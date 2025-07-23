@@ -1,0 +1,57 @@
+{
+  "name": "create-startdown-app",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "create-startdown-app": "./cli/dist/index.js"
+  },
+  "files": [
+    "cli/dist",
+    "cli/templates"
+  ],
+  "scripts": {
+    "dev": "cd cli && tsup --watch",
+    "build": "cd cli && tsup",
+    "start": "node cli/dist/index.js",
+    "typecheck": "tsc",
+    "test": "npm run build && npm run start test-app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/korrect-ai/startdown.git"
+  },
+  "keywords": [
+    "startdown",
+    "mf2",
+    "nextjs",
+    "supabase",
+    "stripe",
+    "startup",
+    "saas",
+    "boilerplate"
+  ],
+  "author": "Korrect AI",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/korrect-ai/startdown/issues"
+  },
+  "homepage": "https://github.com/korrect-ai/startdown#readme",
+  "description": "Create a startup-ready web app with the MF² Stack",
+  "dependencies": {
+    "@clack/prompts": "^0.11.0",
+    "chalk": "^5.4.1",
+    "commander": "^14.0.0",
+    "execa": "^9.6.0",
+    "gradient-string": "^2.0.2",
+    "ora": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^24.1.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}
