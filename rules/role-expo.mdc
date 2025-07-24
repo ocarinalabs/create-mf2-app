@@ -1,0 +1,133 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: Expo & React-Native Development
+globs: 
+alwaysApply: false
+---
+
+You are an expert in TypeScript, React Native, Expo, and Mobile UI development.
+
+# React Native & Expo Development Guidelines
+
+## Code Style and Structure
+
+- Write concise, type-safe TypeScript code with descriptive variable names
+- Use functional components with hooks; avoid class components
+- Use auxiliary verbs in variable names (e.g., `isLoading`, `hasError`)
+- Break down components into smaller, reusable pieces with single responsibilities
+- Prefer iteration and modularization over code duplication
+- Structure files: exported component, subcomponents, helpers, static content, types
+- Organize by feature: Group related components, hooks, and styles into feature-based directories
+- Follow Expo's official documentation: https://docs.expo.dev/
+
+## Naming Conventions
+
+- Components: Use PascalCase (e.g., `UserProfile`, `CheckoutScreen`)
+- Variables/Functions: Use camelCase (e.g., `isFetchingData`, `handleUserInput`)
+- Directories: Use lowercase with hyphens (e.g., `components/auth-wizard`, `features/payment-flow`)
+- Favor named exports for components
+
+## TypeScript Usage
+
+- Use TypeScript for all code; prefer interfaces over types
+- Enable strict typing in `tsconfig.json`
+- Avoid enums; use maps instead
+- Avoid using `any`; strive for precise and specific types
+- Use `React.FC<PropsType>` for defining functional components with props
+- Use strict mode in TypeScript for better type safety
+- If not using TypeScript, use PropTypes for type checking
+
+## Syntax and Formatting
+
+- Use the "function" keyword for pure functions
+- Avoid unnecessary curly braces in conditionals; use concise syntax
+- Use declarative JSX
+- Use Prettier for consistent code formatting
+- Leverage ES6+ features (arrow functions, destructuring, template literals)
+
+## UI and Styling
+
+- Use Expo's built-in components for common UI patterns
+- Implement responsive design with Flexbox and `useWindowDimensions`
+- Use StyleSheet.create() for consistent styling or styled-components/Tailwind CSS for dynamic styles
+- Use optimized image libraries and the WebP format where supported
+- Implement dark mode support using Expo's `useColorScheme`
+- Ensure high accessibility (a11y) standards with ARIA roles and native props
+- Use `react-native-reanimated` and `react-native-gesture-handler` for animations
+
+## Safe Area Management
+
+- Use `SafeAreaProvider` from `react-native-safe-area-context` for global management
+- Wrap top-level components with `SafeAreaView` to handle notches and status bars
+- Use `SafeAreaScrollView` for scrollable content
+- Avoid hardcoding padding/margins for safe areas
+
+## Performance Optimization
+
+- Minimize use of `useState` and `useEffect`; prefer context and reducers
+- Avoid heavy computations inside render methods
+- Use `React.memo()` to prevent unnecessary re-renders
+- Use `useMemo` and `useCallback` hooks appropriately
+- Optimize FlatList with props like `removeClippedSubviews`, `maxToRenderPerBatch`, and `windowSize`
+- Use `getItemLayout` for FlatLists when items have consistent sizes to improve performance
+- Avoid anonymous functions in `renderItem` or event handlers
+- Use Expo's AppLoading and SplashScreen for optimized startup
+- Profile performance using React Native's built-in tools
+- Implement code splitting and lazy loading for non-critical components
+- Follow React Native's threading model to ensure UI operations run on the main thread
+
+## Navigation
+
+- Use `react-navigation` for routing; follow best practices for stack, tab, and drawer navigators
+- Use `expo-router` for file-based routing with native navigation
+- Leverage deep linking and universal links for better user engagement
+
+## State Management
+
+- Use React Context and `useReducer` for global state
+- Leverage `react-query` for data fetching and caching
+- For complex state, consider Zustand or Redux Toolkit
+- Avoid global variables to prevent unintended side effects
+
+## Error Handling and Validation
+
+- Use Zod for runtime validation and error handling
+- Implement proper error logging with Sentry or similar
+- Handle errors at the beginning of functions
+- Use early returns for error conditions
+- Implement global error boundaries
+- Use `expo-error-reporter` for production error reporting
+
+## Testing
+
+- Write unit tests with Jest and React Native Testing Library
+- Implement integration tests for critical flows using Detox
+- Use Expo's testing tools for different environments
+- Consider snapshot testing for UI consistency
+
+## Security
+
+- Sanitize user inputs to prevent XSS attacks
+- Use `react-native-encrypted-storage` for secure data storage
+- Ensure HTTPS and proper authentication for API communication
+- Follow Expo's security guidelines: https://docs.expo.dev/guides/security/
+
+## Internationalization (i18n)
+
+- Use `react-native-i18n` or `expo-localization` for multiple languages
+- Support RTL layouts
+- Ensure text scaling for accessibility
+
+## Key Conventions
+
+- Rely on Expo's managed workflow for streamlined development
+- Prioritize Mobile Web Vitals (Load Time, Jank, Responsiveness)
+- Use `expo-constants` for environment variables
+- Use `expo-permissions` for device permissions
+- Implement `expo-updates` for OTA updates
+- Utilize Expo's EAS Build and Updates for continuous deployment
+- Test extensively on both iOS and Android

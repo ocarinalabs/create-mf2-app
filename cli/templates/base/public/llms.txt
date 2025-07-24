@@ -1,0 +1,50 @@
+# MF² Stack
+
+The opinionated SaaS starter with Next.js, Convex, Clerk, and Polar. Ship your startup in days, not months.
+
+## Overview
+
+MF² Stack (Move F***ing Fast Stack) is a battle-tested, production-ready starter template that combines the best modern web technologies with zero-config abstractions. Built for founders and developers who want to focus on their product, not infrastructure.
+
+## Tech Stack
+
+- **Next.js 15** - React framework with App Router
+- **Convex** - Real-time database and backend
+- **Clerk** - Authentication and user management
+- **Polar** - Developer-focused payments and subscriptions
+- **shadcn/ui** - Beautiful, accessible components
+- **Tailwind CSS** - Utility-first styling
+- **TypeScript** - Type safety throughout
+- **Framer Motion** - Smooth animations
+- **Vercel** - Deployment and analytics
+
+## Features
+
+- 🔐 Authentication with Clerk (social logins, magic links)
+- 💳 Payments with Polar (subscriptions, one-time)
+- 🗄️ Real-time database with Convex
+- 🎨 Beautiful UI with shadcn/ui and Tailwind
+- 🌙 Dark mode support
+- 📊 Analytics with Vercel
+- 📧 Email with Resend
+- 🚀 One-click deploy to Vercel
+
+## Getting Started
+
+```bash
+npx startdown@latest
+```
+
+Follow the prompts to set up your project. You'll need accounts with:
+- Convex (database)
+- Clerk (auth)
+- Polar (payments)
+- Vercel (hosting)
+
+## Documentation
+
+Full documentation available at https://mf2stack.dev/docs
+
+## License
+
+MIT

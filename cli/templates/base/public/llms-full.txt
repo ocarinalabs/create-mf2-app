@@ -1,0 +1,228 @@
+# MF² Stack - Full Documentation
+
+The opinionated SaaS starter with Next.js, Convex, Clerk, and Polar. Ship your startup in days, not months.
+
+## Project Structure
+
+```
+├── src/
+│   ├── app/                    # Next.js app directory
+│   │   ├── (auth)/            # Auth-protected routes
+│   │   ├── components/        # React components
+│   │   │   ├── ui/           # shadcn/ui components
+│   │   │   └── ...          # Custom components
+│   │   ├── fonts/            # Custom fonts
+│   │   └── globals.css       # Global styles
+│   └── lib/                   # Utilities and helpers
+│       └── utils.ts          # Utility functions
+├── convex/                    # Convex backend
+│   ├── _generated/           # Generated Convex files
+│   ├── auth.config.ts        # Clerk auth configuration
+│   ├── emails.ts             # Resend email service
+│   ├── http.ts               # HTTP routes and webhooks
+│   ├── polar.ts              # Polar integration
+│   ├── polarWebhooks.ts      # Polar webhook handlers
+│   ├── schema.ts             # Database schema
+│   └── users.ts              # User management
+├── public/                    # Static assets
+└── ...                       # Config files
+
+## Key Technologies
+
+### Next.js 15 (App Router)
+- Server Components by default
+- Streaming and Suspense
+- Built-in optimizations
+- TypeScript support
+
+### Convex
+- Real-time database
+- Type-safe queries and mutations
+- Built-in authentication
+- Scheduled functions (crons)
+- HTTP endpoints
+
+### Clerk
+- Social logins (Google, GitHub, etc.)
+- Magic links
+- User management UI
+- JWT-based authentication
+- Webhook support
+
+### Polar
+- Developer-focused payments
+- Subscription management
+- Customer portal
+- Webhook events
+- Product syncing
+
+## Implementation Patterns
+
+### Authentication Flow
+1. User signs up/in with Clerk
+2. Clerk issues JWT token
+3. Convex validates JWT with Clerk issuer
+4. User record created/updated in Convex
+5. Auth state available throughout app
+
+### Payment Flow
+1. Products created in Polar dashboard
+2. Products synced to Convex via `syncProducts`
+3. User selects plan on pricing page
+4. Checkout handled by Polar
+5. Webhook updates user subscription in Convex
+
+### Database Schema
+```typescript
+// convex/schema.ts
+export default defineSchema({
+  users: defineTable({
+    clerkId: v.string(),
+    email: v.optional(v.string()),
+    polarCustomerId: v.optional(v.string()),
+    subscriptionId: v.optional(v.string()),
+    subscriptionStatus: v.optional(v.string()),
+    subscriptionPriceId: v.optional(v.string()),
+  })
+    .index("by_clerk_id", ["clerkId"])
+    .index("by_email", ["email"]),
+  
+  products: defineTable({
+    polarId: v.string(),
+    name: v.string(),
+    description: v.optional(v.string()),
+    isRecurring: v.boolean(),
+    priceAmount: v.number(),
+    priceCurrency: v.string(),
+    intervalUnit: v.optional(v.string()),
+    // ... more fields
+  })
+    .index("by_polar_id", ["polarId"]),
+});
+```
+
+### Component Architecture
+- Server Components for data fetching
+- Client Components for interactivity
+- Shared UI components in `/components/ui`
+- Composition over inheritance
+- Props drilling minimized with Convex
+
+### Styling Approach
+- Tailwind CSS for utility classes
+- CSS variables for theming
+- Dark mode with `next-themes`
+- Consistent spacing scale
+- Mobile-first responsive design
+
+## Environment Variables
+
+Required environment variables:
+
+```bash
+# Convex
+CONVEX_DEPLOYMENT=
+NEXT_PUBLIC_CONVEX_URL=
+
+# Clerk
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+CLERK_JWT_ISSUER_DOMAIN=
+CLERK_WEBHOOK_SECRET=
+
+# Polar
+POLAR_API_KEY=
+POLAR_WEBHOOK_SECRET=
+NEXT_PUBLIC_POLAR_ENABLED=
+
+# Resend
+RESEND_API_KEY=
+
+# App
+NEXT_PUBLIC_APP_URL=
+```
+
+## Best Practices
+
+### Security
+- All API keys in environment variables
+- JWT validation on every request
+- Webhook signature verification
+- HTTPS enforced in production
+- No client-side secrets
+
+### Performance
+- Server Components by default
+- Images optimized with next/image
+- Fonts optimized with next/font
+- Code splitting automatic
+- Edge runtime where applicable
+
+### Developer Experience
+- TypeScript for type safety
+- Prettier for formatting
+- ESLint for linting
+- Hot reload with Turbopack
+- Clear error messages
+
+### Deployment
+- Optimized for Vercel
+- Environment variables in Vercel dashboard
+- Automatic deployments from Git
+- Preview deployments for PRs
+- Analytics included
+
+## Common Tasks
+
+### Add a new page
+1. Create file in `app/` directory
+2. Export default component
+3. Add to navigation if needed
+
+### Add a new Convex function
+1. Create file in `convex/` directory
+2. Export query/mutation/action
+3. Use in components with `useQuery`/`useMutation`
+
+### Add a new UI component
+1. Check shadcn/ui registry first
+2. Install with `npx shadcn@latest add [component]`
+3. Customize in `components/ui/`
+
+### Update subscription plans
+1. Create/update products in Polar
+2. Run `npx convex run polar:syncProducts`
+3. Update pricing component
+
+## Troubleshooting
+
+### Common Issues
+- **Auth not working**: Check CLERK_JWT_ISSUER_DOMAIN
+- **Payments failing**: Verify Polar webhook URL
+- **Database errors**: Run `npx convex dev` to see logs
+- **Build failures**: Check TypeScript errors
+
+### Debug Commands
+```bash
+# Check Convex logs
+npx convex logs
+
+# Sync Polar products
+npx convex run polar:syncProducts
+
+# Clean duplicate products
+npx convex run polar:cleanupDuplicateProducts
+```
+
+## Resources
+
+- MF² Stack Docs: https://mf2stack.dev/docs
+- Next.js Docs: https://nextjs.org/docs
+- Convex Docs: https://docs.convex.dev
+- Clerk Docs: https://clerk.com/docs
+- Polar Docs: https://docs.polar.sh
+- shadcn/ui: https://ui.shadcn.com
+
+## License
+
+MIT License - see LICENSE file for details
