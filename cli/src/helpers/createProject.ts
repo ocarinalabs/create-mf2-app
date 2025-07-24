@@ -10,12 +10,11 @@ const __dirname = path.dirname(__filename);
 interface CreateProjectOptions {
   projectName: string;
   platform: string;
-  backend: string;
-  payments: string;
+  needsBackend: boolean;
 }
 
 export async function createProject(options: CreateProjectOptions): Promise<string> {
-  const { projectName } = options;
+  const { projectName, needsBackend } = options;
   const projectDir = path.join(process.cwd(), projectName);
   
   const spinner = ora('Creating project directory...').start();
@@ -35,11 +34,14 @@ export async function createProject(options: CreateProjectOptions): Promise<stri
     
     // Copy template files
     spinner.text = 'Copying template files...';
-    const templateDir = path.join(__dirname, '..', '..', 'templates', 'web');
+    const templateName = needsBackend ? 'base-fullstack' : 'base-frontend';
+    const templateDir = path.join(__dirname, '..', '..', 'templates', templateName);
     
-    // For now, just create a basic structure
-    // In the future, this will copy from templates directory
-    await createBasicStructure(projectDir);
+    // Copy all files from template to project directory
+    await copyTemplate(templateDir, projectDir);
+    
+    // Update package.json with project name
+    await updatePackageJson(projectDir, projectName);
     
     spinner.succeed('Project created successfully');
     
@@ -50,51 +52,34 @@ export async function createProject(options: CreateProjectOptions): Promise<stri
   }
 }
 
-async function createBasicStructure(projectDir: string) {
-  // Create basic directories
-  const dirs = [
-    'src',
-    'src/app',
-    'src/components',
-    'src/lib',
-    'public'
-  ];
+async function copyTemplate(templateDir: string, projectDir: string) {
+  const files = await fs.readdir(templateDir, { withFileTypes: true });
   
-  for (const dir of dirs) {
-    await fs.mkdir(path.join(projectDir, dir), { recursive: true });
-  }
-  
-  // Create placeholder files (these will be replaced with actual templates)
-  const packageJson = {
-    name: path.basename(projectDir),
-    version: '0.1.0',
-    private: true,
-    scripts: {
-      dev: 'next dev',
-      build: 'next build',
-      start: 'next start',
-      lint: 'next lint'
-    },
-    dependencies: {
-      next: '^14.0.0',
-      react: '^18.2.0',
-      'react-dom': '^18.2.0',
-      '@supabase/supabase-js': '^2.38.0',
-      stripe: '^14.0.0'
-    },
-    devDependencies: {
-      '@types/node': '^20.0.0',
-      '@types/react': '^18.2.0',
-      '@types/react-dom': '^18.2.0',
-      typescript: '^5.0.0',
-      tailwindcss: '^3.3.0',
-      autoprefixer: '^10.4.0',
-      postcss: '^8.4.0'
+  for (const file of files) {
+    const srcPath = path.join(templateDir, file.name);
+    const destPath = path.join(projectDir, file.name);
+    
+    if (file.isDirectory()) {
+      await fs.mkdir(destPath, { recursive: true });
+      await copyTemplate(srcPath, destPath); // Recursively copy subdirectories
+    } else {
+      // Skip .DS_Store and other system files
+      if (file.name.startsWith('.') && file.name !== '.env.example' && file.name !== '.gitignore') {
+        continue;
+      }
+      await fs.copyFile(srcPath, destPath);
     }
-  };
+  }
+}
+
+async function updatePackageJson(projectDir: string, projectName: string) {
+  const packageJsonPath = path.join(projectDir, 'package.json');
+  const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
+  
+  packageJson.name = projectName;
   
   await fs.writeFile(
-    path.join(projectDir, 'package.json'),
+    packageJsonPath,
     JSON.stringify(packageJson, null, 2)
   );
 }

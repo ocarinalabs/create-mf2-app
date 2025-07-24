@@ -10,31 +10,37 @@ import { getPkgManager } from './utils/getPkgManager.js';
 async function main() {
   renderTitle();
   
-  // Get all user choices (even if we ignore some for MVP)
+  // Get user choices
   const {
     projectName,
     platform,
-    backend,
-    payments,
-    typescript,
-    styling
+    needsBackend
   } = await runCli();
   
-  // For MVP, we always use the same stack
-  logger.info('\n📦 Creating your startup with:');
-  logger.info('✓ Next.js 14 (App Router)');
-  logger.info('✓ Supabase (Database + Auth)');
-  logger.info('✓ Stripe (Payments)');
-  logger.info('✓ Tailwind CSS');
-  logger.info('✓ TypeScript\n');
+  // Show what we're creating
+  logger.info('\n📦 Creating your project with:');
+  logger.info('✓ Next.js 15 (App Router)');
+  logger.info('✓ TypeScript');
+  logger.info('✓ Tailwind CSS + shadcn/ui');
+  
+  if (needsBackend) {
+    logger.info('✓ Convex (Real-time database)');
+    logger.info('✓ Clerk (Authentication)');
+    logger.info('✓ Polar (Payments)');
+    logger.info('✓ Resend (Email)');
+  } else {
+    logger.info('✓ SEO-ready metadata');
+    logger.info('✓ Dark mode support');
+    logger.info('✓ Vercel Analytics');
+  }
+  
+  logger.info('\n');
   
   // Create project
   const projectDir = await createProject({ 
     projectName,
-    // Pass choices for future use
     platform,
-    backend,
-    payments 
+    needsBackend
   });
   
   // Install dependencies
@@ -45,13 +51,25 @@ async function main() {
   await initializeGit(projectDir);
   
   // Success message
-  logger.success(`\n✅ Your MF² startup is ready!\n`);
+  logger.success(`\n✅ Your MF² project is ready!\n`);
   logger.info(`📁 Project: ${projectName}`);
-  logger.info(`🚀 Stack: Next.js + Supabase + Stripe\n`);
-  logger.info('Next steps:');
-  logger.info(`1. cd ${projectName}`);
-  logger.info('2. npm run dev');
-  logger.info('3. Ship fast, learn faster!\n');
+  
+  if (needsBackend) {
+    logger.info(`🚀 Stack: Next.js + Convex + Clerk + Polar\n`);
+    logger.info('Next steps:');
+    logger.info(`1. cd ${projectName}`);
+    logger.info('2. Copy .env.example to .env.local');
+    logger.info('3. Add your environment variables');
+    logger.info('4. npm run dev');
+    logger.info('5. npx convex dev (in another terminal)');
+  } else {
+    logger.info(`🚀 Stack: Next.js + TypeScript + Tailwind CSS\n`);
+    logger.info('Next steps:');
+    logger.info(`1. cd ${projectName}`);
+    logger.info('2. npm run dev');
+  }
+  
+  logger.info('\n💫 Ship fast, learn faster!\n');
   
   process.exit(0);
 }

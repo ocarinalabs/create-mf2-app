@@ -1,0 +1,24 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: Project Context
+globs: 
+alwaysApply: false
+---
+
+# Project Context
+
+- Cleve is the **all-in-one workspace** for modern content creation, allowing users to capture ideas, generate posts, and organize their personal brand in one place.
+- Key **AI features** include **Voice Mode** for hands-free notes, **Ask Me** for deep-dive insights, and **Editing Tools** for line-by-line refinement.
+- **Stats** delivers personalized, interactive monthly reports on LinkedIn performance.
+- **Ghostwriter** turns raw ideas into multi-platform social posts optimized for tone and channel.
+- **Agency & Team** plans support unlimited AI post generation, approval workflows, and thought-leadership at scale.
+
+### Cleve Mobile Goals
+
+- **Feature parity** with the web: content creation, scheduling, Stats dashboard, Ghostwriter flows.
+- **Native performance**: smooth audio recording for Voice Mode, offline caching of user notes, and responsive UI for graphs.
+- **Scalable architecture**: TypeScript, React Native hooks, modular screen components, and EAS Build for CI/CD.

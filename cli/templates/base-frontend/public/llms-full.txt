@@ -1,0 +1,156 @@
+# MF² Stack Frontend - Full Documentation
+
+The modern web starter with Next.js, TypeScript, and Tailwind CSS. Build beautiful, fast websites in minutes.
+
+## Project Structure
+
+```
+├── src/
+│   ├── app/                    # Next.js app directory
+│   │   ├── components/        # React components
+│   │   │   ├── ui/           # shadcn/ui components
+│   │   │   └── ...          # Custom components
+│   │   ├── fonts/            # Custom fonts
+│   │   └── globals.css       # Global styles
+│   └── lib/                   # Utilities and helpers
+│       └── utils.ts          # Utility functions
+├── public/                    # Static assets
+│   ├── llms.txt              # LLM documentation
+│   └── llms-full.txt         # This file
+└── ...                       # Config files
+```
+
+## Key Technologies
+
+### Next.js 15 (App Router)
+- Server Components by default
+- Streaming and Suspense
+- Built-in optimizations
+- TypeScript support
+- Turbopack for fast HMR
+
+### Tailwind CSS v4
+- Utility-first CSS framework
+- JIT compilation
+- CSS variables for theming
+- Dark mode support via CSS classes
+
+### shadcn/ui Components
+- Radix UI primitives
+- Fully accessible
+- Customizable with Tailwind
+- Copy-paste component system
+- TypeScript support
+
+### Framer Motion
+- Declarative animations
+- Gesture support
+- Layout animations
+- Server-safe rendering
+
+## Component Architecture
+- Server Components for data fetching
+- Client Components for interactivity
+- Shared UI components in `/components/ui`
+- Composition over inheritance
+- Props drilling minimized with proper structure
+
+## Styling Approach
+- Tailwind CSS for utility classes
+- CSS variables for theming
+- Dark mode with `next-themes`
+- Consistent spacing scale
+- Mobile-first responsive design
+
+## Environment Variables
+
+Required environment variables:
+
+```bash
+# App
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+## Best Practices
+
+### Performance
+- Server Components by default
+- Images optimized with next/image
+- Fonts optimized with next/font
+- Code splitting automatic
+- Edge runtime where applicable
+
+### Developer Experience
+- TypeScript for type safety
+- Prettier for formatting
+- ESLint for linting
+- Hot reload with Turbopack
+- Clear error messages
+
+### SEO & Metadata
+- Dynamic metadata generation
+- Open Graph images
+- Twitter cards
+- Sitemap generation
+- Robots.txt configuration
+
+### Deployment
+- Optimized for Vercel
+- Environment variables in Vercel dashboard
+- Automatic deployments from Git
+- Preview deployments for PRs
+- Analytics included
+
+## Common Tasks
+
+### Add a new page
+1. Create file in `app/` directory
+2. Export default component
+3. Add metadata if needed
+
+### Add a new UI component
+1. Check shadcn/ui registry first
+2. Install with `npx shadcn@latest add [component]`
+3. Customize in `components/ui/`
+
+### Update theme
+1. Edit CSS variables in `globals.css`
+2. Update Tailwind config if needed
+3. Test in both light and dark modes
+
+### Deploy to production
+1. Push to GitHub
+2. Import to Vercel
+3. Configure environment variables
+4. Deploy
+
+## Troubleshooting
+
+### Common Issues
+- **Build failures**: Check TypeScript errors
+- **Styling issues**: Clear Tailwind cache
+- **Dark mode**: Ensure proper theme provider setup
+
+### Debug Commands
+```bash
+# Check for TypeScript errors
+npm run type-check
+
+# Analyze bundle size
+npm run analyze
+
+# Clear caches
+rm -rf .next
+```
+
+## Resources
+
+- MF² Stack Docs: https://mf2stack.dev/docs
+- Next.js Docs: https://nextjs.org/docs
+- Tailwind CSS: https://tailwindcss.com
+- shadcn/ui: https://ui.shadcn.com
+- Framer Motion: https://www.framer.com/motion
+
+## License
+
+MIT License - see LICENSE file for details

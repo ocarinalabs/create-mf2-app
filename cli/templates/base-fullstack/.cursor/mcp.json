@@ -1,0 +1,42 @@
+{
+  "mcpServers": {
+    "context7": {
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "convex": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "convex@latest",
+        "mcp",
+        "start"
+      ]
+    },
+    "Clerk": {
+      "command": "npx",
+      "args": ["@clerk/clerk-mcp@latest"],
+      "env": {
+        "CLERK_API_KEY": "YOUR CLERK API KEY",
+        "ALL_TOOLS": "false",
+        "PROMPTS_DISABLED": "false"
+      }
+    },
+    "Polar": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "--package",
+        "@polar-sh/sdk",
+        "--",
+        "mcp",
+        "start",
+        "--access-token",
+        "..."
+      ]
+    },
+    "resend": {
+      "type": "command",
+      "command": "node ABSOLUTE_PATH_TO_MCP_SEND_EMAIL_PROJECT/build/index.js --key=YOUR_RESEND_API_KEY"
+    }
+  }
+}

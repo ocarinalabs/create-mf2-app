@@ -1,0 +1,43 @@
+# MF² Stack - Frontend
+
+The modern web starter with Next.js, TypeScript, and Tailwind CSS. Build beautiful, fast websites in minutes.
+
+## Overview
+
+MF² Stack (Move F***ing Fast Stack) Frontend is a production-ready starter template that combines the best modern web technologies for building stunning, performant websites and web applications.
+
+## Tech Stack
+
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type safety throughout
+- **Tailwind CSS** - Utility-first styling  
+- **shadcn/ui** - Beautiful, accessible components
+- **Framer Motion** - Smooth animations
+- **Vercel** - Deployment and analytics
+
+## Features
+
+- 🎨 Beautiful UI with shadcn/ui and Tailwind
+- 🌙 Dark mode support
+- 📱 Fully responsive design
+- 🚀 Lightning fast with Turbopack
+- 📊 Analytics with Vercel
+- 🔍 SEO optimized with metadata API
+- 📦 Bundle analyzer included
+- ⚡ Zero configuration needed
+
+## Getting Started
+
+```bash
+npx startdown@latest
+```
+
+Select "No, just frontend" when prompted about backend needs.
+
+## Documentation
+
+Full documentation available at https://mf2stack.dev/docs
+
+## License
+
+MIT

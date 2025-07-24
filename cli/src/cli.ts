@@ -5,10 +5,7 @@ import { validateAppName } from './utils/validateAppName.js';
 export interface CliResults {
   projectName: string;
   platform: 'web' | 'mobile' | 'desktop';
-  backend: 'supabase' | 'firebase' | 'custom';
-  payments: 'stripe' | 'lemonsqueezy' | 'none';
-  typescript: boolean;
-  styling: 'tailwind' | 'css';
+  needsBackend: boolean;
 }
 
 export async function runCli(): Promise<CliResults> {
@@ -42,45 +39,28 @@ export async function runCli(): Promise<CliResults> {
     platform: () => p.select({
       message: 'What platform are you building for?',
       options: [
-        { value: 'web', label: 'Web App (SaaS)' },
-        { value: 'mobile', label: 'Mobile App (Coming Soon)', hint: 'Will use web template for now' },
-        { value: 'desktop', label: 'Desktop App (Coming Soon)', hint: 'Will use web template for now' }
+        { value: 'web', label: 'Web' },
+        { value: 'mobile', label: 'Mobile (Coming Soon)', hint: 'React Native + Expo' },
+        { value: 'desktop', label: 'Desktop (Coming Soon)', hint: 'Electron' }
       ],
       initialValue: 'web'
     }),
     
-    backend: () => p.select({
-      message: 'Choose your backend',
+    needsBackend: () => p.select({
+      message: 'Do you need a backend?',
       options: [
-        { value: 'supabase', label: 'Supabase (Recommended)', hint: 'Easiest to start' },
-        { value: 'firebase', label: 'Firebase (Coming Soon)' },
-        { value: 'custom', label: 'Custom API (Coming Soon)' }
+        { 
+          value: false, 
+          label: 'No, just frontend', 
+          hint: 'Landing pages, marketing sites, documentation' 
+        },
+        { 
+          value: true, 
+          label: 'Yes, full-stack', 
+          hint: 'SaaS apps, user accounts, payments, emails' 
+        }
       ],
-      initialValue: 'supabase'
-    }),
-    
-    payments: () => p.select({
-      message: 'Payment provider',
-      options: [
-        { value: 'stripe', label: 'Stripe', hint: 'Most flexible' },
-        { value: 'lemonsqueezy', label: 'Lemonsqueezy (Coming Soon)' },
-        { value: 'none', label: 'No payments (Coming Soon)' }
-      ],
-      initialValue: 'stripe'
-    }),
-    
-    typescript: () => p.confirm({
-      message: 'Use TypeScript?',
-      initialValue: true
-    }),
-    
-    styling: () => p.select({
-      message: 'Styling solution',
-      options: [
-        { value: 'tailwind', label: 'Tailwind CSS' },
-        { value: 'css', label: 'Plain CSS (Coming Soon)' }
-      ],
-      initialValue: 'tailwind'
+      initialValue: false
     })
   }, {
     onCancel: () => {
