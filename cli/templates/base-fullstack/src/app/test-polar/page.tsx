@@ -1,10 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { Authenticated, Unauthenticated, useQuery, useAction } from "convex/react";
+import {
+  Authenticated,
+  Unauthenticated,
+  useQuery,
+  useAction,
+} from "convex/react";
 import { SignInButton } from "@clerk/nextjs";
 import { api } from "@/convex/_generated/api";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CheckoutLink, CustomerPortalLink } from "@convex-dev/polar/react";
@@ -13,13 +24,17 @@ import { Badge } from "@/components/ui/badge";
 export default function TestPolarPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-8 text-center">Polar Integration Test</h1>
-      
+      <h1 className="text-3xl font-bold mb-8 text-center">
+        Polar Integration Test
+      </h1>
+
       <Unauthenticated>
         <Card>
           <CardHeader>
             <CardTitle>Sign In Required</CardTitle>
-            <CardDescription>Please sign in to test Polar integration</CardDescription>
+            <CardDescription>
+              Please sign in to test Polar integration
+            </CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center">
             <SignInButton mode="modal">
@@ -38,11 +53,11 @@ export default function TestPolarPage() {
 
 function PolarTestContent() {
   const [loading, setLoading] = useState(false);
-  
+
   // Test queries
   const configuredProducts = useQuery(api.polar.getConfiguredProducts);
   const allProducts = useQuery(api.polar.listAllProducts);
-  
+
   // Test actions
   const generateCheckoutLink = useAction(api.polar.generateCheckoutLink);
   const generatePortalUrl = useAction(api.polar.generateCustomerPortalUrl);
@@ -52,9 +67,9 @@ function PolarTestContent() {
   const handleGenerateCheckoutLink = async (productId: string) => {
     setLoading(true);
     try {
-      const url = await generateCheckoutLink({ 
+      const url = await generateCheckoutLink({
         productIds: [productId],
-        successUrl: window.location.origin + "/checkout/success"
+        successUrl: window.location.origin + "/checkout/success",
       });
       window.open(url, "_blank");
     } catch (error) {
@@ -97,10 +112,14 @@ function PolarTestContent() {
   };
 
   const handleClearProducts = async () => {
-    if (!confirm("Are you sure you want to archive all products? This will hide them from view but they can be recovered.")) {
+    if (
+      !confirm(
+        "Are you sure you want to archive all products? This will hide them from view but they can be recovered."
+      )
+    ) {
       return;
     }
-    
+
     setLoading(true);
     try {
       const result = await clearAllProducts();
@@ -122,7 +141,9 @@ function PolarTestContent() {
       <Card>
         <CardHeader>
           <CardTitle>Polar is Disabled</CardTitle>
-          <CardDescription>Set NEXT_PUBLIC_POLAR_ENABLED=true in your .env.local</CardDescription>
+          <CardDescription>
+            Set NEXT_PUBLIC_POLAR_ENABLED=true in your .env.local
+          </CardDescription>
         </CardHeader>
       </Card>
     );
@@ -143,14 +164,30 @@ function PolarTestContent() {
           </div>
           <div className="flex justify-between items-center">
             <span className="text-sm">Starter Product ID:</span>
-            <Badge variant={process.env.NEXT_PUBLIC_POLAR_STARTER_PRODUCT_ID ? "default" : "destructive"}>
-              {process.env.NEXT_PUBLIC_POLAR_STARTER_PRODUCT_ID ? "✓ Set" : "✗ Not Set"}
+            <Badge
+              variant={
+                process.env.NEXT_PUBLIC_POLAR_STARTER_PRODUCT_ID
+                  ? "default"
+                  : "destructive"
+              }
+            >
+              {process.env.NEXT_PUBLIC_POLAR_STARTER_PRODUCT_ID
+                ? "✓ Set"
+                : "✗ Not Set"}
             </Badge>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-sm">Pro Product ID:</span>
-            <Badge variant={process.env.NEXT_PUBLIC_POLAR_PRO_PRODUCT_ID ? "default" : "destructive"}>
-              {process.env.NEXT_PUBLIC_POLAR_PRO_PRODUCT_ID ? "✓ Set" : "✗ Not Set"}
+            <Badge
+              variant={
+                process.env.NEXT_PUBLIC_POLAR_PRO_PRODUCT_ID
+                  ? "default"
+                  : "destructive"
+              }
+            >
+              {process.env.NEXT_PUBLIC_POLAR_PRO_PRODUCT_ID
+                ? "✓ Set"
+                : "✗ Not Set"}
             </Badge>
           </div>
         </CardContent>
@@ -160,13 +197,17 @@ function PolarTestContent() {
       <Card>
         <CardHeader>
           <CardTitle>Configured Products</CardTitle>
-          <CardDescription>Products configured in convex/polar.ts</CardDescription>
+          <CardDescription>
+            Products configured in convex/polar.ts
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {configuredProducts === undefined ? (
             <Skeleton className="h-20 w-full" />
           ) : configuredProducts === null ? (
-            <p className="text-sm text-muted-foreground">No configured products found</p>
+            <p className="text-sm text-muted-foreground">
+              No configured products found
+            </p>
           ) : (
             <div className="space-y-3">
               {Object.entries(configuredProducts).map(([key, product]) => (
@@ -175,9 +216,10 @@ function PolarTestContent() {
                     <div>
                       <p className="font-medium">{key}</p>
                       <p className="text-sm text-muted-foreground">
-                        {product.name} - {product.prices[0]?.priceAmount ? 
-                          `$${(product.prices[0].priceAmount / 100).toFixed(2)}` : 
-                          "No price"}
+                        {product.name} -{" "}
+                        {product.prices[0]?.priceAmount
+                          ? `$${(product.prices[0].priceAmount / 100).toFixed(2)}`
+                          : "No price"}
                       </p>
                     </div>
                     <Button
@@ -199,14 +241,19 @@ function PolarTestContent() {
       <Card>
         <CardHeader>
           <CardTitle>All Products from Polar</CardTitle>
-          <CardDescription>All products synced from your Polar account</CardDescription>
+          <CardDescription>
+            All products synced from your Polar account
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {allProducts === undefined ? (
             <Skeleton className="h-20 w-full" />
           ) : allProducts === null || allProducts.length === 0 ? (
             <div className="space-y-3">
-              <p className="text-sm text-muted-foreground">No products found. Make sure to create products in Polar and sync them.</p>
+              <p className="text-sm text-muted-foreground">
+                No products found. Make sure to create products in Polar and
+                sync them.
+              </p>
               <Button onClick={handleSyncProducts} disabled={loading}>
                 Sync Products from Polar
               </Button>
@@ -218,11 +265,13 @@ function PolarTestContent() {
                   <div className="flex justify-between items-start">
                     <div>
                       <p className="font-medium">{product.name}</p>
-                      <p className="text-xs text-muted-foreground">ID: {product.id}</p>
+                      <p className="text-xs text-muted-foreground">
+                        ID: {product.id}
+                      </p>
                       <p className="text-sm">
-                        {product.prices[0]?.priceAmount ? 
-                          `$${(product.prices[0].priceAmount / 100).toFixed(2)} / ${product.prices[0].recurringInterval}` : 
-                          "No price"}
+                        {product.prices[0]?.priceAmount
+                          ? `$${(product.prices[0].priceAmount / 100).toFixed(2)} / ${product.prices[0].recurringInterval}`
+                          : "No price"}
                       </p>
                     </div>
                     <div className="space-x-2">
@@ -242,7 +291,11 @@ function PolarTestContent() {
                 <Button onClick={handleSyncProducts} disabled={loading}>
                   Sync Products from Polar
                 </Button>
-                <Button onClick={handleClearProducts} disabled={loading} variant="destructive">
+                <Button
+                  onClick={handleClearProducts}
+                  disabled={loading}
+                  variant="destructive"
+                >
                   Archive All Products
                 </Button>
               </div>
@@ -255,7 +308,9 @@ function PolarTestContent() {
       <Card>
         <CardHeader>
           <CardTitle>React Components Test</CardTitle>
-          <CardDescription>Test the CheckoutLink and CustomerPortalLink components</CardDescription>
+          <CardDescription>
+            Test the CheckoutLink and CustomerPortalLink components
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
@@ -269,12 +324,16 @@ function PolarTestContent() {
                 Subscribe to Starter Plan
               </CheckoutLink>
             ) : (
-              <p className="text-sm text-muted-foreground">Set NEXT_PUBLIC_POLAR_STARTER_PRODUCT_ID to test</p>
+              <p className="text-sm text-muted-foreground">
+                Set NEXT_PUBLIC_POLAR_STARTER_PRODUCT_ID to test
+              </p>
             )}
           </div>
-          
+
           <div>
-            <p className="text-sm font-medium mb-2">CustomerPortalLink Component:</p>
+            <p className="text-sm font-medium mb-2">
+              CustomerPortalLink Component:
+            </p>
             <CustomerPortalLink
               polarApi={api.polar}
               className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
@@ -282,9 +341,11 @@ function PolarTestContent() {
               Manage Subscription
             </CustomerPortalLink>
           </div>
-          
+
           <div>
-            <p className="text-sm font-medium mb-2">Manual Portal URL Generation:</p>
+            <p className="text-sm font-medium mb-2">
+              Manual Portal URL Generation:
+            </p>
             <Button
               variant="outline"
               onClick={handleGeneratePortalUrl}

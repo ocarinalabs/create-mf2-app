@@ -6,21 +6,31 @@ import { api } from "@/convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function TestResendPage() {
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("Test Email from MF² Stack");
-  const [message, setMessage] = useState("This is a test email sent from the MF² Stack template using Resend.");
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [message, setMessage] = useState(
+    "This is a test email sent from the MF² Stack template using Resend."
+  );
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
   const [error, setError] = useState<string | null>(null);
 
   const sendEmail = useAction(api.emails.sendEmail);
 
   const handleSendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email) {
       setError("Please enter an email address");
       return;
@@ -124,9 +134,15 @@ export default function TestResendPage() {
             <h3 className="font-semibold mb-2">Configuration Notes:</h3>
             <ul className="text-sm space-y-1 text-muted-foreground">
               <li>• Make sure RESEND_API_KEY is set in your environment</li>
-              <li>• Set RESEND_FROM_EMAIL to your verified sender email (required)</li>
-              <li>• Verify your domain in Resend dashboard for production use</li>
-              <li>• The email is currently in test mode (see convex/emails.ts)</li>
+              <li>
+                • Set RESEND_FROM_EMAIL to your verified sender email (required)
+              </li>
+              <li>
+                • Verify your domain in Resend dashboard for production use
+              </li>
+              <li>
+                • The email is currently in test mode (see convex/emails.ts)
+              </li>
               <li>• For production, set testMode: false in emails.ts</li>
             </ul>
           </div>

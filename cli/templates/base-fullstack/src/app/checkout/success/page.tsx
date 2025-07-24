@@ -1,7 +1,13 @@
 import { CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function CheckoutSuccessPage() {
   return (
@@ -13,7 +19,8 @@ export default function CheckoutSuccessPage() {
           </div>
           <CardTitle className="text-2xl">Payment Successful!</CardTitle>
           <CardDescription>
-            Thank you for your purchase. You can now access all premium features.
+            Thank you for your purchase. You can now access all premium
+            features.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">

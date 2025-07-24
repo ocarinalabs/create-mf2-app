@@ -1,7 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Check } from "lucide-react";
 import { CheckoutLink } from "@convex-dev/polar/react";
 import { api } from "@/convex/_generated/api";
@@ -72,11 +79,11 @@ export function Pricing() {
             Choose the plan that fits your needs. Always flexible to scale.
           </p>
         </div>
-        
+
         <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
           {plans.map((plan) => (
-            <Card 
-              key={plan.name} 
+            <Card
+              key={plan.name}
               className={plan.popular ? "border-primary shadow-lg" : ""}
             >
               {plan.popular && (
@@ -91,7 +98,9 @@ export function Pricing() {
               <CardContent>
                 <div className="mb-4">
                   <span className="text-4xl font-bold">{plan.price}</span>
-                  {plan.price !== "Custom" && <span className="text-muted-foreground">/month</span>}
+                  {plan.price !== "Custom" && (
+                    <span className="text-muted-foreground">/month</span>
+                  )}
                 </div>
                 <ul className="space-y-2">
                   {plan.features.map((feature) => (
@@ -109,18 +118,20 @@ export function Pricing() {
                     productIds={[plan.productId]}
                     className="w-full"
                   >
-                    <Button 
-                      className="w-full" 
+                    <Button
+                      className="w-full"
                       variant={plan.popular ? "default" : "outline"}
                     >
                       Get Started
                     </Button>
                   </CheckoutLink>
                 ) : (
-                  <Button 
-                    className="w-full" 
+                  <Button
+                    className="w-full"
                     variant="outline"
-                    onClick={() => window.location.href = "mailto:sales@example.com"}
+                    onClick={() =>
+                      (window.location.href = "mailto:sales@example.com")
+                    }
                   >
                     Contact Sales
                   </Button>

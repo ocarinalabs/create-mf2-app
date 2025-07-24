@@ -23,7 +23,7 @@ export const list = query({
           author: user?.clerkUser.first_name || "Anonymous",
           ...message,
         };
-      }),
+      })
     );
   },
 });
@@ -35,16 +35,16 @@ export const getForCurrentUser = query({
     if (identity === null) {
       throw new Error("Not authenticated");
     }
-    
+
     const user = await ctx.db
       .query("users")
       .withIndex("by_clerk_id", (q) => q.eq("clerkUser.id", identity.subject))
       .unique();
-    
+
     if (!user) {
       throw new Error("User not found");
     }
-    
+
     return await ctx.db
       .query("messages")
       .filter((q) => q.eq(q.field("user"), user._id))

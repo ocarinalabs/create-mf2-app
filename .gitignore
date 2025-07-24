@@ -58,5 +58,3 @@ next-env.d.ts
 # emacs backup files
 \#*
 .\#*
-
-/examples

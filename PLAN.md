@@ -1,21 +1,32 @@
 # The Startdown Stack: Comprehensive Implementation Plan
 
-## Current Status (Updated)
+## Current Status (Updated - Latest)
 
 ### ✅ Completed:
 - Repository structure set up
 - TypeScript configuration (root + cli with inheritance)
-- tsup build configuration
+- tsup build configuration  
 - Dependencies installed (@clack/prompts, commander, chalk, ora, execa)
-- PLAN.md created
+- PLAN.md created with architectural decisions
 - Examples folder with T3 and Next.js CLIs for reference
 - CLI source code (entry point, prompts, logic)
 - Package.json configuration (bin field, scripts)
 - All helper files created
+- Two complete templates:
+  - `base-frontend`: Landing page with Next.js, TypeScript, Tailwind, shadcn/ui
+  - `base-fullstack`: Complete SaaS with Convex, Clerk, Polar, Resend, PostHog, Mintlify
+- Metadata system with `createMetadata` helper
+- Dynamic sitemap generation
+- All integrations working (auth, payments, email, analytics)
+- Environment variable setup with examples
+- Test pages for all services
 
 ### ❌ TODO:
-- Web template files (Next.js + Convex + shadcn/ui + Clerk + Polar)
-- README with vision
+- Create landing page with MF² branding
+- Publish to npm registry
+- Create comprehensive README with vision
+- Test end-to-end user flow
+- Add telemetry/analytics (optional)
 - Playbook content (future phase)
 
 ## 1. Naming & Branding Strategy
@@ -62,10 +73,42 @@ Unlike existing tools that only provide code, Startdown provides:
 - Smart incompatibility detection
 - TypeScript-first approach
 
+### Our Analysis of T3's Approach (Updated):
+After deep analysis of T3's implementation, we discovered:
+- **T3 doesn't dynamically modify files** - they pre-create every permutation
+- Example: 8+ different layout files for different feature combinations
+- This leads to **exponential file growth** (2^n variants for n features)
+- Maintenance burden increases significantly with each new feature
+
+### Why We Chose a Different Path for MF² Stack:
+1. **Two Templates Instead of Modular System**:
+   - `base-frontend`: Just the landing page (Next.js + UI)
+   - `base-fullstack`: Complete SaaS starter (all features)
+   
+2. **Justification**:
+   - T3's complexity makes sense for 5+ orthogonal features
+   - We have 2 "modes" not independent features
+   - Frontend vs Fullstack is a fundamental choice, not a feature toggle
+   - Simpler to maintain and understand
+   - Faster to implement and ship (MF² philosophy)
+   
+3. **Benefits of Our Approach**:
+   - **No file explosion**: Just 2 clear templates
+   - **Easier maintenance**: Update each template directly
+   - **Clear mental model**: Frontend OR Fullstack, not a mix
+   - **Faster CLI**: Simple copy, no complex logic
+   - **Better DX**: See exactly what you're getting
+
+### When T3's Approach Would Make Sense:
+- Multiple independent features (5+) that users mix and match
+- Features that are truly orthogonal (auth doesn't require db, etc.)
+- Large team to maintain all permutations
+- Complex enterprise requirements
+
 ### Our Hybrid Approach:
-1. **T3's modular architecture** for flexibility
-2. **Next.js's simplicity** where possible
-3. **Custom additions** for startup features
+1. **T3's beautiful CLI UX** (@clack/prompts)
+2. **Next.js's simplicity** (straightforward templates)
+3. **MF² philosophy** (opinionated, no analysis paralysis)
 
 ## 4. Current File Structure
 

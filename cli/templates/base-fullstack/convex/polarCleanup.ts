@@ -8,7 +8,7 @@ export const cleanupDuplicateProducts = internalAction({
     const allProducts = await ctx.runQuery(components.polar.lib.listProducts, {
       includeArchived: true,
     });
-    
+
     // Group by product ID
     const productsByExternalId = new Map<string, typeof allProducts>();
     for (const product of allProducts) {
@@ -18,14 +18,16 @@ export const cleanupDuplicateProducts = internalAction({
       }
       productsByExternalId.get(externalId)!.push(product);
     }
-    
+
     let archivedCount = 0;
-    
+
     // For each external ID with duplicates, archive all but one
     for (const [externalId, duplicates] of productsByExternalId) {
       if (duplicates.length > 1) {
-        console.log(`Found ${duplicates.length} duplicates for product ${externalId}`);
-        
+        console.log(
+          `Found ${duplicates.length} duplicates for product ${externalId}`
+        );
+
         // Keep the first one, archive the rest
         for (let i = 1; i < duplicates.length; i++) {
           try {
@@ -42,7 +44,7 @@ export const cleanupDuplicateProducts = internalAction({
         }
       }
     }
-    
+
     console.log(`Archived ${archivedCount} duplicate products`);
     return { deletedCount: archivedCount };
   },

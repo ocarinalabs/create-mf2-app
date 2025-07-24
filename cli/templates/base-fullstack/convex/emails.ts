@@ -22,14 +22,14 @@ export const handleEmailEvent = internalMutation({
 export const sendTestEmail = internalMutation({
   handler: async (ctx) => {
     const fromEmail = process.env.RESEND_FROM_EMAIL;
-    
+
     if (!fromEmail) {
       throw new Error(
         "RESEND_FROM_EMAIL environment variable is required. " +
-        "Please set it to your verified sender email address."
+          "Please set it to your verified sender email address."
       );
     }
-    
+
     await resend.sendEmail(ctx, {
       from: `MF² Stack Test <${fromEmail}>`,
       to: "Resend <delivered@resend.dev>",
@@ -47,14 +47,14 @@ export const sendEmail = action({
   },
   handler: async (ctx, args) => {
     const fromEmail = process.env.RESEND_FROM_EMAIL;
-    
+
     if (!fromEmail) {
       throw new Error(
         "RESEND_FROM_EMAIL environment variable is required. " +
-        "Please set it to your verified sender email address."
+          "Please set it to your verified sender email address."
       );
     }
-    
+
     await resend.sendEmail(ctx, {
       from: `MF² Stack <${fromEmail}>`,
       to: args.to,

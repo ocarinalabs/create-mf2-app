@@ -40,15 +40,30 @@ export const {
 
 // Internal action that does the actual sync work
 export const _syncPolarProducts = internalAction({
-  handler: async (ctx): Promise<{ created: number; archived: number; synced: number; skipped: number; polarArchivedCount?: number }> => {
+  handler: async (
+    ctx
+  ): Promise<{
+    created: number;
+    archived: number;
+    synced: number;
+    skipped: number;
+    polarArchivedCount?: number;
+  }> => {
     // First clean up any duplicates
     await ctx.runAction(internal.polarCleanup.cleanupDuplicateProducts);
-    
-    const stats = { created: 0, archived: 0, synced: 0, skipped: 0, polarArchivedCount: 0 };
-    
+
+    const stats = {
+      created: 0,
+      archived: 0,
+      synced: 0,
+      skipped: 0,
+      polarArchivedCount: 0,
+    };
+
     const polarSdk = new PolarSdk({
       accessToken: process.env.POLAR_ORGANIZATION_TOKEN!,
-      server: process.env.POLAR_SERVER as "sandbox" | "production" || "production",
+      server:
+        (process.env.POLAR_SERVER as "sandbox" | "production") || "production",
     });
 
     // First, get count of archived products in Polar
@@ -69,9 +84,12 @@ export const _syncPolarProducts = internalAction({
     }
 
     // Get existing Convex products
-    const convexProducts = await ctx.runQuery(components.polar.lib.listProducts, {
-      includeArchived: false,
-    });
+    const convexProducts = await ctx.runQuery(
+      components.polar.lib.listProducts,
+      {
+        includeArchived: false,
+      }
+    );
 
     // Archive products that aren't in Polar anymore
     for (const convexProduct of convexProducts) {
@@ -102,7 +120,9 @@ export const _syncPolarProducts = internalAction({
 
       // Skip if no valid prices
       if (validPrices.length === 0) {
-        console.log(`Skipping product with only custom pricing: ${polarProduct.name}`);
+        console.log(
+          `Skipping product with only custom pricing: ${polarProduct.name}`
+        );
         stats.skipped++;
         continue;
       }
@@ -131,20 +151,29 @@ export const _syncPolarProducts = internalAction({
           isArchived: price.isArchived,
           createdAt: price.createdAt.toISOString(),
           modifiedAt: price.modifiedAt?.toISOString() ?? null,
-          recurringInterval: price.type === "recurring" ? price.recurringInterval ?? undefined : undefined,
+          recurringInterval:
+            price.type === "recurring"
+              ? (price.recurringInterval ?? undefined)
+              : undefined,
           priceAmount: price.priceAmount,
           priceCurrency: price.priceCurrency,
           type: price.type,
         })),
       };
 
-      const existingConvexProduct = convexProducts.find((p) => p.id === polarProduct.id);
+      const existingConvexProduct = convexProducts.find(
+        (p) => p.id === polarProduct.id
+      );
       try {
         if (existingConvexProduct) {
-          await ctx.runMutation(components.polar.lib.updateProduct, { product });
+          await ctx.runMutation(components.polar.lib.updateProduct, {
+            product,
+          });
           stats.synced++;
         } else {
-          await ctx.runMutation(components.polar.lib.createProduct, { product });
+          await ctx.runMutation(components.polar.lib.createProduct, {
+            product,
+          });
           stats.created++;
         }
       } catch (error) {
@@ -152,10 +181,15 @@ export const _syncPolarProducts = internalAction({
         // If it's a duplicate error, try to update instead
         if (error instanceof Error && error.message.includes("unique()")) {
           try {
-            await ctx.runMutation(components.polar.lib.updateProduct, { product });
+            await ctx.runMutation(components.polar.lib.updateProduct, {
+              product,
+            });
             stats.synced++;
           } catch (updateError) {
-            console.error(`Failed to update product ${polarProduct.name} after duplicate error:`, updateError);
+            console.error(
+              `Failed to update product ${polarProduct.name} after duplicate error:`,
+              updateError
+            );
           }
         }
       }
@@ -166,11 +200,13 @@ export const _syncPolarProducts = internalAction({
       .map(([key, value]) => `${key}: ${value}`)
       .join(", ");
     console.log(`Polar products sync - ${statsString}`);
-    
+
     if (stats.polarArchivedCount > 0) {
-      console.log(`Note: ${stats.polarArchivedCount} archived products in Polar were not synced`);
+      console.log(
+        `Note: ${stats.polarArchivedCount} archived products in Polar were not synced`
+      );
     }
-    
+
     return stats;
   },
 });
@@ -178,14 +214,22 @@ export const _syncPolarProducts = internalAction({
 // Public action to sync products from Polar (callable from dashboard/UI)
 export const syncProducts = action({
   args: {},
-  handler: async (ctx): Promise<{ success: boolean; compatibleProductCount: number; skippedProductCount: number; archivedProductCount: number; polarArchivedCount: number }> => {
+  handler: async (
+    ctx
+  ): Promise<{
+    success: boolean;
+    compatibleProductCount: number;
+    skippedProductCount: number;
+    archivedProductCount: number;
+    polarArchivedCount: number;
+  }> => {
     if (!process.env.POLAR_ORGANIZATION_TOKEN) {
       throw new Error("POLAR_ORGANIZATION_TOKEN not set");
     }
-    
+
     const stats = await ctx.runAction(internal.polar._syncPolarProducts);
-    
-    return { 
+
+    return {
       success: true,
       compatibleProductCount: stats.created + stats.synced,
       skippedProductCount: stats.skipped,
@@ -198,15 +242,19 @@ export const syncProducts = action({
 // Action to clear all products by archiving them (useful for testing)
 export const clearAllProducts = action({
   args: {},
-  handler: async (ctx): Promise<{ archivedCount: number; cleanedDuplicates: number }> => {
+  handler: async (
+    ctx
+  ): Promise<{ archivedCount: number; cleanedDuplicates: number }> => {
     // First clean up any duplicates
-    const cleanupResult = await ctx.runAction(internal.polarCleanup.cleanupDuplicateProducts);
-    
+    const cleanupResult = await ctx.runAction(
+      internal.polarCleanup.cleanupDuplicateProducts
+    );
+
     // Then archive remaining products
     const products = await ctx.runQuery(components.polar.lib.listProducts, {
       includeArchived: false,
     });
-    
+
     let archivedCount = 0;
     for (const product of products) {
       try {
@@ -221,10 +269,10 @@ export const clearAllProducts = action({
         console.error(`Failed to archive product ${product.id}:`, error);
       }
     }
-    
-    return { 
+
+    return {
       archivedCount,
-      cleanedDuplicates: cleanupResult.deletedCount 
+      cleanedDuplicates: cleanupResult.deletedCount,
     };
   },
 });

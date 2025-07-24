@@ -1,17 +1,30 @@
 "use client";
 
-import { Authenticated, Unauthenticated, AuthLoading, useQuery } from "convex/react";
+import {
+  Authenticated,
+  Unauthenticated,
+  AuthLoading,
+  useQuery,
+} from "convex/react";
 import { SignInButton, UserButton } from "@clerk/nextjs";
 import { api } from "@/convex/_generated/api";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function TestLoginPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
-      <h1 className="text-3xl font-bold mb-8 text-center">Clerk + Convex Test</h1>
-      
+      <h1 className="text-3xl font-bold mb-8 text-center">
+        Clerk + Convex Test
+      </h1>
+
       <AuthLoading>
         <Card>
           <CardHeader>
@@ -27,7 +40,9 @@ export default function TestLoginPage() {
         <Card>
           <CardHeader>
             <CardTitle>Not Signed In</CardTitle>
-            <CardDescription>Sign in to test the Clerk-Convex integration</CardDescription>
+            <CardDescription>
+              Sign in to test the Clerk-Convex integration
+            </CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center">
             <SignInButton mode="modal">
@@ -71,39 +86,58 @@ function UserInfo() {
       <Card>
         <CardHeader>
           <CardTitle>User Data from Convex</CardTitle>
-          <CardDescription>This data is synced via Clerk webhook</CardDescription>
+          <CardDescription>
+            This data is synced via Clerk webhook
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {currentUser ? (
             <div className="space-y-3">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Convex ID:</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Convex ID:
+                </p>
                 <p className="font-mono text-sm">{currentUser._id}</p>
               </div>
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Clerk ID:</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Clerk ID:
+                </p>
                 <p className="font-mono text-sm">{currentUser.clerkUser.id}</p>
               </div>
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Email:</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Email:
+                </p>
                 <p className="font-mono text-sm">
-                  {currentUser.clerkUser.email_addresses?.[0]?.email_address || "No email"}
+                  {currentUser.clerkUser.email_addresses?.[0]?.email_address ||
+                    "No email"}
                 </p>
               </div>
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Name:</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Name:
+                </p>
                 <p className="font-mono text-sm">
-                  {currentUser.clerkUser.first_name} {currentUser.clerkUser.last_name}
+                  {currentUser.clerkUser.first_name}{" "}
+                  {currentUser.clerkUser.last_name}
                 </p>
               </div>
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Color (from Convex):</p>
-                <p className="font-mono text-sm" style={{ color: currentUser.color }}>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Color (from Convex):
+                </p>
+                <p
+                  className="font-mono text-sm"
+                  style={{ color: currentUser.color }}
+                >
                   {currentUser.color}
                 </p>
               </div>
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Created:</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Created:
+                </p>
                 <p className="font-mono text-sm">
                   {new Date(currentUser.clerkUser.created_at).toLocaleString()}
                 </p>
@@ -112,7 +146,8 @@ function UserInfo() {
           ) : (
             <div className="text-center py-4">
               <p className="text-sm text-muted-foreground">
-                Waiting for webhook sync... This usually takes a few seconds after first sign in.
+                Waiting for webhook sync... This usually takes a few seconds
+                after first sign in.
               </p>
             </div>
           )}
@@ -131,7 +166,9 @@ function TestMessages() {
     <Card>
       <CardHeader>
         <CardTitle>Messages Test</CardTitle>
-        <CardDescription>Testing the messages query from the schema</CardDescription>
+        <CardDescription>
+          Testing the messages query from the schema
+        </CardDescription>
       </CardHeader>
       <CardContent>
         {messages !== undefined ? (

@@ -3,7 +3,13 @@
 import { useUser } from "@clerk/nextjs";
 import { CustomerPortalLink } from "@convex-dev/polar/react";
 import { api } from "@/convex/_generated/api";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function AccountPage() {
@@ -30,7 +36,7 @@ export default function AccountPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <h1 className="text-3xl font-bold mb-8">Account Settings</h1>
-      
+
       <div className="space-y-6">
         <Card>
           <CardHeader>
@@ -39,11 +45,15 @@ export default function AccountPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <label className="text-sm font-medium text-muted-foreground">Name</label>
+              <label className="text-sm font-medium text-muted-foreground">
+                Name
+              </label>
               <p className="mt-1">{user.fullName || "Not set"}</p>
             </div>
             <div>
-              <label className="text-sm font-medium text-muted-foreground">Email</label>
+              <label className="text-sm font-medium text-muted-foreground">
+                Email
+              </label>
               <p className="mt-1">{user.primaryEmailAddress?.emailAddress}</p>
             </div>
           </CardContent>
@@ -53,7 +63,9 @@ export default function AccountPage() {
           <Card>
             <CardHeader>
               <CardTitle>Subscription</CardTitle>
-              <CardDescription>Manage your subscription and billing</CardDescription>
+              <CardDescription>
+                Manage your subscription and billing
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <CustomerPortalLink

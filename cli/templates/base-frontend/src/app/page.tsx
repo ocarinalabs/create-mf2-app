@@ -24,13 +24,11 @@ export default function Home() {
                 Move F***ing Fast
               </h1>
               <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                The modern web starter with Next.js, TypeScript, and Tailwind CSS. 
-                Build beautiful, fast websites in minutes, not hours.
+                The modern web starter with Next.js, TypeScript, and Tailwind
+                CSS. Build beautiful, fast websites in minutes, not hours.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Button size="lg">
-                  Get Started
-                </Button>
+                <Button size="lg">Get Started</Button>
                 <Button variant="outline" size="lg">
                   View on GitHub
                 </Button>
@@ -49,31 +47,36 @@ export default function Home() {
               <div className="rounded-lg border bg-card p-8">
                 <h3 className="text-xl font-semibold mb-2">Next.js 15</h3>
                 <p className="text-muted-foreground">
-                  The latest React framework with App Router, Server Components, and Turbopack.
+                  The latest React framework with App Router, Server Components,
+                  and Turbopack.
                 </p>
               </div>
               <div className="rounded-lg border bg-card p-8">
                 <h3 className="text-xl font-semibold mb-2">TypeScript</h3>
                 <p className="text-muted-foreground">
-                  Type-safe development with full TypeScript support out of the box.
+                  Type-safe development with full TypeScript support out of the
+                  box.
                 </p>
               </div>
               <div className="rounded-lg border bg-card p-8">
                 <h3 className="text-xl font-semibold mb-2">Tailwind CSS</h3>
                 <p className="text-muted-foreground">
-                  Beautiful, responsive designs with utility-first CSS and shadcn/ui components.
+                  Beautiful, responsive designs with utility-first CSS and
+                  shadcn/ui components.
                 </p>
               </div>
               <div className="rounded-lg border bg-card p-8">
                 <h3 className="text-xl font-semibold mb-2">Dark Mode</h3>
                 <p className="text-muted-foreground">
-                  Built-in dark mode support with next-themes for seamless theme switching.
+                  Built-in dark mode support with next-themes for seamless theme
+                  switching.
                 </p>
               </div>
               <div className="rounded-lg border bg-card p-8">
                 <h3 className="text-xl font-semibold mb-2">SEO Ready</h3>
                 <p className="text-muted-foreground">
-                  Optimized metadata, Open Graph images, and sitemap generation included.
+                  Optimized metadata, Open Graph images, and sitemap generation
+                  included.
                 </p>
               </div>
               <div className="rounded-lg border bg-card p-8">
@@ -109,10 +112,16 @@ export default function Home() {
             © 2025 MF² Stack. Built with Startdown.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
+            <a
+              href="#"
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
               Documentation
             </a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
+            <a
+              href="#"
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
               GitHub
             </a>
           </div>

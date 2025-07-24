@@ -1,5 +1,5 @@
-import { logger } from '../utils/logger.js';
-import { type PackageManager } from '../utils/getPkgManager.js';
+import { logger } from "../utils/logger.js";
+import { type PackageManager } from "../utils/getPkgManager.js";
 
 interface FormatProjectOptions {
   projectDir: string;
@@ -8,9 +8,11 @@ interface FormatProjectOptions {
   prettier?: boolean;
 }
 
-export async function formatProject(options: FormatProjectOptions): Promise<void> {
+export async function formatProject(
+  options: FormatProjectOptions
+): Promise<void> {
   const { projectDir, pkgManager, eslint, prettier } = options;
-  
-  logger.info('Formatting project...');
-  logger.info('Formatting complete');
+
+  logger.info("Formatting project...");
+  logger.info("Formatting complete");
 }
