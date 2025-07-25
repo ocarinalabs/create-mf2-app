@@ -1,6 +1,6 @@
 # create-mf2-app
 
-The easiest way to start a new project with the MF² Stack.
+The easiest way to start a new project with the MF2 Stack.
 
 ## Getting Started
 
@@ -12,13 +12,13 @@ yarn create mf2-app
 pnpm create mf2-app
 ```
 
-## What is the MF² Stack?
+## What is the MF2 Stack?
 
 The **Move F*cking Fast Stack** is an opinionated, full-stack, typesafe web development starter kit created by [Korrect](https://korrect.app).
 
 ## What's Included
 
-The MF² Stack comes with everything you need to ship fast:
+The MF2 Stack comes with everything you need to ship fast:
 
 - ⚡️ **Next.js 15** - React framework with App Router
 - 🔷 **TypeScript** - Type safety out of the box
@@ -47,7 +47,7 @@ npm create mf2-app@latest my-app --use-pnpm
 
 ## Philosophy
 
-Stop overthinking. Start shipping. The MF² Stack gives you a production-ready foundation so you can focus on what makes your product unique.
+Stop overthinking. Start shipping. The MF2 Stack gives you a production-ready foundation so you can focus on what makes your product unique.
 
 ## Community
 

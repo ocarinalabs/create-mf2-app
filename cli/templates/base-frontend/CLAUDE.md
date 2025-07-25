@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the **base-frontend** template for create-mf2-app, a CLI tool that creates startup-ready web applications using the MF² Stack (Move F\*cking Fast Stack) by Korrect. This template provides a production-ready landing page with modern web technologies.
+This is the **base-frontend** template for create-mf2-app, a CLI tool that creates startup-ready web applications using the MF2 Stack (Move F\*cking Fast Stack) by Korrect. This template provides a production-ready landing page with modern web technologies.
 
 ## Commands
 
@@ -166,4 +166,4 @@ This template is optimized for Vercel deployment but works with any Node.js host
 2. All UI components are pre-installed - no need to add individual shadcn components
 3. The template is intentionally opinionated to enable fast shipping
 4. When suggesting changes, maintain consistency with existing patterns
-5. The MF² philosophy prioritizes shipping speed over perfection
+5. The MF2 philosophy prioritizes shipping speed over perfection

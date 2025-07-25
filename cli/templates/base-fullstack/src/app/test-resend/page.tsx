@@ -17,9 +17,9 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function TestResendPage() {
   const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("Test Email from MF² Stack");
+  const [subject, setSubject] = useState("Test Email from MF2 Stack");
   const [message, setMessage] = useState(
-    "This is a test email sent from the MF² Stack template using Resend."
+    "This is a test email sent from the MF2 Stack template using Resend."
   );
   const [status, setStatus] = useState<
     "idle" | "sending" | "success" | "error"
@@ -45,11 +45,11 @@ export default function TestResendPage() {
         subject,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h1 style="color: #667eea;">MF² Stack</h1>
+            <h1 style="color: #667eea;">MF2 Stack</h1>
             <p>${message}</p>
             <hr style="border: 1px solid #e5e7eb; margin: 20px 0;" />
             <p style="color: #6b7280; font-size: 14px;">
-              This email was sent from the MF² Stack template using Resend.
+              This email was sent from the MF2 Stack template using Resend.
             </p>
           </div>
         `,

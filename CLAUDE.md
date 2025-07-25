@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-create-mf2-app is a CLI tool for creating startup-ready web applications using the MF² Stack (Move F*cking Fast Stack) by Korrect. It provides opinionated, production-ready templates for rapid SaaS development.
+create-mf2-app is a CLI tool for creating startup-ready web applications using the MF2 Stack (Move F*cking Fast Stack) by Korrect. It provides opinionated, production-ready templates for rapid SaaS development.
 
 ## Commands
 
@@ -131,7 +131,7 @@ npm run docs          # Mintlify docs dev server
 
 ### Important Design Decisions
 
-1. **Two Templates Instead of Modular**: Unlike T3 Stack's complex permutation system, MF² Stack uses two distinct templates (frontend vs fullstack) for simplicity and maintainability.
+1. **Two Templates Instead of Modular**: Unlike T3 Stack's complex permutation system, MF2 Stack uses two distinct templates (frontend vs fullstack) for simplicity and maintainability.
 
 2. **Opinionated Choices**: No configuration options for core stack choices - users get a pre-configured, production-ready setup.
 

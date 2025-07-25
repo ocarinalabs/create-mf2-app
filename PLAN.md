@@ -22,7 +22,7 @@
 - Test pages for all services
 
 ### ❌ TODO:
-- Create landing page with MF² branding
+- Create landing page with MF2 branding
 - Publish to npm registry
 - Create comprehensive README with vision
 - Test end-to-end user flow
@@ -32,13 +32,13 @@
 ## 1. Naming & Branding Strategy
 
 ### Clear Definitions:
-- **MF² Stack** (Move F***ing Fast Stack): The philosophy and technical approach
+- **MF2 Stack** (Move F***ing Fast Stack): The philosophy and technical approach
 - **Startdown**: The project/ecosystem name (like T3)
 - **create-startdown-app**: The CLI tool
 - **The Startdown Playbook**: The integrated startup guide
 
 ### Usage Examples:
-- "I'm using the MF² Stack to build my startup" (philosophy)
+- "I'm using the MF2 Stack to build my startup" (philosophy)
 - "Check out Startdown for rapid SaaS development" (ecosystem)
 - "Run `npm create startdown-app` to get started" (tool)
 
@@ -80,7 +80,7 @@ After deep analysis of T3's implementation, we discovered:
 - This leads to **exponential file growth** (2^n variants for n features)
 - Maintenance burden increases significantly with each new feature
 
-### Why We Chose a Different Path for MF² Stack:
+### Why We Chose a Different Path for MF2 Stack:
 1. **Two Templates Instead of Modular System**:
    - `base-frontend`: Just the landing page (Next.js + UI)
    - `base-fullstack`: Complete SaaS starter (all features)
@@ -90,7 +90,7 @@ After deep analysis of T3's implementation, we discovered:
    - We have 2 "modes" not independent features
    - Frontend vs Fullstack is a fundamental choice, not a feature toggle
    - Simpler to maintain and understand
-   - Faster to implement and ship (MF² philosophy)
+   - Faster to implement and ship (MF2 philosophy)
    
 3. **Benefits of Our Approach**:
    - **No file explosion**: Just 2 clear templates
@@ -108,7 +108,7 @@ After deep analysis of T3's implementation, we discovered:
 ### Our Hybrid Approach:
 1. **T3's beautiful CLI UX** (@clack/prompts)
 2. **Next.js's simplicity** (straightforward templates)
-3. **MF² philosophy** (opinionated, no analysis paralysis)
+3. **MF2 philosophy** (opinionated, no analysis paralysis)
 
 ## 4. Current File Structure
 
@@ -164,7 +164,7 @@ npx create-startdown-app my-startup
 
 ### MVP Flow (No Choices):
 ```
-🚀 Welcome to Startdown (MF² Stack)
+🚀 Welcome to Startdown (MF2 Stack)
 
 Creating your startup with our opinionated stack:
 ✓ Next.js 14 (App Router)
@@ -180,7 +180,7 @@ Creating your startup with our opinionated stack:
 [Setting up project...]
 [Initializing git...]
 
-✅ Your MF² startup is ready!
+✅ Your MF2 startup is ready!
 
 📁 Project: my-startup
 🚀 Stack: Modern full-stack SaaS
@@ -255,7 +255,7 @@ Based on your stack (Next.js + Convex + Polar), here's your 2-week plan:
 - [ ] Add Better Stack monitoring
 - [ ] Deploy to Vercel
 
-💡 **MF² Tip**: Skip features, not quality. Ship with 3 features done well rather than 10 done poorly.
+💡 **MF2 Tip**: Skip features, not quality. Ship with 3 features done well rather than 10 done poorly.
 ```
 
 ## 8. Implementation Phases (Updated)
@@ -356,7 +356,7 @@ npx create-startdown-app --template saas-starter
 - Active Discord community
 - Regular template contributions
 
-## 12. The MF² Philosophy in Code
+## 12. The MF2 Philosophy in Code
 
 Every decision should optimize for:
 1. **Speed to first customer** (not perfect code)

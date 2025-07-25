@@ -26,7 +26,7 @@ export default function AppleIcon() {
           fontFamily: "system-ui, -apple-system, sans-serif",
         }}
       >
-        M²
+        M2
       </div>
     ),
     {

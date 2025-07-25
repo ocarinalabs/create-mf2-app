@@ -1,10 +1,10 @@
-# MF² Stack
+# MF2 Stack
 
 The opinionated SaaS starter with Next.js, Convex, Clerk, and Polar. Ship your startup in days, not months.
 
 ## Overview
 
-MF² Stack (Move F***ing Fast Stack) is a battle-tested, production-ready starter template that combines the best modern web technologies with zero-config abstractions. Built for founders and developers who want to focus on their product, not infrastructure.
+MF2 Stack (Move F***ing Fast Stack) is a battle-tested, production-ready starter template that combines the best modern web technologies with zero-config abstractions. Built for founders and developers who want to focus on their product, not infrastructure.
 
 ## Tech Stack
 

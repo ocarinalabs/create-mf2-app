@@ -1,11 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
-import { fileURLToPath } from "url";
 import { logger } from "../utils/logger.js";
 import ora from "ora";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 interface CreateProjectOptions {
   projectName: string;
@@ -37,13 +33,9 @@ export async function createProject(
     // Copy template files
     spinner.text = "Copying template files...";
     const templateName = needsBackend ? "base-fullstack" : "base-frontend";
-    const templateDir = path.join(
-      __dirname,
-      "..",
-      "..",
-      "templates",
-      templateName
-    );
+    // Use Node.js __dirname which is available in CommonJS
+    // When bundled by tsup, this will be cli/dist/, so we go up one level
+    const templateDir = path.join(__dirname, "..", "templates", templateName);
 
     // Copy all files from template to project directory
     await copyTemplate(templateDir, projectDir);

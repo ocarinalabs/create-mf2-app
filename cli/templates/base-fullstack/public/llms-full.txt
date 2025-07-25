@@ -1,4 +1,4 @@
-# MF² Stack - Full Documentation
+# MF2 Stack - Full Documentation
 
 The opinionated SaaS starter with Next.js, Convex, Clerk, and Polar. Ship your startup in days, not months.
 
@@ -216,7 +216,7 @@ npx convex run polar:cleanupDuplicateProducts
 
 ## Resources
 
-- MF² Stack Docs: https://mf2stack.dev/docs
+- MF2 Stack Docs: https://mf2stack.dev/docs
 - Next.js Docs: https://nextjs.org/docs
 - Convex Docs: https://docs.convex.dev
 - Clerk Docs: https://clerk.com/docs

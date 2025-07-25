@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 // Image metadata
-export const alt = "MF² Stack - Move F***ing Fast";
+export const alt = "MF2 Stack - Move F***ing Fast";
 export const size = {
   width: 1200,
   height: 630,
@@ -51,7 +51,7 @@ export default async function Image() {
             letterSpacing: "-0.05em",
           }}
         >
-          MF²
+          MF2
         </div>
 
         {/* Title */}

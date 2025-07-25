@@ -1,4 +1,4 @@
-# Polar Setup Guide for MF² Stack
+# Polar Setup Guide for MF2 Stack
 
 ## Quick Fix for Your Current Issue
 

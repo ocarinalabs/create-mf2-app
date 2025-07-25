@@ -14,8 +14,8 @@ const defaultMetadata: Metadata = {
     process.env.NEXT_PUBLIC_APP_URL || "https://mf2stack.dev"
   ),
   title: {
-    default: "MF² Stack - Move F*cking Fast",
-    template: "%s | MF² Stack",
+    default: "MF2 Stack - Move F*cking Fast",
+    template: "%s | MF2 Stack",
   },
   description:
     "The opinionated SaaS starter with Next.js, Convex, Clerk, and Polar. Ship your startup in days, not months.",
@@ -43,11 +43,11 @@ const defaultMetadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: "MF² Stack - Move F*cking Fast",
+    title: "MF2 Stack - Move F*cking Fast",
     description:
       "The opinionated SaaS starter with Next.js, Convex, Clerk, and Polar. Ship your startup in days, not months.",
     url: "/",
-    siteName: "MF² Stack",
+    siteName: "MF2 Stack",
     locale: "en_US",
     type: "website",
     images: [
@@ -55,13 +55,13 @@ const defaultMetadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "MF² Stack - The fastest way to build your SaaS",
+        alt: "MF2 Stack - The fastest way to build your SaaS",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "MF² Stack - Move F*cking Fast",
+    title: "MF2 Stack - Move F*cking Fast",
     description:
       "The opinionated SaaS starter with Next.js, Convex, Clerk, and Polar.",
     creator: "@korrect",

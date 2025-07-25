@@ -31,7 +31,7 @@ export const sendTestEmail = internalMutation({
     }
 
     await resend.sendEmail(ctx, {
-      from: `MF² Stack Test <${fromEmail}>`,
+      from: `MF2 Stack Test <${fromEmail}>`,
       to: "Resend <delivered@resend.dev>",
       subject: "Hi there",
       html: "This is a test email",
@@ -56,7 +56,7 @@ export const sendEmail = action({
     }
 
     await resend.sendEmail(ctx, {
-      from: `MF² Stack <${fromEmail}>`,
+      from: `MF2 Stack <${fromEmail}>`,
       to: args.to,
       subject: args.subject,
       html: args.html,
