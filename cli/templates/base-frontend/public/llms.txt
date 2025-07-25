@@ -1,43 +1,35 @@
-# MF² Stack - Frontend
+# Your Product Name
 
-The modern web starter with Next.js, TypeScript, and Tailwind CSS. Build beautiful, fast websites in minutes.
+A brief description of your product or service. Replace this with your own compelling product description.
 
 ## Overview
 
-MF² Stack (Move F***ing Fast Stack) Frontend is a production-ready starter template that combines the best modern web technologies for building stunning, performant websites and web applications.
+Customize this section to describe what makes your product unique and valuable to users.
 
-## Tech Stack
+## Key Features
 
-- **Next.js 15** - React framework with App Router
-- **TypeScript** - Type safety throughout
-- **Tailwind CSS** - Utility-first styling  
-- **shadcn/ui** - Beautiful, accessible components
-- **Framer Motion** - Smooth animations
-- **Vercel** - Deployment and analytics
+Describe your product's main features here. For example:
+- Feature 1: Brief description
+- Feature 2: Brief description
+- Feature 3: Brief description
+- Feature 4: Brief description
 
-## Features
+## Why Choose Us
 
-- 🎨 Beautiful UI with shadcn/ui and Tailwind
-- 🌙 Dark mode support
-- 📱 Fully responsive design
-- 🚀 Lightning fast with Turbopack
-- 📊 Analytics with Vercel
-- 🔍 SEO optimized with metadata API
-- 📦 Bundle analyzer included
-- ⚡ Zero configuration needed
+Explain the benefits and value proposition of your product:
+- Benefit 1
+- Benefit 2
+- Benefit 3
+- Benefit 4
 
 ## Getting Started
 
-```bash
-npx startdown@latest
-```
+Provide instructions on how users can get started with your product or service. This could include sign-up steps, installation instructions, or usage guidelines.
 
-Select "No, just frontend" when prompted about backend needs.
+## Contact
 
-## Documentation
+Add your contact information or support channels here.
 
-Full documentation available at https://mf2stack.dev/docs
+## Built With
 
-## License
-
-MIT
+Modern tools and technologies to help you build faster.

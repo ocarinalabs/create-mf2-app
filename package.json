@@ -1,9 +1,9 @@
 {
-  "name": "create-startdown-app",
+  "name": "create-mf2-app",
   "version": "0.1.0",
   "type": "module",
   "bin": {
-    "create-startdown-app": "./cli/dist/index.js"
+    "create-mf2-app": "./cli/dist/index.mjs"
   },
   "files": [
     "cli/dist",
@@ -12,31 +12,35 @@
   "scripts": {
     "dev": "cd cli && tsup --watch",
     "build": "cd cli && tsup",
-    "start": "node cli/dist/index.js",
+    "start": "node cli/dist/index.mjs",
     "typecheck": "tsc",
     "test": "npm run build && npm run start test-app"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/korrect-ai/startdown.git"
+    "url": "git+https://github.com/korrect-ai/create-mf2-app.git"
   },
   "keywords": [
-    "startdown",
     "mf2",
+    "move-fast",
     "nextjs",
-    "supabase",
-    "stripe",
+    "typescript",
+    "tailwind",
+    "convex",
+    "clerk",
     "startup",
     "saas",
-    "boilerplate"
+    "boilerplate",
+    "korrect",
+    "create-app"
   ],
-  "author": "Korrect AI",
+  "author": "Korrect",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/korrect-ai/startdown/issues"
+    "url": "https://github.com/korrect-ai/create-mf2-app/issues"
   },
-  "homepage": "https://github.com/korrect-ai/startdown#readme",
-  "description": "Create a startup-ready web app with the MF² Stack",
+  "homepage": "https://github.com/korrect-ai/create-mf2-app#readme",
+  "description": "Create MF² Stack apps with one command",
   "dependencies": {
     "@clack/prompts": "^0.11.0",
     "chalk": "^5.4.1",

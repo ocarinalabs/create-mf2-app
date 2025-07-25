@@ -1,12 +1,15 @@
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: true
 ---
+
 ---
+
 description: Instructions to be always followed.
-globs: 
+globs:
 alwaysApply: false
+
 ---
 
 These should be respected ALWAYS:

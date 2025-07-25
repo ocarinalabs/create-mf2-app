@@ -68,13 +68,9 @@ next-env.d.ts
 
     // Make initial commit
     await execa("git", ["add", "."], { cwd: projectDir });
-    await execa(
-      "git",
-      ["commit", "-m", "Initial commit from create-startdown-app"],
-      {
-        cwd: projectDir,
-      }
-    );
+    await execa("git", ["commit", "-m", "Initial commit from create-mf2-app"], {
+      cwd: projectDir,
+    });
 
     spinner.succeed("Git repository initialized");
   } catch (error) {

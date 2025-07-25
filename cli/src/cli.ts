@@ -10,7 +10,7 @@ export interface CliResults {
 
 export async function runCli(): Promise<CliResults> {
   const program = new Command()
-    .name("create-startdown-app")
+    .name("create-mf2-app")
     .description("Create a new MF² Stack application")
     .argument("[project-name]")
     .option("--use-npm", "Use npm as package manager")

@@ -1,156 +1,35 @@
-# MF² Stack Frontend - Full Documentation
+# Your Product Name
 
-The modern web starter with Next.js, TypeScript, and Tailwind CSS. Build beautiful, fast websites in minutes.
+A brief description of your product or service. Replace this with your own compelling product description.
 
-## Project Structure
+## Overview
 
-```
-├── src/
-│   ├── app/                    # Next.js app directory
-│   │   ├── components/        # React components
-│   │   │   ├── ui/           # shadcn/ui components
-│   │   │   └── ...          # Custom components
-│   │   ├── fonts/            # Custom fonts
-│   │   └── globals.css       # Global styles
-│   └── lib/                   # Utilities and helpers
-│       └── utils.ts          # Utility functions
-├── public/                    # Static assets
-│   ├── llms.txt              # LLM documentation
-│   └── llms-full.txt         # This file
-└── ...                       # Config files
-```
+Customize this section to describe what makes your product unique and valuable to users.
 
-## Key Technologies
+## Key Features
 
-### Next.js 15 (App Router)
-- Server Components by default
-- Streaming and Suspense
-- Built-in optimizations
-- TypeScript support
-- Turbopack for fast HMR
+Describe your product's main features here. For example:
+- Feature 1: Brief description
+- Feature 2: Brief description
+- Feature 3: Brief description
+- Feature 4: Brief description
 
-### Tailwind CSS v4
-- Utility-first CSS framework
-- JIT compilation
-- CSS variables for theming
-- Dark mode support via CSS classes
+## Why Choose Us
 
-### shadcn/ui Components
-- Radix UI primitives
-- Fully accessible
-- Customizable with Tailwind
-- Copy-paste component system
-- TypeScript support
+Explain the benefits and value proposition of your product:
+- Benefit 1
+- Benefit 2
+- Benefit 3
+- Benefit 4
 
-### Framer Motion
-- Declarative animations
-- Gesture support
-- Layout animations
-- Server-safe rendering
+## Getting Started
 
-## Component Architecture
-- Server Components for data fetching
-- Client Components for interactivity
-- Shared UI components in `/components/ui`
-- Composition over inheritance
-- Props drilling minimized with proper structure
+Provide instructions on how users can get started with your product or service. This could include sign-up steps, installation instructions, or usage guidelines.
 
-## Styling Approach
-- Tailwind CSS for utility classes
-- CSS variables for theming
-- Dark mode with `next-themes`
-- Consistent spacing scale
-- Mobile-first responsive design
+## Contact
 
-## Environment Variables
+Add your contact information or support channels here.
 
-Required environment variables:
+## Built With
 
-```bash
-# App
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
-
-## Best Practices
-
-### Performance
-- Server Components by default
-- Images optimized with next/image
-- Fonts optimized with next/font
-- Code splitting automatic
-- Edge runtime where applicable
-
-### Developer Experience
-- TypeScript for type safety
-- Prettier for formatting
-- ESLint for linting
-- Hot reload with Turbopack
-- Clear error messages
-
-### SEO & Metadata
-- Dynamic metadata generation
-- Open Graph images
-- Twitter cards
-- Sitemap generation
-- Robots.txt configuration
-
-### Deployment
-- Optimized for Vercel
-- Environment variables in Vercel dashboard
-- Automatic deployments from Git
-- Preview deployments for PRs
-- Analytics included
-
-## Common Tasks
-
-### Add a new page
-1. Create file in `app/` directory
-2. Export default component
-3. Add metadata if needed
-
-### Add a new UI component
-1. Check shadcn/ui registry first
-2. Install with `npx shadcn@latest add [component]`
-3. Customize in `components/ui/`
-
-### Update theme
-1. Edit CSS variables in `globals.css`
-2. Update Tailwind config if needed
-3. Test in both light and dark modes
-
-### Deploy to production
-1. Push to GitHub
-2. Import to Vercel
-3. Configure environment variables
-4. Deploy
-
-## Troubleshooting
-
-### Common Issues
-- **Build failures**: Check TypeScript errors
-- **Styling issues**: Clear Tailwind cache
-- **Dark mode**: Ensure proper theme provider setup
-
-### Debug Commands
-```bash
-# Check for TypeScript errors
-npm run type-check
-
-# Analyze bundle size
-npm run analyze
-
-# Clear caches
-rm -rf .next
-```
-
-## Resources
-
-- MF² Stack Docs: https://mf2stack.dev/docs
-- Next.js Docs: https://nextjs.org/docs
-- Tailwind CSS: https://tailwindcss.com
-- shadcn/ui: https://ui.shadcn.com
-- Framer Motion: https://www.framer.com/motion
-
-## License
-
-MIT License - see LICENSE file for details
+Modern tools and technologies to help you build faster.

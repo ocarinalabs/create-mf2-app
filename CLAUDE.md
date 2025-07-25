@@ -4,11 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Startdown is a CLI tool for creating startup-ready web applications using the MF² Stack (Move F***ing Fast Stack). It provides opinionated, production-ready templates for rapid SaaS development.
+create-mf2-app is a CLI tool for creating startup-ready web applications using the MF² Stack (Move F*cking Fast Stack) by Korrect. It provides opinionated, production-ready templates for rapid SaaS development.
 
 ## Commands
 
 ### Development
+
 ```bash
 # Development mode with hot reload
 npm run dev
@@ -24,8 +25,16 @@ npm run test
 ```
 
 ### Using the CLI
+
 ```bash
-# Run the built CLI
+# Install and run
+npm create mf2-app@latest
+# or
+yarn create mf2-app
+# or
+pnpm create mf2-app
+
+# Run the built CLI locally
 npm run start
 
 # Test with a project name
@@ -36,6 +45,7 @@ node cli/dist/index.js
 ```
 
 ### Template Development
+
 For working on templates, navigate to the specific template directory:
 
 ```bash
@@ -46,7 +56,7 @@ npm run build         # Production build
 npm run lint          # Run ESLint
 npm run analyze       # Bundle analyzer
 
-# Fullstack template  
+# Fullstack template
 cd cli/templates/base-fullstack
 npm run dev           # Next.js dev server
 npx convex dev        # Convex backend (separate terminal)
@@ -58,6 +68,7 @@ npm run docs          # Mintlify docs dev server
 ## Architecture
 
 ### Project Structure
+
 - **Root**: NPM package configuration and build scripts
 - **`/cli`**: CLI source code and templates
   - **`/src`**: TypeScript source files
@@ -72,6 +83,7 @@ npm run docs          # Mintlify docs dev server
 ### Key Technologies
 
 #### CLI Stack
+
 - **Build Tool**: tsup (ESM output)
 - **CLI Framework**: Commander + @clack/prompts
 - **Package Manager Detection**: Supports npm, yarn, pnpm, bun
@@ -79,6 +91,7 @@ npm run docs          # Mintlify docs dev server
 #### Template Stacks
 
 **Frontend Template**:
+
 - Next.js 15 (App Router, Turbopack)
 - TypeScript
 - Tailwind CSS v4
@@ -88,10 +101,11 @@ npm run docs          # Mintlify docs dev server
 - Vercel Analytics
 
 **Fullstack Template** (includes everything above plus):
+
 - **Backend**: Convex (real-time database)
 - **Auth**: Clerk
 - **Payments**: Polar
-- **Email**: Resend  
+- **Email**: Resend
 - **Analytics**: PostHog
 - **Docs**: Mintlify
 - **Monitoring**: Better Stack (referenced in PLAN.md)
@@ -99,11 +113,13 @@ npm run docs          # Mintlify docs dev server
 ### Development Workflow
 
 1. **CLI Development**:
+
    - Make changes in `/cli/src`
    - Run `npm run dev` for watch mode
    - Test with `npm run start test-app`
 
 2. **Template Updates**:
+
    - Edit files directly in `/cli/templates/base-frontend` or `/cli/templates/base-fullstack`
    - Test templates by running their respective dev commands
    - Templates are copied as-is during project creation
@@ -115,7 +131,7 @@ npm run docs          # Mintlify docs dev server
 
 ### Important Design Decisions
 
-1. **Two Templates Instead of Modular**: Unlike T3 Stack's complex permutation system, Startdown uses two distinct templates (frontend vs fullstack) for simplicity and maintainability.
+1. **Two Templates Instead of Modular**: Unlike T3 Stack's complex permutation system, MF² Stack uses two distinct templates (frontend vs fullstack) for simplicity and maintainability.
 
 2. **Opinionated Choices**: No configuration options for core stack choices - users get a pre-configured, production-ready setup.
 
@@ -126,6 +142,7 @@ npm run docs          # Mintlify docs dev server
 ### Testing Approach
 
 Currently, there are no automated tests. Testing is done manually:
+
 - Build the CLI: `npm run build`
 - Create test projects: `npm run test`
 - Verify template functionality by running the created projects
@@ -133,19 +150,23 @@ Currently, there are no automated tests. Testing is done manually:
 ### Common Tasks
 
 **Update Dependencies in Templates**:
+
 1. Navigate to template directory
 2. Update package.json
 3. Test thoroughly as templates are copied directly
 
 **Add New shadcn/ui Component**:
+
 - Components are already included in both templates under `/src/components/ui/`
 
 **Modify Project Creation Flow**:
+
 1. Update prompts in `/cli/src/cli.ts`
 2. Modify project creation logic in `/cli/src/helpers/createProject.ts`
 3. Update success messages in `/cli/src/index.ts`
 
 **Debug CLI Issues**:
+
 - Check `/cli/src/utils/logger.ts` for logging utilities
 - Package manager detection in `/cli/src/utils/getPkgManager.ts`
 - Validation logic in `/cli/src/utils/validateAppName.ts`

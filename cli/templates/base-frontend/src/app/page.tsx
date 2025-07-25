@@ -1,132 +1,139 @@
-import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/mode-toggle";
+"use client";
+
+import { AnimatedNavFramer } from "@/components/ui/navigation-bar-animation";
+import { Hero } from "@/components/ui/hero";
+import { BentoFeatures } from "@/components/ui/bento-features";
+import { PricingSection } from "@/components/ui/pricing-section";
+import { PricingTier } from "@/components/ui/pricing-card";
+import { FAQ } from "@/components/ui/faq";
+import { Waitlist } from "@/components/ui/waitlist";
+import { Footer } from "@/components/ui/footer";
+import { BGPattern } from "@/components/ui/bg-pattern";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+
+// CUSTOMIZE THIS: Update these tiers to match your product's pricing
+const pricingTiers: PricingTier[] = [
+  {
+    name: "Starter",
+    price: {
+      monthly: "$0",
+      yearly: "$0",
+    },
+    description:
+      "Perfect for getting started. Add your product's core features here. Customize this text to match your offering.",
+    features: [
+      {
+        title: "Up to 10 users",
+        description: "Perfect for small teams",
+      },
+      {
+        title: "Basic features",
+        description: "Everything you need to start",
+      },
+      {
+        title: "Community support",
+        description: "Get help from the community",
+      },
+      {
+        title: "99.9% uptime",
+        description: "Reliable infrastructure",
+      },
+      {
+        title: "SSL certificates",
+        description: "Secure by default",
+      },
+      {
+        title: "API access",
+        description: "Build integrations",
+      },
+    ],
+    cta: "Get Started",
+  },
+  {
+    name: "Pro",
+    price: {
+      monthly: "$0",
+      yearly: "$0",
+    },
+    description:
+      "For growing teams. Add your premium features here. This is where you showcase what makes the upgrade worth it.",
+    highlighted: false,
+    popular: false,
+    features: [
+      {
+        title: "Everything in Starter",
+        description: "All basic features included",
+      },
+      {
+        title: "Unlimited users",
+        description: "No limits on team size",
+      },
+      {
+        title: "Advanced analytics",
+        description: "Deep insights into usage",
+      },
+      {
+        title: "Priority support",
+        description: "Get help fast when you need it",
+      },
+      {
+        title: "Custom integrations",
+        description: "Connect with your tools",
+      },
+      {
+        title: "White-label options",
+        description: "Make it your own",
+      },
+    ],
+    cta: "Upgrade to Pro",
+  },
+];
 
 export default function Home() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Avoid hydration mismatch
+  if (!mounted) {
+    return null;
+  }
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="px-6 lg:px-8 h-16 flex items-center justify-between border-b">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-purple-700 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-            M²
-          </div>
-          <span className="font-semibold text-lg">MF² Stack</span>
-        </div>
-        <ModeToggle />
-      </header>
-
-      {/* Hero Section */}
-      <main className="flex-1">
-        <section className="px-6 lg:px-8 py-24 lg:py-32">
-          <div className="mx-auto max-w-7xl">
-            <div className="mx-auto max-w-2xl text-center">
-              <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-                Move F***ing Fast
-              </h1>
-              <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                The modern web starter with Next.js, TypeScript, and Tailwind
-                CSS. Build beautiful, fast websites in minutes, not hours.
-              </p>
-              <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Button size="lg">Get Started</Button>
-                <Button variant="outline" size="lg">
-                  View on GitHub
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section className="px-6 lg:px-8 py-24 bg-muted/50">
-          <div className="mx-auto max-w-7xl">
-            <h2 className="text-3xl font-bold text-center mb-12">
-              Everything You Need
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="rounded-lg border bg-card p-8">
-                <h3 className="text-xl font-semibold mb-2">Next.js 15</h3>
-                <p className="text-muted-foreground">
-                  The latest React framework with App Router, Server Components,
-                  and Turbopack.
-                </p>
-              </div>
-              <div className="rounded-lg border bg-card p-8">
-                <h3 className="text-xl font-semibold mb-2">TypeScript</h3>
-                <p className="text-muted-foreground">
-                  Type-safe development with full TypeScript support out of the
-                  box.
-                </p>
-              </div>
-              <div className="rounded-lg border bg-card p-8">
-                <h3 className="text-xl font-semibold mb-2">Tailwind CSS</h3>
-                <p className="text-muted-foreground">
-                  Beautiful, responsive designs with utility-first CSS and
-                  shadcn/ui components.
-                </p>
-              </div>
-              <div className="rounded-lg border bg-card p-8">
-                <h3 className="text-xl font-semibold mb-2">Dark Mode</h3>
-                <p className="text-muted-foreground">
-                  Built-in dark mode support with next-themes for seamless theme
-                  switching.
-                </p>
-              </div>
-              <div className="rounded-lg border bg-card p-8">
-                <h3 className="text-xl font-semibold mb-2">SEO Ready</h3>
-                <p className="text-muted-foreground">
-                  Optimized metadata, Open Graph images, and sitemap generation
-                  included.
-                </p>
-              </div>
-              <div className="rounded-lg border bg-card p-8">
-                <h3 className="text-xl font-semibold mb-2">Analytics</h3>
-                <p className="text-muted-foreground">
-                  Vercel Analytics integration for understanding your audience.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="px-6 lg:px-8 py-24">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold mb-6">
-              Ready to build something amazing?
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Start your project with the MF² Stack and ship faster than ever.
-            </p>
-            <Button size="lg" className="px-8">
-              Start Building
-            </Button>
-          </div>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="px-6 lg:px-8 py-8 border-t">
-        <div className="mx-auto max-w-7xl flex items-center justify-between">
-          <p className="text-sm text-muted-foreground">
-            © 2025 MF² Stack. Built with Startdown.
-          </p>
-          <div className="flex gap-6">
-            <a
-              href="#"
-              className="text-sm text-muted-foreground hover:text-foreground"
-            >
-              Documentation
-            </a>
-            <a
-              href="#"
-              className="text-sm text-muted-foreground hover:text-foreground"
-            >
-              GitHub
-            </a>
-          </div>
-        </div>
-      </footer>
-    </div>
+    <main className="relative flex min-h-screen flex-col items-center">
+      {/* Background pattern for entire page */}
+      <BGPattern
+        variant="grid"
+        mask="fade-edges"
+        size={40}
+        fill={
+          theme === "dark" ? "rgba(255, 255, 255, 0.03)" : "rgba(0, 0, 0, 0.03)"
+        }
+        className="fixed inset-0"
+      />
+      <AnimatedNavFramer />
+      <Hero
+        heading="Move F*cking Fast"
+        description="Production-ready starter kit for building modern web applications with AI."
+        buttons={{
+          primary: { text: "Get started", url: "#waitlist" },
+          secondary: { text: "Learn more", url: "#features" },
+        }}
+      />
+      <BentoFeatures />
+      <PricingSection
+        title="Pricing"
+        subtitle="The gap between price and value is your opportunity"
+        tiers={pricingTiers}
+        frequencies={["monthly", "yearly"]}
+      />
+      <FAQ />
+      <Waitlist />
+      <Footer />
+    </main>
   );
 }
