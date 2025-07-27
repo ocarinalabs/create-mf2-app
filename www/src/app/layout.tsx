@@ -18,6 +18,25 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "MF2",
   description: "The stack AI moves fast with",
+  metadataBase: new URL("https://mf2.dev"),
+  openGraph: {
+    title: "MF2 - Move F*cking Fast",
+    description:
+      "The stack AI moves fast with. Build production-ready SaaS applications in days, not months.",
+    url: "https://mf2.dev",
+    siteName: "MF2",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    title: "MF2 - Move F*cking Fast",
+    description:
+      "The stack AI moves fast with. Build production-ready SaaS applications in days, not months.",
+    card: "summary_large_image",
+  },
+  alternates: {
+    canonical: "https://mf2.dev",
+  },
 };
 
 export default function RootLayout({

@@ -1,10 +1,10 @@
-# Create MF2 App - Full Documentation
+# MF2 - Full Documentation
 
 The stack AI moves fast with. Build and ship production-ready SaaS applications in days, not months.
 
 ## Overview
 
-Create MF2 App is the official CLI tool for the MF2 Stack (Move F*cking Fast Stack) by Korrect. It's an opinionated, AI-optimized starter that combines the best modern web technologies into a cohesive stack that AI assistants can understand and work with effectively.
+MF2 (Move F*cking Fast) Stack by Korrect. The official CLI tool is create-mf2-app. It's an opinionated, AI-optimized starter that combines the best modern web technologies into a cohesive stack that AI assistants can understand and work with effectively.
 
 Logo: ❃ (Heavy chevron snowflake)
 
@@ -177,7 +177,7 @@ npm run lint         # Run ESLint
 
 ## Links
 
-- Website: https://mf2.sh
+- Website: https://mf2.dev
 - GitHub: https://github.com/korrect-ai/create-mf2-app
 - Documentation: https://github.com/korrect-ai/create-mf2-app#readme
 - Issues: https://github.com/korrect-ai/create-mf2-app/issues

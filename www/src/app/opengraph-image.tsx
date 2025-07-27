@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Create MF2 App - Move F*cking Fast";
+export const alt = "MF2 - Move F*cking Fast";
 export const size = {
   width: 1200,
   height: 630,
