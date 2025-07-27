@@ -8,14 +8,12 @@ import {
   Variants,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
-import { ModeToggle } from "@/components/mode-toggle";
 
 const navItems = [
   { name: "Stack", href: "#stack" },
   { name: "FAQ", href: "#faq" },
-  { name: "GitHub", href: "https://github.com/korrect/create-mf2-app" },
+  { name: "GitHub", href: "https://github.com/korrect-ai/create-mf2-app" },
 ];
 
 const EXPAND_SCROLL_THRESHOLD = 80;
@@ -158,22 +156,6 @@ export function AnimatedNavFramer() {
               {item.name}
             </motion.a>
           ))}
-          <motion.div variants={itemVariants}>
-            <ModeToggle />
-          </motion.div>
-          <motion.div variants={itemVariants}>
-            <Button
-              size="sm"
-              onClick={(e) => e.stopPropagation()}
-              className="font-sans text-xs sm:text-sm px-2 sm:px-4 h-7 sm:h-9"
-              asChild
-            >
-              <a href="#waitlist">
-                <span className="sm:hidden">Get Started</span>
-                <span className="hidden sm:inline">Get Started</span>
-              </a>
-            </Button>
-          </motion.div>
         </motion.div>
 
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

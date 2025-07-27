@@ -13,34 +13,24 @@ interface FaqItem {
 
 const faqItems: FaqItem[] = [
   {
-    question: "Is this just another boilerplate?",
+    question: "Is it free to use?",
     answer:
-      "No. This is a complete, production-ready stack with auth, payments, analytics, and emails already wired up. Everything is configured and tested. You get opinionated choices that work, not a template full of TODOs.",
+      "Yes, create-mf2-app is completely free and open source. The individual services in the stack have their own pricing, but most offer generous free tiers perfect for getting started.",
   },
   {
-    question: "What's included in the fullstack version?",
+    question: "What license is this under?",
     answer:
-      "Everything: Next.js 15, TypeScript, Tailwind CSS v4, shadcn/ui (all components), Convex (database), Clerk (auth), Polar (payments), Resend (emails), PostHog (analytics), and Mintlify (docs). All configured, all working, all ready to ship.",
+      "MIT License. Use it for anything - personal projects, commercial products, or client work. No attribution required.",
   },
   {
-    question: "Can I use a different database/auth/payment provider?",
+    question: "What's included?",
     answer:
-      "Of course. But that's not the point. We picked the best tools that work together seamlessly. If you want to spend days swapping providers, you're missing the 'Move F*cking Fast' philosophy.",
+      "Frontend template: Next.js 15, TypeScript, Tailwind CSS v4, shadcn/ui, dark mode, SEO optimization, and Vercel Analytics. Fullstack template includes everything above plus: Convex, Clerk, Polar, Resend, PostHog, and Mintlify. All pre-configured and production-ready.",
   },
   {
-    question: "Is this suitable for production?",
+    question: "Is this optimized for AI development?",
     answer:
-      "Absolutely. We use this exact stack for our own products. It's battle-tested, scales well, and includes everything you need for a real business: auth, payments, analytics, error tracking, and more.",
-  },
-  {
-    question: "How is this different from T3 Stack?",
-    answer:
-      "T3 is great for learning. MF2 is for shipping. We made opinionated choices so you don't have to. Less configuration options, more pre-built features. Think of it as T3's impatient cousin who has a startup to launch.",
-  },
-  {
-    question: "Do I need to know all these technologies?",
-    answer:
-      "No. That's the beauty. Everything is set up with sensible defaults. You can ship your first feature without touching the config. Learn as you build, not before you build.",
+      "Yes. The stack is designed with AI-first development in mind. TypeScript provides type safety for AI responses, Convex handles real-time data streaming, and the modular architecture makes it easy to integrate AI services like OpenAI, Anthropic, or Replicate.",
   },
 ];
 
@@ -52,11 +42,8 @@ export function FAQ() {
           <BlurFade delay={0.1} inView={true}>
             <div className="text-center mb-12">
               <h2 className="font-sans text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4">
-                Questions We Know You Have
+                FAQ
               </h2>
-              <p className="text-lg sm:text-xl text-muted-foreground">
-                Let's address the elephant in the room
-              </p>
             </div>
           </BlurFade>
 

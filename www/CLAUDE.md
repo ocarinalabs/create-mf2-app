@@ -4,166 +4,147 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the **base-frontend** template for create-mf2-app, a CLI tool that creates startup-ready web applications using the MF2 Stack (Move F\*cking Fast Stack) by Korrect. This template provides a production-ready landing page with modern web technologies.
+This is the landing page and documentation site for create-mf2-app, the official CLI tool for the MF2 Stack (Move F*cking Fast Stack) by Korrect. It's built with Next.js 15, Convex for real-time stats tracking, and includes comprehensive documentation powered by Mintlify.
 
 ## Commands
 
 ### Development
 
 ```bash
-# Install dependencies
-npm install
-
-# Development server with Turbopack (fast refresh)
+# Start Next.js development server with Turbopack
 npm run dev
 
-# Production build
+# Start Convex backend (separate terminal)
+npx convex dev
+
+# Build for production
 npm run build
 
 # Start production server
-npm start
+npm run start
 
 # Run ESLint
 npm run lint
 
-# Bundle analyzer (requires ANALYZE=true)
-npm run analyze
+# Run knip for unused exports/dependencies
+npm run knip
+```
+
+### Documentation (Mintlify)
+
+```bash
+# Navigate to docs directory
+cd docs
+
+# Install Mintlify CLI globally
+npm i -g mint
+
+# Start documentation dev server
+mint dev
+
+# Validate documentation links
+mint broken-links
+
+# Update Mintlify CLI
+npm mint update
 ```
 
 ## Architecture
 
-### Tech Stack
-
-This frontend template includes:
-
-- **Next.js 15**: React framework with App Router
-- **TypeScript**: Type safety throughout
-- **Tailwind CSS v4**: Utility-first styling
-- **shadcn/ui**: Complete component library (all components pre-installed)
-- **Dark mode**: Theme support with next-themes
-- **SEO**: Built-in metadata helpers
-- **Analytics**: Vercel Analytics ready
-- **Motion**: Framer Motion for animations
-
 ### Project Structure
 
-```
-/src
-├── app/                  # Next.js App Router
-│   ├── layout.tsx       # Root layout with providers
-│   ├── page.tsx         # Homepage
-│   ├── globals.css      # Global styles and Tailwind
-│   ├── manifest.ts      # PWA manifest
-│   └── (metadata files) # Icons, OG images, sitemap
-├── components/
-│   ├── ui/              # All shadcn/ui components
-│   ├── icons/           # Icon components
-│   ├── logo.tsx         # Brand logo
-│   └── (features)       # Landing page components
-├── hooks/               # Custom React hooks
-└── lib/                 # Utilities
-```
+- **`/src`**: Next.js application source
+  - **`/app`**: App Router pages and layouts
+    - SEO optimized with metadata, Open Graph images, and sitemap
+    - Dark mode support via next-themes
+  - **`/components`**: React components
+    - **`/ui`**: shadcn/ui components (customized for landing page)
+    - Custom components: Hero, CliPreview, TechStack, FAQ, etc.
+- **`/convex`**: Backend for tracking GitHub/npm stats
+  - Uses @erquhart/convex-oss-stats for tracking metrics
+  - Configured to track korrect-ai organization and create-mf2-app repo
+- **`/docs`**: Mintlify documentation
+  - Guides for getting started, customization, and content writing
+  - AI tools documentation (Claude Code, Cursor, Windsurf)
+  - API reference examples
+- **`/public`**: Static assets including bento grid images and LLM context files
 
-### Key Files
+### Key Technologies
 
-- **`components.json`**: shadcn/ui configuration
-- **`next.config.ts`**: Next.js configuration
-- **`tailwind.config.ts`**: Tailwind CSS configuration
-- **`postcss.config.mjs`**: PostCSS for Tailwind v4
+- **Frontend**: Next.js 15 with App Router and Turbopack
+- **Styling**: Tailwind CSS v4 with PostCSS
+- **Backend**: Convex for real-time database
+- **Components**: shadcn/ui (customized versions)
+- **Documentation**: Mintlify
+- **Analytics**: Vercel Analytics
+- **Animation**: Framer Motion, React Three Fiber for 3D effects
 
-## Development Workflow
+### Key Features
 
-### Working with Components
+1. **Landing Page Components**:
+   - Animated navigation bar with Framer Motion
+   - 3D animated beams background using Three.js
+   - CLI preview component showcasing the tool
+   - Tech stack showcase with logos
+   - FAQ section
+   - Community section with Discord/GitHub links
 
-All shadcn/ui components are pre-installed in `/src/components/ui/`. The template includes:
+2. **Real-time Stats Tracking**:
+   - Tracks GitHub stars, forks, and issues
+   - Monitors npm package downloads
+   - Updates via Convex real-time sync
 
-- Form components (form, input, button, etc.)
-- Layout components (card, dialog, sheet, etc.)
-- Data display (table, accordion, tabs, etc.)
-- Feedback (alert, toast via sonner, etc.)
-- Navigation (dropdown, navigation menu, etc.)
+3. **Documentation Site**:
+   - Comprehensive guides and API docs
+   - Custom branding and navigation
+   - Code examples and snippets
+   - AI tool integration guides
 
-### Adding New Features
+### Development Workflow
 
-1. **Pages**: Add new routes in `/src/app/`
-2. **Components**: Create in `/src/components/`
-3. **Styles**: Use Tailwind classes, theme colors use CSS variables
-4. **Icons**: Import from `lucide-react` or add to `/src/components/icons/`
+1. **Frontend Development**:
+   - Run `npm run dev` for hot reload development
+   - Components use TypeScript for type safety
+   - All UI components are in `/src/components/ui/`
 
-### Theme System
+2. **Convex Backend**:
+   - Run `npx convex dev` in a separate terminal
+   - Stats are synced via the ossStats component
+   - HTTP routes configured in `convex/http.ts`
 
-- Colors defined via CSS variables in `globals.css`
-- Light/dark mode toggle via `mode-toggle.tsx`
-- Theme provider wraps the app in `layout.tsx`
+3. **Documentation Updates**:
+   - Edit MDX files in `/docs`
+   - Use `mint dev` to preview changes locally
+   - Documentation structure defined in `docs/docs.json`
 
-### SEO & Metadata
+### Important Notes
 
-- Dynamic metadata using Next.js metadata API
-- Helper functions in `/src/lib/` for consistent metadata
-- Automatic sitemap generation at `/sitemap.ts`
-- Open Graph images configured
+- The site uses client-side rendering for the main page to avoid hydration issues
+- All shadcn/ui components are pre-customized for the landing page aesthetic
+- The Convex backend tracks both the GitHub organization and specific repository
+- Environment variables for Convex should be configured in `.env.local`
+- The site is optimized for SEO with proper meta tags, Open Graph images, and sitemap
 
-## Important Patterns
+### Common Tasks
 
-### Using Tailwind CSS v4
+**Update Landing Page Content**:
 
-This template uses Tailwind CSS v4 with:
+- Hero text: Edit `/src/components/ui/hero.tsx`
+- Tech stack: Modify `/src/components/ui/tech-stack.tsx`
+- FAQ: Update `/src/components/ui/faq.tsx`
 
-- PostCSS configuration for processing
-- `@tailwind` imports in globals.css
-- `cn()` utility for conditional classes
+**Add New Documentation**:
 
-### Component Patterns
+1. Create new MDX file in appropriate `/docs` subdirectory
+2. Update navigation in `/docs/docs.json`
+3. Preview with `mint dev`
 
-```typescript
-// Using cn() for conditional classes
-import { cn } from "@/lib/utils";
+**Modify Stats Tracking**:
 
-<div className={cn("base-classes", condition && "conditional-classes")} />;
-```
+- Update organizations/repos in `/convex/stats.ts`
+- Configure new metrics in the ossStats setup
 
-### Form Handling
+**Deploy Updates**:
 
-Forms use react-hook-form with zod validation:
-
-```typescript
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-```
-
-## Template-Specific Features
-
-This frontend template includes pre-built landing page components:
-
-- Hero section with animations
-- Bento grid feature showcase
-- Pricing section with tabs
-- FAQ accordion
-- Waitlist form with confetti
-- Footer with links
-- Background patterns
-
-All components are fully customizable and use the established design system.
-
-## Performance Considerations
-
-- Turbopack enabled for faster development
-- Image optimization with Next.js Image
-- Font optimization with next/font
-- Bundle analyzer available for production builds
-
-## Deployment
-
-This template is optimized for Vercel deployment but works with any Node.js hosting:
-
-- Environment variables in `.env.local`
-- Automatic preview deployments
-- Edge runtime compatible
-
-## Notes for Future Claude Instances
-
-1. This is a template file that gets copied when users run `create-mf2-app`
-2. All UI components are pre-installed - no need to add individual shadcn components
-3. The template is intentionally opinionated to enable fast shipping
-4. When suggesting changes, maintain consistency with existing patterns
-5. The MF2 philosophy prioritizes shipping speed over perfection
+- Push to main branch for automatic Vercel deployment
+- Convex backend updates automatically with `npx convex deploy`

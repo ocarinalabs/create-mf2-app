@@ -8,11 +8,14 @@ import {
   ClerkIcon,
   PolarIcon,
   ResendIcon,
+  PostHogIcon,
+  VercelIcon,
+  MintlifyIcon,
 } from "@/components/icons/technologies";
 
 interface TechCard {
   name: string;
-  icon: React.ElementType;
+  icon: React.ComponentType<{ className?: string }>;
   description: string;
   href: string;
   highlight?: boolean;
@@ -22,72 +25,103 @@ const techCards: TechCard[] = [
   {
     name: "Next.js",
     icon: NextjsIcon,
-    description: "The React framework that doesn't suck. Server components, app router, and everything you need to ship fast.",
+    description:
+      "React framework with server components, app router, and production-ready features.",
     href: "https://nextjs.org",
   },
   {
-    name: "TypeScript", 
+    name: "TypeScript",
     icon: TypeScriptIcon,
-    description: "Because 'undefined is not a function' at 3am isn't fun. Type safety that actually helps you ship faster.",
+    description: "Type-safe JavaScript that catches errors during development.",
     href: "https://typescriptlang.org",
   },
   {
     name: "Tailwind CSS",
     icon: TailwindCSSIcon,
-    description: "Stop writing CSS. Start shipping features. Utility-first CSS that makes your app look good by default.",
+    description: "Utility-first CSS framework for rapid UI development.",
     href: "https://tailwindcss.com",
   },
   {
     name: "shadcn/ui",
     icon: ShadcnIcon,
-    description: "Beautiful components that just work. Copy, paste, customize. No npm hell, no version conflicts.",
+    description:
+      "Beautifully designed components built with Radix UI and Tailwind CSS.",
     href: "https://ui.shadcn.com",
   },
   {
     name: "Convex",
     icon: ConvexIcon,
-    description: "Real-time database that syncs like magic. No backend needed. Perfect for moving f*cking fast.",
+    description:
+      "Real-time database with TypeScript support and automatic syncing.",
     href: "https://convex.dev",
     highlight: true,
   },
   {
     name: "Clerk",
     icon: ClerkIcon,
-    description: "Auth that works out of the box. Social logins, magic links, 2FA - everything configured and ready.",
+    description:
+      "Complete authentication solution with social logins and user management.",
     href: "https://clerk.com",
     highlight: true,
   },
   {
     name: "Polar",
     icon: PolarIcon,
-    description: "Get paid in minutes, not months. Simple subscriptions and payments for developers who ship.",
+    description: "Modern payment infrastructure for SaaS and subscriptions.",
     href: "https://polar.sh",
     highlight: true,
   },
   {
     name: "Resend",
     icon: ResendIcon,
-    description: "Email that actually reaches inboxes. Beautiful templates, great DX, and it just works.",
+    description: "Developer-friendly email API with great deliverability.",
     href: "https://resend.com",
     highlight: true,
+  },
+  {
+    name: "PostHog",
+    icon: PostHogIcon,
+    description: "Product analytics and feature flags in one platform.",
+    href: "https://posthog.com",
+    highlight: true,
+  },
+  {
+    name: "Vercel",
+    icon: VercelIcon,
+    description: "Deployment platform optimized for Next.js applications.",
+    href: "https://vercel.com",
+    highlight: true,
+  },
+  {
+    name: "Mintlify",
+    icon: MintlifyIcon,
+    description: "Beautiful documentation that's easy to maintain.",
+    href: "https://mintlify.com",
+    highlight: true,
+  },
+  {
+    name: "Your package",
+    icon: () => (
+      <div className="flex items-center justify-center h-10 w-10 rounded-full border-2 border-current">
+        <span className="text-2xl font-bold">?</span>
+      </div>
+    ),
+    description:
+      "Got a suggestion? Submit a PR to add your favorite tool to the stack.",
+    href: "https://github.com/korrect-ai/create-mf2-app/pulls",
   },
 ];
 
 export function TechStack() {
   return (
-    <section id="stack" className="py-16 md:py-24 lg:py-32">
+    <section id="stack" className="py-8 md:py-12 lg:py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-12">
             <BlurFade delay={0}>
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4">
-                The Stack That Ships
+                Stop overthinking your stack, we already did that for you.
               </h2>
-            </BlurFade>
-            <BlurFade delay={0.1}>
-              <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-                Hand-picked technologies that work together perfectly. No analysis paralysis. No integration nightmares.
-              </p>
             </BlurFade>
           </div>
 
@@ -105,7 +139,10 @@ export function TechStack() {
                   }`}
                 >
                   <div className="flex items-center gap-4 p-6 pb-4">
-                    <tech.icon className="h-10 w-10 shrink-0" />
+                    {(() => {
+                      const Icon = tech.icon;
+                      return <Icon className="h-10 w-10 shrink-0" />;
+                    })()}
                     <h3 className="text-xl font-semibold">{tech.name}</h3>
                   </div>
                   <div className="px-6 pb-6 text-sm text-muted-foreground">
@@ -120,16 +157,6 @@ export function TechStack() {
               </BlurFade>
             ))}
           </div>
-
-          <BlurFade delay={0.8}>
-            <div className="mt-12 text-center">
-              <p className="text-muted-foreground">
-                <strong className="text-foreground">Frontend only?</strong> Get Next.js, TypeScript, Tailwind, and shadcn/ui.
-                <br />
-                <strong className="text-foreground">Need the full monty?</strong> Add auth, payments, database, and emails.
-              </p>
-            </div>
-          </BlurFade>
         </div>
       </div>
     </section>

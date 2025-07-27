@@ -10,7 +10,7 @@ export function renderTitle() {
 ╚██████╗██║  ██║███████╗██║  ██║   ██║   ███████╗    ██║ ╚═╝ ██║██║     ███████╗    ██║  ██║██║     ██║     
  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝    ╚═╝     ╚═╝╚═╝     ╚══════╝    ╚═╝  ╚═╝╚═╝     ╚═╝     
 
-Move F*cking Fast
+❃ Move F*cking Fast ❃
 `;
 
   console.log(gradient.pastel.multiline(title));

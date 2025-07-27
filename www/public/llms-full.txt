@@ -1,35 +1,195 @@
-# Your Product Name
+# Create MF2 App - Full Documentation
 
-A brief description of your product or service. Replace this with your own compelling product description.
+The stack AI moves fast with. Build and ship production-ready SaaS applications in days, not months.
 
 ## Overview
 
-Customize this section to describe what makes your product unique and valuable to users.
+Create MF2 App is the official CLI tool for the MF2 Stack (Move F*cking Fast Stack) by Korrect. It's an opinionated, AI-optimized starter that combines the best modern web technologies into a cohesive stack that AI assistants can understand and work with effectively.
+
+Logo: ❃ (Heavy chevron snowflake)
 
 ## Key Features
 
-Describe your product's main features here. For example:
-- Feature 1: Brief description
-- Feature 2: Brief description
-- Feature 3: Brief description
-- Feature 4: Brief description
+### AI-Native Development
+- Designed specifically for AI-assisted development
+- Clear file structures and naming conventions
+- Comprehensive TypeScript types throughout
+- Predictable patterns that AI can follow
+- Built-in CLAUDE.md files for AI context
 
-## Why Choose Us
+### Two Templates
 
-Explain the benefits and value proposition of your product:
-- Benefit 1
-- Benefit 2
-- Benefit 3
-- Benefit 4
+1. **Frontend Template** (base-frontend)
+   - Next.js 15 with App Router
+   - Tailwind CSS v4 with PostCSS
+   - All shadcn/ui components pre-installed
+   - Dark mode support
+   - SEO optimized with metadata helpers
+   - Vercel Analytics ready
+
+2. **Fullstack Template** (base-fullstack)
+   - Everything in frontend plus:
+   - Convex real-time backend
+   - Clerk authentication with user management
+   - Polar subscription payments
+   - Resend transactional emails
+   - PostHog analytics (optional)
+   - Mintlify documentation
+
+### Modern Stack
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS v4, shadcn/ui (all components included)
+- **Backend**: Convex (real-time, type-safe, serverless)
+- **Auth**: Clerk (managed authentication)
+- **Payments**: Polar (subscription management)
+- **Email**: Resend (transactional emails)
+- **Analytics**: PostHog (product analytics)
+- **Docs**: Mintlify (beautiful documentation)
+
+## Why MF2 Stack?
+
+### For Developers
+- **Zero Configuration**: npx create-mf2-app and you're ready
+- **Opinionated**: No analysis paralysis, just proven choices
+- **Production-Ready**: Auth, payments, and infrastructure solved
+- **Fast Iteration**: Hot reload, real-time sync, instant deploys
+- **Type Safety**: End-to-end TypeScript with Convex
+
+### For AI Assistants
+- **Clear Conventions**: Consistent patterns across the codebase
+- **Self-Documenting**: CLAUDE.md files in every template
+- **Predictable Structure**: AI knows where to find things
+- **Type Information**: Full TypeScript for better AI suggestions
+- **Modern Patterns**: Uses latest React and Next.js patterns
 
 ## Getting Started
 
-Provide instructions on how users can get started with your product or service. This could include sign-up steps, installation instructions, or usage guidelines.
+```bash
+# Create a new MF2 app
+npm create mf2-app@latest
 
-## Contact
+# You can also use yarn or pnpm
+yarn create mf2-app
+pnpm create mf2-app
 
-Add your contact information or support channels here.
+# Skip prompts with a project name
+npm create mf2-app@latest my-startup
+```
 
-## Built With
+### CLI Flow
+1. Choose your project name
+2. Select template (Frontend or Fullstack)
+3. Pick package manager (npm, yarn, pnpm, bun)
+4. Initialize git repository (optional)
+5. Install dependencies automatically
 
-Modern tools and technologies to help you build faster.
+## Project Structure
+
+### Frontend Template
+```
+my-app/
+├── src/
+│   ├── app/              # Next.js App Router
+│   ├── components/       # React components
+│   │   ├── ui/          # All shadcn/ui components
+│   │   └── ...          # Your components
+│   ├── lib/             # Utilities
+│   └── hooks/           # Custom React hooks
+├── public/              # Static assets
+├── CLAUDE.md           # AI assistant context
+└── [config files]      # Next, TypeScript, Tailwind, etc.
+```
+
+### Fullstack Template
+```
+my-app/
+├── src/                 # Same as frontend
+├── convex/              # Backend functions
+│   ├── _generated/      # Type-safe API
+│   ├── schema.ts        # Database schema
+│   └── *.ts            # Your functions
+├── docs/               # Mintlify documentation
+└── [config files]
+```
+
+## Environment Variables
+
+The fullstack template includes a comprehensive `.env.example`:
+
+```bash
+# Convex
+CONVEX_DEPLOYMENT=
+NEXT_PUBLIC_CONVEX_URL=
+
+# Clerk Auth
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+CLERK_WEBHOOK_SECRET=
+
+# Polar Payments
+POLAR_ACCESS_TOKEN=
+POLAR_WEBHOOK_SECRET=
+NEXT_PUBLIC_POLAR_CHECKOUT_OPEN_CUSTOMER_DASHBOARD_URL=
+
+# Resend Email
+RESEND_API_KEY=
+RESEND_FROM_EMAIL=
+
+# PostHog Analytics (optional)
+NEXT_PUBLIC_POSTHOG_KEY=
+NEXT_PUBLIC_POSTHOG_HOST=
+```
+
+## Philosophy
+
+MF2 Stack follows the "Move F*cking Fast" philosophy:
+
+1. **Ship > Perfect**: Get to production quickly
+2. **Opinionated > Flexible**: Proven choices over endless options
+3. **AI-First**: Built for the AI-assisted development era
+4. **Complete > Modular**: Everything you need included
+5. **Simple > Complex**: Straightforward patterns that work
+
+## Common Commands
+
+### Development
+```bash
+npm run dev          # Start Next.js dev server
+npx convex dev       # Start Convex backend (fullstack)
+npm run build        # Production build
+npm run lint         # Run ESLint
+```
+
+### Deployment
+- Frontend deploys to Vercel automatically
+- Convex backend deploys with `npx convex deploy`
+- Set environment variables in your deployment platform
+
+## Tech Choices Explained
+
+- **Next.js 15**: Best React framework with App Router
+- **Convex**: Real-time backend without the complexity
+- **Clerk**: Managed auth that actually works
+- **Polar**: Subscription-focused payment platform
+- **Tailwind v4**: Modern CSS with better performance
+- **shadcn/ui**: Beautiful components you own
+- **TypeScript**: Type safety throughout
+
+## Links
+
+- Website: https://mf2.sh
+- GitHub: https://github.com/korrect-ai/create-mf2-app
+- Documentation: https://github.com/korrect-ai/create-mf2-app#readme
+- Issues: https://github.com/korrect-ai/create-mf2-app/issues
+
+## Created By
+
+Built by [Korrect](https://korrect.ai) - the team that brought you Robin.
+
+## License
+
+MIT - Use it for anything, even commercial projects.
+
+---
+
+Remember: The goal is to ship. The stack AI moves fast with. Start building.

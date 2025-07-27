@@ -1,35 +1,55 @@
-# Your Product Name
+# Create MF2 App
 
-A brief description of your product or service. Replace this with your own compelling product description.
+The stack AI moves fast with. Build and ship production-ready SaaS applications in days, not months.
 
 ## Overview
 
-Customize this section to describe what makes your product unique and valuable to users.
+Create MF2 App is the official CLI tool for the MF2 Stack (Move F*cking Fast Stack) by Korrect. It's an opinionated, AI-optimized starter that combines the best modern web technologies into a cohesive stack that AI assistants can understand and work with effectively.
 
 ## Key Features
 
-Describe your product's main features here. For example:
-- Feature 1: Brief description
-- Feature 2: Brief description
-- Feature 3: Brief description
-- Feature 4: Brief description
+- **AI-Native Development**: Designed for AI-assisted development with clear patterns and conventions
+- **Full-Stack Templates**: Choose between frontend-only or complete SaaS starter
+- **Real-time Backend**: Powered by Convex for instant data synchronization
+- **Authentication**: Clerk integration with session management built-in
+- **Payments**: Polar for subscription management and billing
+- **Type Safety**: End-to-end TypeScript with runtime validation
+- **Modern UI**: Tailwind CSS v4 with all shadcn/ui components pre-installed
 
-## Why Choose Us
+## Why MF2 Stack?
 
-Explain the benefits and value proposition of your product:
-- Benefit 1
-- Benefit 2
-- Benefit 3
-- Benefit 4
+- **Zero Configuration**: Everything works out of the box
+- **AI-Optimized**: Clear file structure and patterns that AI can navigate easily
+- **Production-Ready**: Includes auth, payments, emails, and analytics
+- **Best Practices**: Opinionated choices based on what actually ships
+- **Fast Iteration**: Hot reload, real-time sync, and instant deployments
+
+## Tech Stack
+
+Frontend: Next.js 15, React 19, Tailwind CSS v4, shadcn/ui
+Backend: Convex (real-time database)
+Auth: Clerk
+Payments: Polar
+Email: Resend
+Analytics: PostHog (optional)
+Deployment: Vercel
 
 ## Getting Started
 
-Provide instructions on how users can get started with your product or service. This could include sign-up steps, installation instructions, or usage guidelines.
+```bash
+npm create mf2-app@latest
+# or
+yarn create mf2-app
+# or 
+pnpm create mf2-app
+```
 
 ## Contact
 
-Add your contact information or support channels here.
+Website: https://mf2.sh
+GitHub: https://github.com/korrect-ai/create-mf2-app
+Created by: Korrect (https://korrect.ai)
 
-## Built With
+## Built For AI
 
-Modern tools and technologies to help you build faster.
+This stack is specifically designed to work seamlessly with AI coding assistants like Claude, Cursor, and GitHub Copilot. Clear conventions, comprehensive types, and predictable patterns make it easy for AI to help you build faster.

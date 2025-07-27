@@ -13,8 +13,8 @@ export default function Icon() {
     (
       <div
         style={{
-          fontSize: 20,
-          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          fontSize: 26,
+          background: "black",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -22,10 +22,9 @@ export default function Icon() {
           justifyContent: "center",
           color: "white",
           fontWeight: "bold",
-          borderRadius: 6,
         }}
       >
-        M2
+        ❃
       </div>
     ),
     {

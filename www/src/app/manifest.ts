@@ -2,10 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Create MF2 App",
+    name: "MF2",
     short_name: "MF2",
-    description:
-      "Stop overthinking your stack. We already did that for you. Ship now.",
+    description: "The stack AI moves fast with",
     start_url: "/",
     display: "standalone",
     orientation: "portrait",

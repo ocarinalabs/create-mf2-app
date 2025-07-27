@@ -1,6 +1,14 @@
 "use client";
 
-import { forwardRef, useImperativeHandle, useEffect, useRef, useMemo, type FC, type ReactNode } from "react";
+import {
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+  useRef,
+  useMemo,
+  type FC,
+  type ReactNode,
+} from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
@@ -35,10 +43,15 @@ function extendMaterial<T extends THREE.Material = THREE.Material>(
   cfg: ExtendMaterialConfig
 ): THREE.ShaderMaterial {
   const physical = THREE.ShaderLib.physical as ShaderWithDefines;
-  const { vertexShader: baseVert, fragmentShader: baseFrag, uniforms: baseUniforms } = physical;
+  const {
+    vertexShader: baseVert,
+    fragmentShader: baseFrag,
+    uniforms: baseUniforms,
+  } = physical;
   const baseDefines = physical.defines ?? {};
 
-  const uniforms: Record<string, THREE.IUniform> = THREE.UniformsUtils.clone(baseUniforms);
+  const uniforms: Record<string, THREE.IUniform> =
+    THREE.UniformsUtils.clone(baseUniforms);
 
   const defaults = new BaseMaterial(cfg.material || {}) as T & {
     color?: THREE.Color;
@@ -52,7 +65,8 @@ function extendMaterial<T extends THREE.Material = THREE.Material>(
   if ("roughness" in defaults) uniforms.roughness.value = defaults.roughness;
   if ("metalness" in defaults) uniforms.metalness.value = defaults.metalness;
   if ("envMap" in defaults) uniforms.envMap.value = defaults.envMap;
-  if ("envMapIntensity" in defaults) uniforms.envMapIntensity.value = defaults.envMapIntensity;
+  if ("envMapIntensity" in defaults)
+    uniforms.envMapIntensity.value = defaults.envMapIntensity;
 
   Object.entries(cfg.uniforms ?? {}).forEach(([key, u]) => {
     uniforms[key] =
@@ -226,7 +240,10 @@ function createStackedPlanesBufferGeometry(
       positions.set([...v0, ...v1], vertexOffset * 3);
 
       const uvY = j / heightSegments;
-      uvs.set([uvXOffset, uvY + uvYOffset, uvXOffset + 1, uvY + uvYOffset], uvOffset);
+      uvs.set(
+        [uvXOffset, uvY + uvYOffset, uvXOffset + 1, uvY + uvYOffset],
+        uvOffset
+      );
 
       if (j < heightSegments) {
         const a = vertexOffset,
@@ -280,7 +297,9 @@ const MergedPlanes = forwardRef<
     height: number;
   }
 >(({ material, width, count, height }, ref) => {
-  const mesh = useRef<THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>>(null!);
+  const mesh = useRef<THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>>(
+    null!
+  );
 
   useImperativeHandle(ref, () => mesh.current);
 
@@ -307,12 +326,21 @@ const PlaneNoise = forwardRef<
     height: number;
   }
 >((props, ref) => (
-  <MergedPlanes ref={ref} material={props.material} width={props.width} count={props.count} height={props.height} />
+  <MergedPlanes
+    ref={ref}
+    material={props.material}
+    width={props.width}
+    count={props.count}
+    height={props.height}
+  />
 ));
 
 PlaneNoise.displayName = "PlaneNoise";
 
-const DirLight: FC<{ position: [number, number, number]; color: string }> = ({ position, color }) => {
+const DirLight: FC<{ position: [number, number, number]; color: string }> = ({
+  position,
+  color,
+}) => {
   const dir = useRef<THREE.DirectionalLight>(null!);
 
   useEffect(() => {
@@ -332,7 +360,14 @@ const DirLight: FC<{ position: [number, number, number]; color: string }> = ({ p
     dir.current.shadow.bias = -0.004;
   }, []);
 
-  return <directionalLight ref={dir} color={color} intensity={1} position={position} />;
+  return (
+    <directionalLight
+      ref={dir}
+      color={color}
+      intensity={1}
+      position={position}
+    />
+  );
 };
 
 const Beams: FC<BeamsProps> = ({
@@ -345,7 +380,9 @@ const Beams: FC<BeamsProps> = ({
   scale = 0.2,
   rotation = 0,
 }) => {
-  const meshRef = useRef<THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>>(null!);
+  const meshRef = useRef<
+    THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>
+  >(null!);
 
   const beamMaterial = useMemo(
     () =>
@@ -409,7 +446,13 @@ const Beams: FC<BeamsProps> = ({
   return (
     <CanvasWrapper>
       <group rotation={[0, 0, degToRad(rotation)]}>
-        <PlaneNoise ref={meshRef} material={beamMaterial} count={beamNumber} width={beamWidth} height={beamHeight} />
+        <PlaneNoise
+          ref={meshRef}
+          material={beamMaterial}
+          count={beamNumber}
+          width={beamWidth}
+          height={beamHeight}
+        />
         <DirLight color={lightColor} position={[0, 3, 10]} />
       </group>
       <ambientLight intensity={1} />
