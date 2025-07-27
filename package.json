@@ -38,8 +38,8 @@
   "bugs": {
     "url": "https://github.com/korrect-ai/create-mf2-app/issues"
   },
-  "homepage": "https://github.com/korrect-ai/create-mf2-app#readme",
-  "description": "The stack AI moves fast with",
+  "homepage": "https://mf2.dev",
+  "description": "The stack AI moves fast with.",
   "dependencies": {
     "@clack/prompts": "^0.11.0",
     "chalk": "^5.4.1",
