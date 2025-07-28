@@ -105,14 +105,14 @@ export function CliPreview() {
             <div className="relative">
               <div className="overflow-x-auto overflow-y-hidden -mx-4 px-4 sm:mx-0 sm:px-0">
                 <div className="inline-block min-w-full sm:min-w-0">
-                  <div className="overflow-hidden rounded-lg border border-white/20 bg-black/50 backdrop-blur-xl shadow-2xl w-full sm:w-auto sm:min-w-[600px] md:min-w-[700px] lg:min-w-[800px]">
+                  <div className="overflow-hidden rounded-lg border border-white/20 bg-black/50 backdrop-blur-xl shadow-2xl min-w-[90vw] sm:w-auto sm:min-w-[600px] md:min-w-[700px] lg:min-w-[800px]">
                     <div className="flex items-center gap-2 border-b border-white/10 px-3 py-2 sm:px-4 sm:py-3">
                       <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-red-500" />
                       <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-yellow-500" />
                       <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-green-500" />
                     </div>
-                    <div className="p-3 sm:p-4 md:p-6 font-mono text-xs sm:text-sm md:text-base">
-                      <div className="space-y-1 min-h-[400px] sm:min-h-[600px] md:min-h-[800px]">
+                    <div className="p-4 sm:p-4 md:p-6 font-mono text-xs sm:text-sm md:text-base">
+                      <div className="space-y-1 min-h-[650px] sm:min-h-[650px] md:min-h-[800px]">
                         {cliFlow.slice(0, displayedLines).map((line, index) => (
                           <div key={index} className="min-h-[1.5em]">
                             {line.type === "command" && (

@@ -2,171 +2,112 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Overview
-
-create-mf2-app is a CLI tool for creating startup-ready web applications using the MF2 Stack (Move F*cking Fast Stack) by Korrect. It provides opinionated, production-ready templates for rapid SaaS development.
-
 ## Commands
 
-### Development
-
+### CLI Development
 ```bash
-# Development mode with hot reload
+# Install dependencies
+npm install
+
+# Development mode with watch
 npm run dev
 
 # Build the CLI
 npm run build
 
-# Type checking
-npm run typecheck
-
-# Test the CLI locally
-npm run test
-```
-
-### Using the CLI
-
-```bash
-# Install and run
-npm create mf2-app@latest
-# or
-yarn create mf2-app
-# or
-pnpm create mf2-app
-
-# Run the built CLI locally
+# Start CLI (after building)
 npm run start
 
-# Test with a project name
-npm run start my-test-app
+# Run with specific app name
+npm run test
 
-# Direct execution
-node cli/dist/index.js
+# Type checking
+npm run typecheck
 ```
 
-### Template Development
-
-For working on templates, navigate to the specific template directory:
-
+### Website Development
 ```bash
-# Frontend template
-cd cli/templates/base-frontend
-npm run dev           # Next.js dev server with Turbopack
-npm run build         # Production build
-npm run lint          # Run ESLint
-npm run analyze       # Bundle analyzer
+cd www
 
-# Fullstack template
-cd cli/templates/base-fullstack
-npm run dev           # Next.js dev server
-npx convex dev        # Convex backend (separate terminal)
-npm run build         # Production build
-npm run lint          # Run ESLint
-npm run docs          # Mintlify docs dev server
+# Install dependencies
+npm install
+
+# Development server with Turbopack
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm run start
+
+# Run linting
+npm run lint
+
+# Dependency checking
+npm run knip
+
+# Convex development (separate terminal)
+npx convex dev
 ```
 
-## Architecture
+## High-Level Architecture
 
 ### Project Structure
 
-- **Root**: NPM package configuration and build scripts
-- **`/cli`**: CLI source code and templates
-  - **`/src`**: TypeScript source files
-    - **`index.ts`**: Entry point with shebang
-    - **`cli.ts`**: User prompts and input collection
-    - **`/helpers`**: Core functionality (createProject, installDependencies, git init)
-    - **`/utils`**: Utilities (logger, validation, package manager detection)
-  - **`/templates`**: Project templates
-    - **`base-frontend`**: Landing page template (Next.js + TypeScript + Tailwind + shadcn/ui)
-    - **`base-fullstack`**: SaaS template (adds Convex + Clerk + Polar + Resend + PostHog)
+This is a monorepo containing:
 
-### Key Technologies
+1. **CLI Tool** (`/cli`): The `create-mf2-app` CLI for scaffolding new projects
+   - Written in TypeScript, built with tsup
+   - Uses commander for CLI interface, clack/prompts for interactions
+   - Templates stored in `/cli/templates/`
 
-#### CLI Stack
+2. **Landing Page** (`/www`): Marketing website for the MF2 Stack
+   - Next.js 15 with App Router and Turbopack
+   - Real-time GitHub stats via Convex
+   - Tailwind CSS v4, shadcn/ui components
 
-- **Build Tool**: tsup (ESM output)
-- **CLI Framework**: Commander + @clack/prompts
-- **Package Manager Detection**: Supports npm, yarn, pnpm, bun
+### CLI Architecture
 
-#### Template Stacks
+**Key Components:**
+- `cli/src/index.ts`: Entry point, sets up commander
+- `cli/src/cli.ts`: Main CLI logic and flow
+- `cli/src/helpers/`: Core functionality
+  - `createProject.ts`: Orchestrates project creation
+  - `scaffoldProject.ts`: Copies template files
+  - `selectBoilerplate.ts`: Template selection logic
+  - `installDependencies.ts`: Package installation
 
-**Frontend Template**:
+**Templates:**
+- `base-frontend`: Landing pages, marketing sites
+- `base-fullstack`: Full SaaS apps with Convex, Clerk, Polar
 
-- Next.js 15 (App Router, Turbopack)
-- TypeScript
-- Tailwind CSS v4
-- shadcn/ui (all components included)
-- Dark mode support
-- SEO metadata helpers
-- Vercel Analytics
+**Build Process:**
+- Uses tsup for fast TypeScript compilation
+- Outputs to CommonJS format for Node.js compatibility
+- Includes shims for Node.js built-ins
 
-**Fullstack Template** (includes everything above plus):
+### Key Implementation Details
 
-- **Backend**: Convex (real-time database)
-- **Auth**: Clerk
-- **Payments**: Polar
-- **Email**: Resend
-- **Analytics**: PostHog
-- **Docs**: Mintlify
-- **Monitoring**: Better Stack (referenced in PLAN.md)
+1. **Package Manager Detection**: Automatically detects npm/yarn/pnpm/bun from user environment
 
-### Development Workflow
+2. **Git Integration**: Initializes git repo with proper `.gitignore` handling
 
-1. **CLI Development**:
+3. **Template System**: 
+   - Templates are complete, working applications
+   - Each template has its own `CLAUDE.md` for guidance
+   - Frontend template includes comprehensive shadcn/ui components
+   - Fullstack template includes authentication, payments, real-time features
 
-   - Make changes in `/cli/src`
-   - Run `npm run dev` for watch mode
-   - Test with `npm run start test-app`
+4. **Error Handling**: User-friendly error messages with helpful context
 
-2. **Template Updates**:
+5. **Development Workflow**:
+   - `npm run dev` watches TypeScript files and auto-runs CLI
+   - Tests by running `npm run test` which creates a test app
 
-   - Edit files directly in `/cli/templates/base-frontend` or `/cli/templates/base-fullstack`
-   - Test templates by running their respective dev commands
-   - Templates are copied as-is during project creation
+### Publishing
 
-3. **Adding New Features**:
-   - For CLI features: Update relevant helpers in `/cli/src/helpers`
-   - For template features: Add to appropriate template directory
-   - Many helper functions are placeholders for future functionality
-
-### Important Design Decisions
-
-1. **Two Templates Instead of Modular**: Unlike T3 Stack's complex permutation system, MF2 Stack uses two distinct templates (frontend vs fullstack) for simplicity and maintainability.
-
-2. **Opinionated Choices**: No configuration options for core stack choices - users get a pre-configured, production-ready setup.
-
-3. **Complete UI Components**: All shadcn/ui components are included out-of-the-box rather than requiring separate installation.
-
-4. **Environment Variables**: Fullstack template includes `.env.example` with all required keys documented.
-
-### Testing Approach
-
-Currently, there are no automated tests. Testing is done manually:
-
-- Build the CLI: `npm run build`
-- Create test projects: `npm run test`
-- Verify template functionality by running the created projects
-
-### Common Tasks
-
-**Update Dependencies in Templates**:
-
-1. Navigate to template directory
-2. Update package.json
-3. Test thoroughly as templates are copied directly
-
-**Add New shadcn/ui Component**:
-
-- Components are already included in both templates under `/src/components/ui/`
-
-**Modify Project Creation Flow**:
-
-1. Update prompts in `/cli/src/cli.ts`
-2. Modify project creation logic in `/cli/src/helpers/createProject.ts`
-3. Update success messages in `/cli/src/index.ts`
-
-**Debug CLI Issues**:
-
-- Check `/cli/src/utils/logger.ts` for logging utilities
-- Package manager detection in `/cli/src/utils/getPkgManager.ts`
-- Validation logic in `/cli/src/utils/validateAppName.ts`
+The CLI is published to npm as `create-mf2-app`. Users can run:
+- `npm create mf2-app@latest`
+- `yarn create mf2-app`
+- `pnpm create mf2-app`
