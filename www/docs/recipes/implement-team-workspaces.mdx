@@ -1,0 +1,728 @@
+---
+title: "Team Workspaces"
+description: "Add multi-tenant workspaces to your SaaS"
+icon: "users"
+---
+
+# Team Workspaces
+
+Turn your single-user app into a team collaboration powerhouse. This recipe shows you how to implement Slack-style workspaces with invites, permissions, and billing.
+
+<Note>
+  **Prerequisites**: You should have Clerk auth and Convex set up. This builds on top of the base SaaS template.
+</Note>
+
+## What you'll build
+
+- 🏢 Multi-tenant workspaces
+- 👥 Team member management  
+- 📧 Email invitations
+- 🔒 Role-based permissions
+- 💳 Per-workspace billing
+- 🔄 Instant workspace switching
+
+## The data model (5 min)
+
+First, let's design our schema for teams:
+
+```typescript convex/schema.ts
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
+
+export default defineSchema({
+  // Users stay global
+  users: defineTable({
+    clerkId: v.string(),
+    email: v.string(),
+    name: v.string(),
+    imageUrl: v.optional(v.string()),
+    // Track current workspace for quick access
+    currentWorkspaceId: v.optional(v.id("workspaces")),
+  })
+    .index("by_clerk_id", ["clerkId"])
+    .index("by_email", ["email"]),
+
+  // Workspaces (teams)
+  workspaces: defineTable({
+    name: v.string(),
+    slug: v.string(), // URL-friendly name
+    imageUrl: v.optional(v.string()),
+    // Billing
+    subscriptionId: v.optional(v.string()),
+    subscriptionStatus: v.optional(v.string()),
+    plan: v.union(v.literal("free"), v.literal("pro"), v.literal("enterprise")),
+    // Metadata
+    createdAt: v.number(),
+    createdBy: v.id("users"),
+  })
+    .index("by_slug", ["slug"]),
+
+  // Workspace members
+  members: defineTable({
+    workspaceId: v.id("workspaces"),
+    userId: v.id("users"),
+    role: v.union(v.literal("owner"), v.literal("admin"), v.literal("member")),
+    joinedAt: v.number(),
+  })
+    .index("by_workspace", ["workspaceId"])
+    .index("by_user", ["userId"])
+    .index("by_workspace_user", ["workspaceId", "userId"]),
+
+  // Invitations
+  invitations: defineTable({
+    workspaceId: v.id("workspaces"),
+    email: v.string(),
+    role: v.union(v.literal("admin"), v.literal("member")),
+    invitedBy: v.id("users"),
+    invitedAt: v.number(),
+    acceptedAt: v.optional(v.number()),
+    expiresAt: v.number(),
+    token: v.string(), // Unique invite token
+  })
+    .index("by_email", ["email"])
+    .index("by_token", ["token"])
+    .index("by_workspace", ["workspaceId"]),
+});
+```
+
+## Step 1: Workspace creation (5 min)
+
+When a user signs up, create their personal workspace:
+
+```typescript convex/auth.ts
+import { internalMutation } from "./_generated/server";
+import { v } from "convex/values";
+
+export const createUserWithWorkspace = internalMutation({
+  args: {
+    clerkId: v.string(),
+    email: v.string(),
+    name: v.string(),
+  },
+  handler: async (ctx, args) => {
+    // Create user
+    const userId = await ctx.db.insert("users", {
+      clerkId: args.clerkId,
+      email: args.email,
+      name: args.name,
+    });
+
+    // Create personal workspace
+    const workspaceId = await ctx.db.insert("workspaces", {
+      name: `${args.name}'s Workspace`,
+      slug: generateSlug(args.name),
+      plan: "free",
+      createdAt: Date.now(),
+      createdBy: userId,
+    });
+
+    // Add user as owner
+    await ctx.db.insert("members", {
+      workspaceId,
+      userId,
+      role: "owner",
+      joinedAt: Date.now(),
+    });
+
+    // Set as current workspace
+    await ctx.db.patch(userId, {
+      currentWorkspaceId: workspaceId,
+    });
+
+    return { userId, workspaceId };
+  },
+});
+
+function generateSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    + "-" + Math.random().toString(36).substr(2, 9);
+}
+```
+
+## Step 2: Workspace context & switching (10 min)
+
+Create a workspace provider:
+
+```tsx src/components/workspace-provider.tsx
+"use client";
+
+import { createContext, useContext, ReactNode } from "react";
+import { useQuery, useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
+
+interface WorkspaceContextType {
+  currentWorkspace: Workspace | null;
+  workspaces: Workspace[];
+  switchWorkspace: (workspaceId: Id<"workspaces">) => void;
+  isLoading: boolean;
+}
+
+const WorkspaceContext = createContext<WorkspaceContextType | null>(null);
+
+export function WorkspaceProvider({ children }: { children: ReactNode }) {
+  const user = useUser();
+  const workspaces = useQuery(api.workspaces.getUserWorkspaces);
+  const currentWorkspace = useQuery(api.workspaces.getCurrentWorkspace);
+  const switchWorkspace = useMutation(api.workspaces.switchWorkspace);
+
+  if (!user) return null;
+
+  return (
+    <WorkspaceContext.Provider
+      value={{
+        currentWorkspace: currentWorkspace || null,
+        workspaces: workspaces || [],
+        switchWorkspace,
+        isLoading: !workspaces || !currentWorkspace,
+      }}
+    >
+      {children}
+    </WorkspaceContext.Provider>
+  );
+}
+
+export const useWorkspace = () => {
+  const context = useContext(WorkspaceContext);
+  if (!context) {
+    throw new Error("useWorkspace must be used within WorkspaceProvider");
+  }
+  return context;
+};
+```
+
+Add workspace switcher UI:
+
+```tsx src/components/workspace-switcher.tsx
+"use client";
+
+import { useWorkspace } from "@/components/workspace-provider";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { ChevronsUpDown, Plus, Check } from "lucide-react";
+import { useState } from "react";
+import { CreateWorkspaceDialog } from "./create-workspace-dialog";
+
+export function WorkspaceSwitcher() {
+  const { currentWorkspace, workspaces, switchWorkspace } = useWorkspace();
+  const [createOpen, setCreateOpen] = useState(false);
+
+  if (!currentWorkspace) return null;
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" className="w-[200px] justify-between">
+            <span className="truncate">{currentWorkspace.name}</span>
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-[200px]">
+          <DropdownMenuLabel>Workspaces</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          {workspaces.map((workspace) => (
+            <DropdownMenuItem
+              key={workspace._id}
+              onClick={() => switchWorkspace(workspace._id)}
+            >
+              <Check
+                className={`mr-2 h-4 w-4 ${
+                  workspace._id === currentWorkspace._id
+                    ? "opacity-100"
+                    : "opacity-0"
+                }`}
+              />
+              <span className="truncate">{workspace.name}</span>
+            </DropdownMenuItem>
+          ))}
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => setCreateOpen(true)}>
+            <Plus className="mr-2 h-4 w-4" />
+            Create workspace
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      
+      <CreateWorkspaceDialog open={createOpen} onOpenChange={setCreateOpen} />
+    </>
+  );
+}
+```
+
+## Step 3: Inviting team members (10 min)
+
+Create the invite system:
+
+```typescript convex/invitations.ts
+import { mutation, query } from "./_generated/server";
+import { v } from "convex/values";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export const inviteTeamMember = mutation({
+  args: {
+    email: v.string(),
+    role: v.union(v.literal("admin"), v.literal("member")),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+
+    // Get current workspace and check permissions
+    const user = await getUserByClerkId(ctx, identity.subject);
+    if (!user?.currentWorkspaceId) throw new Error("No workspace selected");
+
+    const membership = await getMembership(ctx, user.currentWorkspaceId, user._id);
+    if (!membership || membership.role === "member") {
+      throw new Error("Only admins and owners can invite members");
+    }
+
+    // Check if already invited or member
+    const existingMember = await ctx.db
+      .query("users")
+      .withIndex("by_email", q => q.eq("email", args.email))
+      .first();
+
+    if (existingMember) {
+      const existingMembership = await ctx.db
+        .query("members")
+        .withIndex("by_workspace_user", q => 
+          q.eq("workspaceId", user.currentWorkspaceId)
+            .eq("userId", existingMember._id)
+        )
+        .first();
+      
+      if (existingMembership) {
+        throw new Error("User is already a member");
+      }
+    }
+
+    // Create invitation
+    const token = generateInviteToken();
+    const invitation = await ctx.db.insert("invitations", {
+      workspaceId: user.currentWorkspaceId,
+      email: args.email,
+      role: args.role,
+      invitedBy: user._id,
+      invitedAt: Date.now(),
+      expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
+      token,
+    });
+
+    // Get workspace for email
+    const workspace = await ctx.db.get(user.currentWorkspaceId);
+
+    // Send invite email
+    await ctx.scheduler.runAfter(0, api.emails.sendInvite, {
+      to: args.email,
+      inviterName: user.name,
+      workspaceName: workspace!.name,
+      inviteUrl: `${process.env.NEXT_PUBLIC_APP_URL}/invite/${token}`,
+    });
+
+    return { success: true };
+  },
+});
+
+export const acceptInvite = mutation({
+  args: { token: v.string() },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+
+    // Get invitation
+    const invitation = await ctx.db
+      .query("invitations")
+      .withIndex("by_token", q => q.eq("token", args.token))
+      .first();
+
+    if (!invitation) {
+      throw new Error("Invalid invitation");
+    }
+
+    if (invitation.expiresAt < Date.now()) {
+      throw new Error("Invitation expired");
+    }
+
+    if (invitation.acceptedAt) {
+      throw new Error("Invitation already accepted");
+    }
+
+    // Get or create user
+    let user = await getUserByClerkId(ctx, identity.subject);
+    if (!user) {
+      // User doesn't exist yet, create them
+      const userId = await ctx.db.insert("users", {
+        clerkId: identity.subject,
+        email: invitation.email,
+        name: identity.name || invitation.email,
+      });
+      user = await ctx.db.get(userId)!;
+    }
+
+    // Add to workspace
+    await ctx.db.insert("members", {
+      workspaceId: invitation.workspaceId,
+      userId: user._id,
+      role: invitation.role,
+      joinedAt: Date.now(),
+    });
+
+    // Mark invitation as accepted
+    await ctx.db.patch(invitation._id, {
+      acceptedAt: Date.now(),
+    });
+
+    // Switch to new workspace
+    await ctx.db.patch(user._id, {
+      currentWorkspaceId: invitation.workspaceId,
+    });
+
+    return { workspaceId: invitation.workspaceId };
+  },
+});
+```
+
+Invite UI:
+
+```tsx src/components/invite-team-dialog.tsx
+"use client";
+
+import { useState } from "react";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { toast } from "sonner";
+
+export function InviteTeamDialog({ open, onOpenChange }) {
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState<"admin" | "member">("member");
+  const inviteMember = useMutation(api.invitations.inviteTeamMember);
+
+  const handleInvite = async () => {
+    try {
+      await inviteMember({ email, role });
+      toast.success("Invitation sent!");
+      setEmail("");
+      onOpenChange(false);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Invite team member</DialogTitle>
+          <DialogDescription>
+            Invite someone to collaborate in your workspace.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email address</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="colleague@company.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="role">Role</Label>
+            <Select value={role} onValueChange={setRole}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="member">Member</SelectItem>
+                <SelectItem value="admin">Admin</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            Cancel
+          </Button>
+          <Button onClick={handleInvite} disabled={!email}>
+            Send invitation
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+## Step 4: Permission system (5 min)
+
+Implement role-based access control:
+
+```typescript convex/permissions.ts
+import { Doc, Id } from "./_generated/dataModel";
+import { QueryCtx } from "./_generated/server";
+
+export type Permission = 
+  | "workspace.view"
+  | "workspace.edit"
+  | "workspace.delete"
+  | "members.invite"
+  | "members.remove"
+  | "billing.manage";
+
+const rolePermissions: Record<string, Permission[]> = {
+  owner: [
+    "workspace.view",
+    "workspace.edit",
+    "workspace.delete",
+    "members.invite",
+    "members.remove",
+    "billing.manage",
+  ],
+  admin: [
+    "workspace.view",
+    "workspace.edit",
+    "members.invite",
+    "members.remove",
+  ],
+  member: [
+    "workspace.view",
+  ],
+};
+
+export async function checkPermission(
+  ctx: QueryCtx,
+  userId: Id<"users">,
+  workspaceId: Id<"workspaces">,
+  permission: Permission
+): Promise<boolean> {
+  const membership = await ctx.db
+    .query("members")
+    .withIndex("by_workspace_user", q => 
+      q.eq("workspaceId", workspaceId).eq("userId", userId)
+    )
+    .first();
+
+  if (!membership) return false;
+
+  const permissions = rolePermissions[membership.role] || [];
+  return permissions.includes(permission);
+}
+
+// Helper hook for client
+export function usePermission(permission: Permission): boolean {
+  const { currentWorkspace } = useWorkspace();
+  const hasPermission = useQuery(
+    api.permissions.checkCurrentUserPermission,
+    currentWorkspace ? { permission } : "skip"
+  );
+  
+  return hasPermission || false;
+}
+```
+
+Protect actions with permissions:
+
+```typescript
+// Before any sensitive action
+const hasPermission = await checkPermission(
+  ctx,
+  user._id,
+  workspaceId,
+  "workspace.edit"
+);
+
+if (!hasPermission) {
+  throw new Error("You don't have permission to perform this action");
+}
+```
+
+## Step 5: Per-workspace billing (5 min)
+
+Update billing to be workspace-specific:
+
+```typescript convex/billing.ts
+export const createCheckoutSession = mutation({
+  args: { plan: v.string() },
+  handler: async (ctx, args) => {
+    const user = await getCurrentUser(ctx);
+    if (!user?.currentWorkspaceId) throw new Error("No workspace");
+
+    // Check permission
+    const hasPermission = await checkPermission(
+      ctx,
+      user._id,
+      user.currentWorkspaceId,
+      "billing.manage"
+    );
+    
+    if (!hasPermission) {
+      throw new Error("Only workspace owners can manage billing");
+    }
+
+    const workspace = await ctx.db.get(user.currentWorkspaceId);
+    
+    // Create Polar checkout with workspace metadata
+    const session = await polar.checkoutSessions.create({
+      productId: PLAN_PRODUCT_IDS[args.plan],
+      metadata: {
+        workspaceId: workspace._id,
+        userId: user._id,
+      },
+    });
+
+    return session.url;
+  },
+});
+
+// Webhook handler
+export const handleBillingWebhook = internalMutation({
+  args: { event: v.any() },
+  handler: async (ctx, args) => {
+    const { workspaceId } = args.event.metadata;
+    
+    await ctx.db.patch(workspaceId, {
+      subscriptionId: args.event.subscriptionId,
+      subscriptionStatus: args.event.status,
+      plan: args.event.plan,
+    });
+  },
+});
+```
+
+## Common patterns
+
+### Workspace-scoped queries
+
+Always filter by current workspace:
+
+```typescript
+export const getProjects = query({
+  handler: async (ctx) => {
+    const user = await getCurrentUser(ctx);
+    if (!user?.currentWorkspaceId) return [];
+
+    return await ctx.db
+      .query("projects")
+      .withIndex("by_workspace", q => 
+        q.eq("workspaceId", user.currentWorkspaceId)
+      )
+      .collect();
+  },
+});
+```
+
+### Workspace limits
+
+Enforce plan limits:
+
+```typescript
+const workspace = await ctx.db.get(workspaceId);
+const memberCount = await ctx.db
+  .query("members")
+  .withIndex("by_workspace", q => q.eq("workspaceId", workspaceId))
+  .collect();
+
+if (workspace.plan === "free" && memberCount.length >= 3) {
+  throw new Error("Free plan limited to 3 members. Upgrade to add more.");
+}
+```
+
+### Activity tracking
+
+Log workspace activity:
+
+```typescript
+await ctx.db.insert("activityLogs", {
+  workspaceId,
+  userId,
+  action: "project.created",
+  metadata: { projectId },
+  timestamp: Date.now(),
+});
+```
+
+## Testing workspaces
+
+```typescript
+// Create test workspace with members
+const createTestWorkspace = async () => {
+  const workspace = await createWorkspace({ name: "Test Team" });
+  
+  await inviteTeamMember({ 
+    email: "admin@test.com", 
+    role: "admin" 
+  });
+  
+  await inviteTeamMember({ 
+    email: "member@test.com", 
+    role: "member" 
+  });
+  
+  return workspace;
+};
+```
+
+## Migration guide
+
+If adding workspaces to an existing app:
+
+1. Create default workspace for each user
+2. Assign all existing data to default workspace
+3. Update all queries to filter by workspace
+4. Add workspace switcher to UI
+5. Test permissions thoroughly
+
+## You now have teams! 🎉
+
+Your single-user app is now a full multi-tenant SaaS. Users can:
+- Create unlimited workspaces
+- Invite team members
+- Switch contexts instantly
+- Manage separate billing per team
+- Control access with roles
+
+Next steps:
+
+<CardGroup cols={2}>
+  <Card title="Add SSO" icon="shield-check" href="/recipes/enterprise-sso">
+    Enterprise login with SAML
+  </Card>
+  <Card title="Audit logs" icon="scroll" href="/recipes/audit-logs">
+    Track all team activity
+  </Card>
+</CardGroup>
+
+Remember: Great teams ship fast together. You just made that possible.

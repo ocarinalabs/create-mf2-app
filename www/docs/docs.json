@@ -1,115 +1,65 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
+  "theme": "maple",
+  "name": "MF2 Stack",
   "colors": {
     "primary": "#16A34A",
-    "light": "#07C983",
+    "light": "#22C55E",
     "dark": "#15803D"
   },
   "favicon": "/favicon.svg",
-  "navigation": {
-    "tabs": [
-      {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": [
+        "index",
+        "what-is-mf2",
+        "mf2-axioms",
+        "quickstart"
+      ]
+    },
+    {
+      "group": "Tutorial",
+      "pages": [
+        "installation",
+        "first-app",
+        "project-structure"
+      ]
+    },
+    {
+      "group": "Build with AI",
+      "pages": [
+        "stack/ai-development"
+      ]
+    },
+    {
+      "group": "Recipes",
+      "pages": [
+        "recipes/implement-team-workspaces",
+        "recipes/add-admin-dashboard",
+        "recipes/integrate-ai-features"
+      ]
+    },
+    {
+      "group": "Help",
+      "pages": [
+        "troubleshooting",
+        "faq"
       ]
     }
-  },
+  ],
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
+    "links": []
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/korrectai",
+      "github": "https://github.com/korrect-ai/create-mf2-app",
+      "linkedin": "https://linkedin.com/company/korrect-ai"
     }
   }
 }

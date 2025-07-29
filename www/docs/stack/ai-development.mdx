@@ -1,0 +1,425 @@
+---
+title: "AI Development"
+description: "Why MF2 is the best stack for AI-assisted coding"
+icon: "sparkles"
+---
+
+# AI-First Development
+
+**The stack AI moves fast with.** MF2 isn't just AI-compatible - it's AI-optimized. Built with modern tools developers and LLMs love. Every pattern, every convention, every decision makes AI your senior developer. Here's how to 10x your velocity with Claude Code, Cursor, or GitHub Copilot.
+
+<Note>
+  **The reality**: A junior dev with AI and MF2 can outship a senior dev with a "sophisticated" architecture. We've seen it happen.
+</Note>
+
+## Why AI loves MF2
+
+<CardGroup cols={3}>
+  <Card title="Boring patterns" icon="brain">
+    Standard code AI has seen 1000x times
+  </Card>
+  <Card title="Explicit > clever" icon="eye">
+    Code so clear, AI never gets confused
+  </Card>
+  <Card title="Convention-heavy" icon="book">
+    AI knows exactly where everything goes
+  </Card>
+</CardGroup>
+
+## The MF2 + AI Workflow
+
+### 1. Let AI scaffold entire features
+
+<Tabs>
+  <Tab title="Claude Code">
+    ```bash
+    # Open your project
+    cd my-mf2-app
+    
+    # Start Claude Code
+    claude
+    ```
+
+    **Prompt example:**
+    ```
+    Create a team invitation system:
+    - Users can invite teammates by email
+    - Invites expire after 7 days  
+    - Email notifications via Resend
+    - Track invite status in Convex
+    - Show pending invites in dashboard
+    ```
+
+    Claude will:
+    1. Create the Convex schema and functions
+    2. Build the invitation UI components
+    3. Set up email templates
+    4. Add the dashboard view
+    5. Handle all the edge cases
+  </Tab>
+  
+  <Tab title="Cursor">
+    **Step 1: Index your codebase**
+    ```
+    Cmd+Shift+P → "Cursor: Index Codebase"
+    ```
+
+    **Step 2: Use the composer (Cmd+K)**
+    ```
+    @codebase create a waitlist feature where users 
+    pay $10 for early access. Use Polar for payments 
+    and Convex for data storage. Add real-time stats.
+    ```
+
+    **Step 3: Review and apply**
+    - Cursor generates multiple files
+    - Shows diffs inline
+    - Apply all at once
+  </Tab>
+  
+  <Tab title="GitHub Copilot">
+    **In-file generation:**
+    ```typescript
+    // Create a function to handle user onboarding
+    // that creates a workspace, sends welcome email,
+    // and tracks analytics
+    
+    export const onboardUser = mutation({
+      // Copilot autocompletes the entire function
+    });
+    ```
+
+    **Multi-file features:**
+    1. Create empty files with descriptive names
+    2. Add comments describing what you want
+    3. Let Copilot fill in the implementation
+  </Tab>
+</Tabs>
+
+### 2. Natural language to full implementation
+
+**What you can literally say:**
+
+> "Add a referral system where users get $10 credit for each friend who signs up and makes a purchase"
+
+**What AI will create:**
+
+```typescript
+// convex/referrals.ts
+import { mutation, query } from "./_generated/server";
+import { v } from "convex/values";
+
+export const createReferralCode = mutation({
+  handler: async (ctx) => {
+    const user = await ctx.auth.getUserIdentity();
+    if (!user) throw new Error("Not authenticated");
+    
+    const existing = await ctx.db
+      .query("referralCodes")
+      .withIndex("by_user", q => q.eq("userId", user.subject))
+      .first();
+    
+    if (existing) return existing.code;
+    
+    const code = generateUniqueCode();
+    await ctx.db.insert("referralCodes", {
+      userId: user.subject,
+      code,
+      usageCount: 0,
+      totalEarned: 0,
+    });
+    
+    return code;
+  },
+});
+
+export const applyReferralCode = mutation({
+  args: { code: v.string() },
+  handler: async (ctx, args) => {
+    // Full implementation with error handling,
+    // credit application, and notification sending
+  },
+});
+```
+
+### 3. AI understands your entire codebase
+
+Because MF2 follows strict conventions:
+
+```
+AI knows:
+- Pages live in src/app/*/page.tsx
+- Components go in src/components/*
+- Backend logic is in convex/*.ts
+- Types are colocated with usage
+- Imports use @/ prefix
+```
+
+So when you say "add a settings page", AI knows:
+1. Create `src/app/settings/page.tsx`
+2. Protect it with auth
+3. Use existing UI components
+4. Follow the established patterns
+
+## Prompt engineering for MF2
+
+### The golden rules
+
+<AccordionGroup>
+  <Accordion title="Be specific about business logic, not implementation" icon="briefcase">
+    **❌ Bad prompt:**
+    ```
+    Create a React component with useState that fetches 
+    data from an API endpoint and displays it in a table
+    ```
+
+    **✅ Good prompt:**
+    ```
+    Show a list of customer invoices with:
+    - Invoice number, date, amount, status
+    - Real-time updates when status changes
+    - Click to download PDF
+    - Filter by date range and status
+    ```
+
+    Let AI figure out the implementation details.
+  </Accordion>
+  
+  <Accordion title="Reference existing patterns" icon="clone">
+    **✅ Good prompt:**
+    ```
+    Create a team settings page similar to the user 
+    settings page but for team-wide preferences
+    ```
+
+    AI will:
+    - Copy the layout structure
+    - Use the same component patterns
+    - Follow the same auth approach
+    - Maintain consistency
+  </Accordion>
+  
+  <Accordion title="Think in features, not code" icon="rocket">
+    **❌ Bad prompt:**
+    ```
+    Write a mutation that inserts into the database
+    ```
+
+    **✅ Good prompt:**
+    ```
+    Users should be able to create projects with:
+    - Name and description (required)
+    - Optional due date
+    - Assign to team members
+    - Auto-generate a shareable link
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Common AI + MF2 Patterns
+
+### Full CRUD in one prompt
+
+```
+Create a complete task management system:
+- Tasks have title, description, status, assignee
+- Real-time updates across all users
+- Drag and drop to change status
+- Due date notifications
+- Activity history
+```
+
+**AI generates:**
+- Schema in `convex/schema.ts`
+- CRUD operations in `convex/tasks.ts`
+- UI components with drag-and-drop
+- Real-time subscriptions
+- Email notifications setup
+
+### Upgrade features intelligently
+
+```
+The current user profile only shows name and email.
+Upgrade it to include:
+- Avatar upload with Convex file storage
+- Bio with markdown support
+- Social links
+- Public profile toggle
+- Custom URL slug
+```
+
+**AI will:**
+- Extend the existing schema
+- Add file upload handling
+- Create the UI without breaking existing code
+- Add proper validation
+- Handle migration for existing users
+
+### Clone and modify
+
+```
+We have a blog post system. Create an identical
+system for documentation but with:
+- Version history
+- Draft/published states
+- Category organization
+- Search functionality
+```
+
+## AI debugging in MF2
+
+### Copy error → Get fix
+
+```typescript
+// Error: Cannot read property 'subject' of null
+
+// Paste to AI with context:
+"Getting this error in my Convex mutation when 
+trying to access user.subject. The mutation is 
+called from a protected page."
+
+// AI knows:
+// - It's an auth issue
+// - How Clerk + Convex auth works
+// - The exact fix needed
+```
+
+### Performance issues
+
+```
+"The dashboard is slow when loading projects. 
+Each project shows member count and last activity."
+
+// AI will suggest:
+// - Add database indexes
+// - Implement pagination
+// - Use Convex's reactive queries efficiently
+// - Add loading states
+```
+
+## Advanced AI techniques
+
+### 1. Chain complex features
+
+```
+Step 1: "Create a subscription billing system with Polar"
+// Let AI complete
+
+Step 2: "Add usage-based billing on top of subscriptions"
+// AI understands the context
+
+Step 3: "Add admin dashboard to manage billing"
+// AI builds on previous work
+```
+
+### 2. Refactor with confidence
+
+```
+"Our user authentication is getting complex. 
+Refactor it to use a proper auth context with:
+- Loading states
+- Error handling  
+- Permission levels
+- Team switching"
+```
+
+Because MF2 is predictable, AI can safely refactor without breaking things.
+
+### 3. Generate test scenarios
+
+```
+"Generate test data for development:
+- 100 users with realistic names
+- 500 projects with varied statuses
+- 2000 tasks with relationships
+- Simulate 30 days of activity"
+```
+
+## Setting up your AI environment
+
+### Claude Code configuration
+
+Add to your `CLAUDE.md`:
+
+```markdown
+# CLAUDE.md
+
+## Project Context
+This is an MF2 (Move F*cking Fast) stack application.
+
+## Key Patterns
+- Always use Convex for data (never local state for persisted data)
+- UI components from shadcn/ui
+- Real-time by default
+- Server components where possible, "use client" when needed
+
+## Commands
+- `npm run dev` - Start Next.js
+- `npx convex dev` - Start Convex (separate terminal)
+- `npm run build` - Build for production
+```
+
+### Cursor rules
+
+Create `.cursorrules`:
+
+```
+# MF2 Stack Rules
+
+- Use TypeScript with strict mode
+- Prefer Convex queries/mutations over API routes
+- Components use shadcn/ui
+- Follow Next.js 15 App Router patterns
+- Real-time updates via useQuery hooks
+- Authentication via Clerk
+- Payments via Polar
+- Emails via Resend
+```
+
+### GitHub Copilot workspace
+
+`.github/copilot-workspace.md`:
+
+```markdown
+# MF2 Workspace
+
+## Architecture
+- Frontend: Next.js 15 + TypeScript + Tailwind
+- Backend: Convex (real-time database)
+- Auth: Clerk
+- Payments: Polar
+
+## Conventions
+- Pages: src/app/*/page.tsx
+- Components: src/components/*
+- Backend: convex/*.ts
+```
+
+## When AI gets stuck
+
+<CardGroup cols={2}>
+  <Card title="AI generates old patterns" icon="clock-rotate-left">
+    Add to prompt: "Use Next.js 15 App Router, not pages directory"
+  </Card>
+  <Card title="AI overcomplicates" icon="diagram-project">
+    Add to prompt: "Keep it simple, no abstractions needed"
+  </Card>
+  <Card title="AI ignores Convex" icon="database">
+    Add to prompt: "Use Convex for data, not API routes or local state"
+  </Card>
+  <Card title="AI adds too many deps" icon="package">
+    Add to prompt: "Use only what's already in package.json"
+  </Card>
+</CardGroup>
+
+## The bottom line
+
+MF2 + AI isn't about replacing developers. It's about making one developer as productive as a team. While others debug their clever abstractions, you're shipping features.
+
+The stack is intentionally boring so AI can be exciting. Every pattern is predictable so generation is reliable. The code is explicit so AI never hallucinates.
+
+**This is why MF2 is the stack AI moves fast with. For devs who want to ship fast.**
+
+<Card title="Ready to code at light speed?" icon="rocket" href="/first-app" horizontal>
+  See the AI + MF2 workflow in action by building your first app.
+</Card>

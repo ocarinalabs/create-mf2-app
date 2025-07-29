@@ -1,0 +1,541 @@
+---
+title: "Troubleshooting"
+description: "Get unstuck fast when shit breaks"
+icon: "wrench"
+---
+
+# When Things Go Wrong
+
+**For devs who want to ship fast.** Something broke? Good. That means you're building. Here's how to fix the most common issues in under 2 minutes and get back to shipping.
+
+<Note>
+  **Can't find your error?** Hit Cmd+F and search. If it's not here, you found a new one. [Ask Discord](https://discord.gg/korrect).
+</Note>
+
+## Installation Issues
+
+<AccordionGroup>
+  <Accordion title="npm create mf2-app fails" icon="terminal" defaultOpen>
+    **Symptoms:**
+    - "command not found"
+    - "EACCES permission denied"
+    - Hangs forever
+
+    **Fix:**
+    ```bash
+    # Option 1: Use npx (recommended)
+    npx create-mf2-app@latest my-app
+
+    # Option 2: Clear npm cache
+    npm cache clean --force
+    npm create mf2-app@latest my-app
+
+    # Option 3: Use a different package manager
+    yarn create mf2-app my-app
+    # or
+    pnpm create mf2-app my-app
+    ```
+
+    **Still broken?**
+    ```bash
+    # Nuclear option - direct clone
+    git clone https://github.com/korrect-ai/create-mf2-app
+    cd create-mf2-app/cli/templates/[template-name]
+    npm install
+    ```
+  </Accordion>
+
+  <Accordion title="Dependencies won't install" icon="package">
+    **The error:**
+    ```
+    npm ERR! code ERESOLVE
+    npm ERR! ERESOLVE unable to resolve dependency tree
+    ```
+
+    **Fix:**
+    ```bash
+    # Use force (usually safe with MF2)
+    npm install --force
+
+    # Or use legacy peer deps
+    npm install --legacy-peer-deps
+
+    # Nuclear option
+    rm -rf node_modules package-lock.json
+    npm install
+    ```
+
+    **Prevention:** Use the exact Node version we test with:
+    ```bash
+    node --version  # Should be 18.x or 20.x
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Development Errors
+
+### TypeScript Errors
+
+<AccordionGroup>
+  <Accordion title="Type 'ConvexReactClient' errors" icon="typescript">
+    **The error:**
+    ```typescript
+    Type 'ConvexReactClient' is not assignable to...
+    Cannot find module '@/convex/_generated/api'
+    ```
+
+    **Fix:**
+    ```bash
+    # Convex types not generated yet
+    npx convex dev
+    # Wait for "Watching for file changes" message
+    ```
+
+    **Still broken?**
+    ```bash
+    # Force regenerate
+    rm -rf convex/_generated
+    npx convex codegen
+    ```
+  </Accordion>
+
+  <Accordion title="'use client' directive errors" icon="react">
+    **The error:**
+    ```
+    Error: useState only works in Client Components
+    ```
+
+    **Fix:**
+    ```tsx
+    // Add this at the very top of your file
+    "use client";
+
+    import { useState } from "react";
+    // ... rest of your component
+    ```
+
+    **Rule:** If it uses hooks, state, or browser APIs = needs "use client"
+  </Accordion>
+
+  <Accordion title="Module not found: Can't resolve '@/components'" icon="folder">
+    **Fix your import:**
+    ```tsx
+    // ❌ Wrong
+    import Button from "@components/ui/button"
+    import Button from "components/ui/button"
+    
+    // ✅ Correct
+    import { Button } from "@/components/ui/button"
+    ```
+
+    **Check tsconfig.json:**
+    ```json
+    {
+      "compilerOptions": {
+        "paths": {
+          "@/*": ["./src/*"]
+        }
+      }
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Convex Issues
+
+<AccordionGroup>
+  <Accordion title="Convex dev won't start" icon="database">
+    **Symptoms:**
+    - "Failed to push functions"
+    - "Error: Not authenticated"
+    - Stuck on "Preparing deployment"
+
+    **Fix in order:**
+    ```bash
+    # 1. Login to Convex
+    npx convex login
+
+    # 2. Reinitialize if needed
+    npx convex init
+
+    # 3. Check your .env.local
+    cat .env.local
+    # Should have:
+    # CONVEX_DEPLOYMENT=...
+    # NEXT_PUBLIC_CONVEX_URL=...
+
+    # 4. Restart everything
+    rm -rf .next
+    npm run dev
+    # In another terminal:
+    npx convex dev
+    ```
+  </Accordion>
+
+  <Accordion title="Schema mismatch errors" icon="alert-triangle">
+    **The error:**
+    ```
+    Error: Document does not match schema
+    Field "userId" is required but was not provided
+    ```
+
+    **Quick fix:**
+    ```bash
+    # Clear your database (dev only!)
+    npx convex dashboard
+    # Go to Data tab → Select table → Delete all
+    ```
+
+    **Proper fix:**
+    ```typescript
+    // Add migration in convex/migrations.ts
+    export const backfillUserId = internalMutation({
+      handler: async (ctx) => {
+        const docs = await ctx.db.query("myTable").collect();
+        for (const doc of docs) {
+          if (!doc.userId) {
+            await ctx.db.patch(doc._id, { 
+              userId: "default-user" 
+            });
+          }
+        }
+      },
+    });
+    ```
+  </Accordion>
+
+  <Accordion title="Real-time updates not working" icon="refresh">
+    **Check these in order:**
+
+    1. **ConvexProvider wrapped correctly?**
+    ```tsx
+    // src/app/layout.tsx
+    <ConvexClientProvider>
+      {children}
+    </ConvexClientProvider>
+    ```
+
+    2. **Using the right hooks?**
+    ```tsx
+    // ❌ Wrong
+    const data = await query(api.tasks.get);
+    
+    // ✅ Correct
+    const data = useQuery(api.tasks.get);
+    ```
+
+    3. **Browser extensions blocking WebSocket?**
+    - Try incognito mode
+    - Check console for WebSocket errors
+  </Accordion>
+</AccordionGroup>
+
+### Auth Problems
+
+<AccordionGroup>
+  <Accordion title="Clerk infinite redirect loop" icon="arrows-rotate">
+    **The symptoms:**
+    - Page keeps redirecting
+    - URL has `__clerk_db_jwt` repeating
+
+    **Fix:**
+    ```bash
+    # 1. Check your .env.local
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+    CLERK_SECRET_KEY=sk_test_...
+
+    # 2. Clear all cookies
+    # Open DevTools → Application → Cookies → Clear all
+
+    # 3. Check middleware.ts
+    ```
+    ```typescript
+    // src/middleware.ts
+    export default clerkMiddleware({
+      publicRoutes: ["/", "/api/webhooks(.*)"],
+    });
+    ```
+  </Accordion>
+
+  <Accordion title="'User is null' in authenticated routes" icon="user-slash">
+    **Server component fix:**
+    ```tsx
+    import { auth } from "@clerk/nextjs/server";
+
+    export default async function Page() {
+      const { userId } = await auth();
+      
+      if (!userId) {
+        redirect("/sign-in");
+      }
+      // ... rest of component
+    }
+    ```
+
+    **Client component fix:**
+    ```tsx
+    "use client";
+    import { useUser } from "@clerk/nextjs";
+
+    export default function Component() {
+      const { user, isLoaded } = useUser();
+      
+      if (!isLoaded) return <div>Loading...</div>;
+      if (!user) return <div>Please sign in</div>;
+      
+      // ... rest of component
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Build & Deploy Issues
+
+<AccordionGroup>
+  <Accordion title="Build fails on Vercel" icon="triangle-exclamation">
+    **Common errors and fixes:**
+
+    **1. Environment variables missing**
+    ```bash
+    # Make sure ALL vars from .env.local are in Vercel
+    # Project Settings → Environment Variables
+    ```
+
+    **2. Type errors only in production**
+    ```bash
+    # Build locally first
+    npm run build
+    # Fix any errors before pushing
+    ```
+
+    **3. Module not found**
+    ```json
+    // Check package.json - deps vs devDeps
+    {
+      "dependencies": {
+        // Production deps here
+      },
+      "devDependencies": {
+        // Dev only deps here
+      }
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Edge runtime errors" icon="globe">
+    **The error:**
+    ```
+    Dynamic server usage: headers() / cookies()
+    ```
+
+    **Fix - Force dynamic:**
+    ```typescript
+    // Add to your page.tsx
+    export const runtime = "nodejs"; // not "edge"
+    export const dynamic = "force-dynamic";
+    ```
+
+    **Or make it static:**
+    ```typescript
+    // Remove dynamic imports
+    // Pre-fetch data in generateStaticParams
+    ```
+  </Accordion>
+
+  <Accordion title="Hydration mismatch" icon="droplet">
+    **The error:**
+    ```
+    Error: Hydration failed because the initial UI does not match
+    ```
+
+    **Common causes:**
+    ```tsx
+    // ❌ Date/time that differs server/client
+    <p>{new Date().toLocaleString()}</p>
+
+    // ✅ Use stable values
+    <p>{format(date, "PPP")}</p>
+
+    // ❌ Browser-only APIs without checks
+    <p>{window.location.href}</p>
+
+    // ✅ Check if mounted
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
+    if (!mounted) return null;
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Payment Issues
+
+<AccordionGroup>
+  <Accordion title="Polar webhooks not firing" icon="webhook">
+    **Debug checklist:**
+
+    ```bash
+    # 1. Check webhook secret
+    echo $POLAR_WEBHOOK_SECRET
+    # Should not be empty
+
+    # 2. Verify webhook URL in Polar dashboard
+    # Should be: https://your-app.vercel.app/api/webhooks/polar
+
+    # 3. Check API route
+    # src/app/api/webhooks/polar/route.ts exists?
+
+    # 4. Test locally with ngrok
+    npx ngrok http 3000
+    # Use ngrok URL in Polar webhook settings
+    ```
+
+    **Verify webhook handling:**
+    ```typescript
+    // src/app/api/webhooks/polar/route.ts
+    export async function POST(request: Request) {
+      console.log("Webhook received");
+      // Add logging to debug
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Subscription status not updating" icon="credit-card">
+    **Check these:**
+
+    1. **Webhook processing:**
+    ```typescript
+    // Are you updating the user's status?
+    await ctx.db.patch(userId, {
+      subscriptionStatus: "active",
+      subscriptionId: event.data.id,
+    });
+    ```
+
+    2. **Convex function running?**
+    ```bash
+    # Check Convex logs
+    npx convex dashboard
+    # → Logs tab
+    ```
+
+    3. **Client refreshing?**
+    ```tsx
+    // Force refresh after payment
+    const router = useRouter();
+    router.refresh();
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Performance Issues
+
+<AccordionGroup>
+  <Accordion title="Dev server is slow" icon="gauge">
+    **Speed it up:**
+
+    ```bash
+    # 1. Use Turbopack (Next.js 15)
+    npm run dev # Should already use Turbopack
+
+    # 2. Exclude large folders
+    ```
+    ```json
+    // tsconfig.json
+    {
+      "exclude": [
+        "node_modules",
+        ".next",
+        "out",
+        "public/large-assets"
+      ]
+    }
+    ```
+
+    **Still slow?**
+    ```bash
+    # Clear caches
+    rm -rf .next
+    rm -rf node_modules/.cache
+    
+    # Increase Node memory
+    export NODE_OPTIONS="--max-old-space-size=8192"
+    npm run dev
+    ```
+  </Accordion>
+
+  <Accordion title="Bundle size too large" icon="weight">
+    **Quick wins:**
+
+    ```bash
+    # 1. Analyze bundle
+    npm install -D @next/bundle-analyzer
+    ANALYZE=true npm run build
+    ```
+
+    **2. Fix common issues:**
+    ```typescript
+    // ❌ Importing all of lodash
+    import _ from 'lodash';
+    
+    // ✅ Import only what you need
+    import debounce from 'lodash/debounce';
+
+    // ❌ Client bundle includes server code
+    import { serverOnlyFunction } from './utils';
+    
+    // ✅ Separate client/server code
+    import { clientFunction } from './utils.client';
+    ```
+
+    **3. Lazy load heavy components:**
+    ```tsx
+    const HeavyComponent = dynamic(
+      () => import('./HeavyComponent'),
+      { ssr: false }
+    );
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Still Stuck?
+
+<CardGroup cols={2}>
+  <Card title="Search error message" icon="search" href="https://google.com">
+    Copy the exact error → Google → Someone else had it too
+  </Card>
+  <Card title="Ask the community" icon="discord" href="https://discord.gg/korrect">
+    MF2 Discord has devs who've seen it all
+  </Card>
+  <Card title="Check the source" icon="github" href="https://github.com/korrect-ai/create-mf2-app/issues">
+    Known issues and workarounds
+  </Card>
+  <Card title="When all else fails" icon="twitter" href="https://x.com/korrectai">
+    Tweet at us. We actually respond.
+  </Card>
+</CardGroup>
+
+## The Nuclear Option
+
+Nothing above worked? Time for the nuclear option:
+
+```bash
+# 1. Save your work
+cp -r src src-backup
+
+# 2. Nuke everything
+rm -rf node_modules .next convex/_generated package-lock.json
+
+# 3. Fresh install
+npm install
+
+# 4. Restart services
+npx convex dev
+# New terminal:
+npm run dev
+```
+
+If this doesn't work, you've found a real bug. [Report it](https://github.com/korrect-ai/create-mf2-app/issues) and we'll fix it.
+
+Remember: Every error is just the computer being very specific about what it wants. Give it what it wants and move on. You've got features to ship.
+
+**Move f*cking fast. The stack AI moves fast with.**
