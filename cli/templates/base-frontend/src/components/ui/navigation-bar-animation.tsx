@@ -169,10 +169,7 @@ export function AnimatedNavFramer() {
               className="font-sans text-xs sm:text-sm px-2 sm:px-4 h-7 sm:h-9"
               asChild
             >
-              <a href="#waitlist">
-                <span className="sm:hidden">Get Started</span>
-                <span className="hidden sm:inline">Get Started</span>
-              </a>
+              <a href="#waitlist">Try Free</a>
             </Button>
           </motion.div>
         </motion.div>

@@ -11,38 +11,52 @@ interface FaqItem {
   answer: string;
 }
 
-// CUSTOMIZE THIS: Update these FAQs to match your product
-// Add questions your users actually ask
+// FAQ TIP: Address objections before they become roadblocks
+// - Predict what's stopping users from converting (price, trust, complexity)
+// - Keep it to 5-7 high-value questions max
+// - Answer the unspoken fears: "Is this worth it?" "Will I get stuck?" "Can I trust you?"
+// - Write answers that reduce friction, not create more questions
+//
+// DATA SOURCES: Pull questions from support tickets, customer emails, Google autocomplete
+// - Include general industry questions (not just about you) to capture SEO traffic
+// - FAQs can appear in Google's featured snippets - format Q&A clearly
+//
+// WRITING TIPS:
+// - Keep answers under 100 words but complete - don't just link elsewhere
+// - Start yes/no questions with "Yes" or "No" for instant clarity  
+// - Write from customer's POV: they are "I", you are "you"
+// - Show personality while being direct
+// - Update quarterly based on new support patterns
 const faqItems: FaqItem[] = [
   {
-    question: "What is this product?",
+    question: "What is [Your Product]?",
     answer:
-      "This is where you explain what your product does and who it's for. Keep it simple and focused on the value you provide.",
+      "Address the clarity objection: In 1-2 sentences, explain WHAT you do and WHO it's for. Example: 'We help [target audience] achieve [desired outcome] by [unique method]'.",
   },
   {
     question: "How does it work?",
     answer:
-      "Explain the basic process or workflow. Break it down into simple steps that anyone can understand.",
+      "Reduce complexity fears: Break it down into 3-4 simple steps. Show them it's easier than they think. Use 'You just...' language to make it feel effortless.",
   },
   {
     question: "How much does it cost?",
     answer:
-      "Provide clear pricing information. Mention if there's a free trial, different tiers, or any special offers.",
+      "Price transparency builds trust: State your pricing clearly. If you have tiers, mention the starting price. Always frame price against value: 'Just $X for [major benefit]'.",
   },
   {
-    question: "Is there a free trial?",
+    question: "Do you offer a free trial?",
     answer:
-      "Let users know if they can try before they buy. Explain what's included and for how long.",
+      "Reduce commitment anxiety: Yes/No + details. If yes, specify duration and what's included. If no, mention your guarantee or refund policy instead.",
   },
   {
-    question: "How do I get support?",
+    question: "What if I need help?",
     answer:
-      "Tell users how they can reach you - email, chat, documentation, community forums, etc.",
+      "Build trust through availability: List all support channels (email, chat, docs). Mention response times. This shows you'll be there when they need you.",
   },
   {
     question: "Can I cancel anytime?",
     answer:
-      "Be transparent about your cancellation policy. Users want to know they're not locked in.",
+      "Remove lock-in fears: 'Yes, cancel anytime with one click. No questions asked.' Be direct and clear. This removes the biggest commitment objection.",
   },
 ];
 

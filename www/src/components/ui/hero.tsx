@@ -59,7 +59,7 @@ interface HeroProps {
 
 const Hero = ({ heading, description, buttons }: HeroProps) => {
   const [copied, setCopied] = useState(false);
-  const installCommand = "npm create-mf2-app@latest";
+  const installCommand = "npx create-mf2-app@latest ultrathink";
 
   const githubRepo = useQuery(api.stats.getGithubRepo, {
     name: "korrect-ai/create-mf2-app",
@@ -76,12 +76,15 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
   };
 
   return (
-    <section className="pt-24 sm:pt-32 md:pt-40 pb-4 relative overflow-hidden">
+    <section
+      id="hero"
+      className="pt-24 sm:pt-32 md:pt-40 pb-4 relative overflow-hidden"
+    >
       <div className="container relative">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           <BlurFade delay={0}>
             <Badge variant="outline" className="mb-4">
-              For devs who want to ship fast
+              Skip the setup. Ship the slop.
             </Badge>
           </BlurFade>
 

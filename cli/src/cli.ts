@@ -1,15 +1,16 @@
-import * as p from "@clack/prompts";
 import { Command } from "commander";
 import { validateAppName } from "./utils/validateAppName.js";
 
 export interface CliResults {
   projectName: string;
-  platform: "web" | "mobile" | "desktop";
+  platform: "web" | "mobile" | "desktop" | "extension";
   needsBackend: boolean;
   git: boolean;
+  install: boolean;
 }
 
 export async function runCli(): Promise<CliResults> {
+  const p = await import("@clack/prompts");
   const program = new Command()
     .name("create-mf2-app")
     .description("Create a new MF2 Stack application")
@@ -22,7 +23,6 @@ export async function runCli(): Promise<CliResults> {
 
   const providedName = program.args[0];
 
-  // Get project name first
   const projectName = await p.text({
     message: providedName ? "Project name" : "Project name?",
     initialValue: providedName,
@@ -35,8 +35,7 @@ export async function runCli(): Promise<CliResults> {
     process.exit(0);
   }
 
-  // Platform selection with validation loop
-  let platform: "web" | "mobile" | "desktop";
+  let platform: "web" | "mobile" | "desktop" | "extension";
   while (true) {
     const selectedPlatform = await p.select({
       message: "Platform?",
@@ -44,6 +43,7 @@ export async function runCli(): Promise<CliResults> {
         { value: "web", label: "Web" },
         { value: "mobile", label: "Mobile (Coming Soon)" },
         { value: "desktop", label: "Desktop (Coming Soon)" },
+        { value: "extension", label: "Extension (Coming Soon)" },
       ],
       initialValue: "web",
     });
@@ -53,9 +53,19 @@ export async function runCli(): Promise<CliResults> {
       process.exit(0);
     }
 
-    if (selectedPlatform === "mobile" || selectedPlatform === "desktop") {
+    if (
+      selectedPlatform === "mobile" ||
+      selectedPlatform === "desktop" ||
+      selectedPlatform === "extension"
+    ) {
       p.log.warn(
-        `${selectedPlatform === "mobile" ? "Mobile" : "Desktop"} coming soon.`
+        `${
+          selectedPlatform === "mobile"
+            ? "Mobile"
+            : selectedPlatform === "desktop"
+            ? "Desktop"
+            : "Extension"
+        } coming soon.`
       );
       continue;
     }
@@ -64,14 +74,13 @@ export async function runCli(): Promise<CliResults> {
     break;
   }
 
-  // Backend selection
   const needsBackend = await p.select({
     message: "Building?",
     options: [
-      { value: false, label: "Landing Page" },
-      { value: true, label: "SaaS" },
+      { value: true, label: "Full Stack" },
+      { value: false, label: "Frontend" },
     ],
-    initialValue: false,
+    initialValue: true,
   });
 
   if (p.isCancel(needsBackend)) {
@@ -79,7 +88,6 @@ export async function runCli(): Promise<CliResults> {
     process.exit(0);
   }
 
-  // Git initialization
   const git = await p.select({
     message: "Git repo?",
     options: [
@@ -94,10 +102,25 @@ export async function runCli(): Promise<CliResults> {
     process.exit(0);
   }
 
+  const install = await p.select({
+    message: "Install dependencies?",
+    options: [
+      { value: true, label: "Yes" },
+      { value: false, label: "No" },
+    ],
+    initialValue: true,
+  });
+
+  if (p.isCancel(install)) {
+    p.cancel("Operation cancelled");
+    process.exit(0);
+  }
+
   return {
     projectName: projectName as string,
     platform,
     needsBackend: needsBackend as boolean,
     git: git as boolean,
+    install: install as boolean,
   };
 }

@@ -12,7 +12,28 @@ import { BGPattern } from "@/components/ui/bg-pattern";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-// CUSTOMIZE THIS: Update these tiers to match your product's pricing
+// PRICING TIP: Price for profitability, not popularity
+// - Free tier: Keep it generous enough to hook users, limited enough to upsell
+// - Paid tiers: Price based on value delivered, not your costs
+// - Annual discount: Offer 2+ months free (e.g., $20/mo = $200/year instead of $240)
+// Note: The gap between price and value is your opportunity
+//
+// YC WISDOM: Most startups undercharge (it's the #1 pricing mistake)
+// - Early adopters care about benefits, not price - they'll pay premium for value
+// - Your value should be 10x your price (charge $20 → deliver $200 value)
+// - Raise prices by 5% until you lose 20% of deals - that's the sweet spot
+// - Avoid SMB "danger zone" ($2k-$10k/year) - too expensive for self-serve, too cheap for sales team
+//
+// PRICING MODELS:
+// - Tiered (like this): Best for feature differentiation and upselling
+// - Usage-based: Best when tied to customer success metrics (transactions, API calls)
+// - User-based: Best for team collaboration tools (Slack, Google Workspace)
+//
+// SaaS METRICS TO TRACK:
+// - MRR/ARR: Monthly/Annual Recurring Revenue (primary metric)
+// - CAC: Customer Acquisition Cost (keep below 1/3 of LTV)
+// - Net Revenue Retention: Should be >100% (expansion revenue from existing customers)
+// - Growth Rate: Measure weekly early on, then monthly
 const pricingTiers: PricingTier[] = [
   {
     name: "Starter",
@@ -53,11 +74,11 @@ const pricingTiers: PricingTier[] = [
   {
     name: "Pro",
     price: {
-      monthly: "$0",
-      yearly: "$0",
+      monthly: "$20",
+      yearly: "$200",  // 2 months free
     },
     description:
-      "For growing teams. Add your premium features here. This is where you showcase what makes the upgrade worth it.",
+      "Add your premium features here. This is where you showcase what makes the upgrade worth it.",
     highlighted: false,
     popular: false,
     features: [
@@ -117,11 +138,12 @@ export default function Home() {
       />
       <AnimatedNavFramer />
       <Hero
-        heading="Move F*cking Fast"
-        description="Production-ready starter kit for building modern web applications with AI."
+        heading="Your Headline Should Focus on Transformation, Not Features"
+        description="Expand on your promise here. Explain HOW you deliver the transformation in 1-2 clear sentences. Address their pain point and your unique solution."
+        // CTA Tip: Use specific actions with clear value. Avoid "Get Started" or "Learn More"
         buttons={{
-          primary: { text: "Get started", url: "#waitlist" },
-          secondary: { text: "Learn more", url: "#features" },
+          primary: { text: "Try Free", url: "#waitlist" },
+          secondary: { text: "See How It Works", url: "#features" },
         }}
       />
       <BentoFeatures />

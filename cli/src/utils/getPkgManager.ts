@@ -1,7 +1,6 @@
 export type PackageManager = "npm" | "yarn" | "pnpm" | "bun";
 
 export function getPkgManager(): PackageManager {
-  // Check npm_config_user_agent to detect which package manager is being used
   const userAgent = process.env.npm_config_user_agent;
 
   if (userAgent) {
@@ -14,6 +13,5 @@ export function getPkgManager(): PackageManager {
     }
   }
 
-  // Default to npm
   return "npm";
 }

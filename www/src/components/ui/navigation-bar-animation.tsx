@@ -11,9 +11,10 @@ import { cn } from "@/lib/utils";
 import { Logo } from "@/components/logo";
 
 const navItems = [
+  { name: "Install", href: "#hero" },
   { name: "Stack", href: "#stack" },
+  { name: "Docs", href: "https://docs.mf2.dev" },
   { name: "FAQ", href: "#faq" },
-  { name: "GitHub", href: "https://github.com/korrect-ai/create-mf2-app" },
 ];
 
 const EXPAND_SCROLL_THRESHOLD = 80;

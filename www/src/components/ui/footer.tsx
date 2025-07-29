@@ -119,18 +119,11 @@ interface FooterProps {
 
 const defaultMenuItems: MenuItem[] = [
   {
-    title: "Product",
-    links: [
-      { text: "Stack", url: "#stack" },
-      { text: "CLI", url: "https://github.com/korrect-ai/create-mf2-app" },
-    ],
-  },
-  {
     title: "Resources",
     links: [
       {
         text: "Documentation",
-        url: "https://github.com/korrect-ai/create-mf2-app#readme",
+        url: "https://docs.mf2.dev",
       },
       { text: "FAQ", url: "#faq" },
     ],
@@ -146,7 +139,7 @@ const defaultMenuItems: MenuItem[] = [
     ],
   },
   {
-    title: "Company",
+    title: "About",
     links: [
       { text: "Korrect", url: "https://korrect.ai" },
       { text: "Blog", url: "https://korrect.ai/blog" },
@@ -202,9 +195,12 @@ export function Footer({
       <div className="w-full max-w-[1200px] mx-auto">
         <div className="relative">
           <BlurFade delay={0.1} inView={true}>
-            <div className="grid grid-cols-2 gap-12 lg:gap-20 text-base lg:grid-cols-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-20 text-base justify-items-center mx-auto max-w-4xl">
               {menuItems.map((section, sectionIdx) => (
-                <ul key={sectionIdx} className="space-y-3">
+                <ul
+                  key={sectionIdx}
+                  className="space-y-3 text-center lg:text-left"
+                >
                   <li className="font-sans text-muted-foreground text-sm uppercase tracking-wider mb-4">
                     {section.title}
                   </li>
@@ -224,23 +220,9 @@ export function Footer({
           </BlurFade>
 
           <BlurFade delay={0.15} inView={true}>
-            <div className="flex flex-col justify-between gap-8 lg:flex-row lg:gap-0 border-t border-dashed border-border mt-12 pt-8">
-              <div className="flex flex-col space-y-4 text-sm lg:flex-row lg:items-center lg:space-x-8 lg:space-y-0">
-                {statusItems.map((item, idx) => (
-                  <a
-                    key={idx}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center space-x-2 py-1 text-foreground hover:text-primary transition-colors cursor-pointer"
-                    href={item.href || "#"}
-                  >
-                    <span className="text-green-500 group-hover:text-primary">
-                      {item.icon}
-                    </span>
-                    <span className="font-sans">{item.text}</span>
-                  </a>
-                ))}
-                <div className="flex items-center gap-x-2 text-muted-foreground text-sm">
+            <div className="border-t border-dashed border-border mt-12 pt-8 max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <div className="flex items-center justify-center lg:justify-start gap-x-2 text-muted-foreground text-sm">
                   <LogoComponent className="transition" />
                   <span className="font-sans">
                     {copyright} • Built by{" "}
@@ -252,22 +234,40 @@ export function Footer({
                     </a>
                   </span>
                 </div>
-              </div>
-              <div className="flex space-x-4 text-foreground">
-                {socialLinks.map((social, idx) => (
-                  <a
-                    key={idx}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-foreground hover:text-primary transition-colors"
-                    href={social.href}
-                    aria-label={social.label}
-                  >
-                    <div className="size-7 flex items-center justify-center">
-                      {social.icon}
-                    </div>
-                  </a>
-                ))}
+
+                <div className="flex flex-col space-y-4 text-sm lg:flex-row lg:items-center lg:justify-center lg:space-x-8 lg:space-y-0">
+                  {statusItems.map((item, idx) => (
+                    <a
+                      key={idx}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-center space-x-2 py-1 text-foreground hover:text-primary transition-colors cursor-pointer"
+                      href={item.href || "#"}
+                    >
+                      <span className="text-green-500 group-hover:text-primary">
+                        {item.icon}
+                      </span>
+                      <span className="font-sans">{item.text}</span>
+                    </a>
+                  ))}
+                </div>
+
+                <div className="flex space-x-4 text-foreground justify-center lg:justify-end">
+                  {socialLinks.map((social, idx) => (
+                    <a
+                      key={idx}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-foreground hover:text-primary transition-colors"
+                      href={social.href}
+                      aria-label={social.label}
+                    >
+                      <div className="size-7 flex items-center justify-center">
+                        {social.icon}
+                      </div>
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </BlurFade>

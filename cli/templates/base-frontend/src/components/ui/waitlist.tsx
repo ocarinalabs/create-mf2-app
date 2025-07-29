@@ -7,6 +7,34 @@ import { Confetti } from "@/components/ui/confetti";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
+// WAITLIST TIP: Signups ≠ Validation (typical conversion is only 2-20%)
+// - Real validation: People willing to talk to you, give feedback, or pay
+// - Red flags: No email responses, bot signups, "mailbox full" bounces
+// - Quality > Quantity: 200 engaged users > 1000 random signups
+//
+// COMMUNITY BUILDING: These are your potential early adopters - engage them!
+// - Don't just collect emails - use them immediately
+// - Be transparent: Tell them upfront you'll invite to Discord/Slack, send updates
+// - Manual outreach works: Reach out personally, have 10min calls
+// - Focus on people who respond - they're your real users
+//
+// WHAT TO DO WITH EMAILS:
+// - Create a community space (Discord/Slack) and invite them
+// - Send weekly progress updates showing you're building
+// - Ask for feedback and actually implement it
+// - Give early access, special pricing, or founder benefits
+// - Launch fast - long waits kill interest and momentum
+//
+// REMEMBER: Building a waitlist is about building relationships, not collecting emails
+// The goal is to find people who care enough to help shape your product
+//
+// WARNING - THE HARSH REALITY:
+// - Paid ads may result in bot signups
+// - Signups from clickfarm countries when that's not your market
+// - Many successful founders skip waitlists and just launch to a small group
+// - Without talking to customers, you probably don't have any.
+// - 100 signups ≠ $5k MRR. More like 0-2 paying customers if you can't reach them
+
 export function Waitlist() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<
@@ -60,13 +88,13 @@ export function Waitlist() {
       <div className="mx-auto max-w-2xl text-center relative z-10">
         <BlurFade delay={0.25} duration={0.5} inView>
           <h2 className="font-sans text-3xl font-light mb-4 lg:text-5xl">
-            Request Access
+            Validate Your Idea
           </h2>
         </BlurFade>
 
         <BlurFade delay={0.3} duration={0.5} inView>
           <p className="text-lg text-muted-foreground mb-8">
-            Build your community and notify users when you go live
+            Test if people care enough to share their email (and eventually pay)
           </p>
         </BlurFade>
 

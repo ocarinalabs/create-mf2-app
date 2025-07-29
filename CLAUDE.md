@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ### CLI Development
+
 ```bash
 # Install dependencies
 npm install
@@ -26,6 +27,7 @@ npm run typecheck
 ```
 
 ### Website Development
+
 ```bash
 cd www
 
@@ -58,6 +60,7 @@ npx convex dev
 This is a monorepo containing:
 
 1. **CLI Tool** (`/cli`): The `create-mf2-app` CLI for scaffolding new projects
+
    - Written in TypeScript, built with tsup
    - Uses commander for CLI interface, clack/prompts for interactions
    - Templates stored in `/cli/templates/`
@@ -70,6 +73,7 @@ This is a monorepo containing:
 ### CLI Architecture
 
 **Key Components:**
+
 - `cli/src/index.ts`: Entry point, sets up commander
 - `cli/src/cli.ts`: Main CLI logic and flow
 - `cli/src/helpers/`: Core functionality
@@ -79,10 +83,12 @@ This is a monorepo containing:
   - `installDependencies.ts`: Package installation
 
 **Templates:**
+
 - `base-frontend`: Landing pages, marketing sites
 - `base-fullstack`: Full SaaS apps with Convex, Clerk, Polar
 
 **Build Process:**
+
 - Uses tsup for fast TypeScript compilation
 - Outputs to CommonJS format for Node.js compatibility
 - Includes shims for Node.js built-ins
@@ -93,7 +99,8 @@ This is a monorepo containing:
 
 2. **Git Integration**: Initializes git repo with proper `.gitignore` handling
 
-3. **Template System**: 
+3. **Template System**:
+
    - Templates are complete, working applications
    - Each template has its own `CLAUDE.md` for guidance
    - Frontend template includes comprehensive shadcn/ui components
@@ -108,6 +115,7 @@ This is a monorepo containing:
 ### Publishing
 
 The CLI is published to npm as `create-mf2-app`. Users can run:
+
 - `npm create mf2-app@latest`
 - `yarn create mf2-app`
 - `pnpm create mf2-app`

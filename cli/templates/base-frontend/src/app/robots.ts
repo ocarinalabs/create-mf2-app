@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: "https://robin.com/sitemap.xml", // Update this to your actual domain
+    sitemap: "https://example.com/sitemap.xml", // TODO: Update this to your actual domain
   };
 }

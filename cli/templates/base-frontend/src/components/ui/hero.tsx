@@ -42,7 +42,7 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           <BlurFade delay={0}>
             <Badge variant="outline" className="mb-4">
-              For shipping fast
+              Eyebrow text sets context: who this is for
             </Badge>
           </BlurFade>
 
@@ -83,14 +83,14 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
 
           <BlurFade delay={0.2}>
             <p className="text-sm text-muted-foreground mb-4">
-              Clone, prompt, ship
+              CTA subtext reduces hesitation and makes clicking feel safe
             </p>
           </BlurFade>
 
-          {/* Tech stack */}
+          {/* Tech stack marquee - showcases credibility through technology choices */}
           <BlurFade delay={0.25}>
             <p className="text-center text-muted-foreground font-sans text-sm mt-8">
-              Build with modern tools developers and LLMs love
+              Use this marquee to showcase your tech stack, integrations, or key partners
             </p>
           </BlurFade>
 

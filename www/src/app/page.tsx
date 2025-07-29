@@ -30,7 +30,7 @@ export default function Home() {
         buttons={{
           primary: {
             text: "Docs",
-            url: "https://github.com/korrect-ai/create-mf2-app",
+            url: "https://docs.mf2.dev",
           },
           secondary: {
             text: "Deploy",

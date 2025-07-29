@@ -1,4 +1,4 @@
-import chalk from "chalk";
+// @ts-ignore - gradient-string doesn't have types
 import gradient from "gradient-string";
 
 export function renderTitle() {

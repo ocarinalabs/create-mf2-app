@@ -1,5 +1,3 @@
-import { execa } from "execa";
-import ora from "ora";
 import { type PackageManager } from "../utils/getPkgManager.js";
 
 interface InstallDependenciesOptions {
@@ -12,13 +10,13 @@ export async function installDependencies(
 ): Promise<void> {
   const { projectDir, pkgManager } = options;
 
+  const ora = (await import("ora")).default;
+  const { execa } = await import("execa");
   const spinner = ora("Installing dependencies...").start();
 
   try {
-    // Get the install command for the package manager
     const installCommand = getInstallCommand(pkgManager);
 
-    // Run the install command
     await execa(pkgManager, installCommand, {
       cwd: projectDir,
       stdio: "ignore",

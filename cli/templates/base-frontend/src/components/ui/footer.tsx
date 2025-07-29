@@ -147,10 +147,10 @@ const defaultMenuItems: MenuItem[] = [
     ],
   },
   {
-    title: "Company",
+    title: "About",
     links: [
-      { text: "About", url: "/about" },
-      { text: "Contact", url: "/contact" },
+      { text: "Contact", url: "mailto:your@email.com" },
+      { text: "Blog", url: "/blog" },
     ],
   },
   {

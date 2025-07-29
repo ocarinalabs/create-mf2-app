@@ -479,7 +479,6 @@ export default function BeamsBackground() {
         scale={0.15}
         rotation={43}
       />
-      {/* Gradient overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30" />
     </div>
   );
