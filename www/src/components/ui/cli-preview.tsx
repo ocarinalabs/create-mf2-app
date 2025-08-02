@@ -11,21 +11,31 @@ interface CliLine {
 }
 
 const cliFlow: CliLine[] = [
-  { type: "command", text: "npm create-mf2-app@latest", typed: true, delay: 0 },
+  { type: "command", text: "npx create-mf2-app@latest", typed: true, delay: 0 },
   { type: "output", text: "", delay: 400 },
-  { type: "output", text: "◇  Project name", delay: 100 },
-  { type: "output", text: "│  my-mf2-app", delay: 500 },
+  { type: "output", text: "◇  What will your project be called?", delay: 100 },
+  { type: "output", text: "│  my-startup", delay: 500 },
   { type: "output", text: "", delay: 150 },
-  { type: "output", text: "◇  Platform?", delay: 100 },
+  { type: "output", text: "◇  Which platform are you building for?", delay: 100 },
   { type: "output", text: "│  ● Web", delay: 20 },
-  { type: "output", text: "│  ○ Mobile (Coming Soon)", delay: 30 },
-  { type: "output", text: "│  ○ Desktop (Coming Soon)", delay: 30 },
+  { type: "output", text: "│  ○ Mobile (coming soon)", delay: 30 },
+  { type: "output", text: "│  ○ Desktop (coming soon)", delay: 30 },
+  { type: "output", text: "│  ○ Extension (coming soon)", delay: 30 },
   { type: "output", text: "", delay: 900 },
-  { type: "output", text: "◇  Building?", delay: 100 },
-  { type: "output", text: "│  ○ Landing Page", delay: 20 },
-  { type: "output", text: "│  ● SaaS", delay: 30 },
+  { type: "output", text: "◇  What are you building?", delay: 100 },
+  { type: "output", text: "│  ● Full Stack (database, auth, payments, emails)", delay: 20 },
+  { type: "output", text: "│  ○ Full Stack + AI (agents, RAG, chat interface)", delay: 30 },
+  { type: "output", text: "│  ○ Frontend (landing pages, marketing sites)", delay: 30 },
   { type: "output", text: "", delay: 700 },
-  { type: "output", text: "◇  Git repo?", delay: 100 },
+  { type: "output", text: "◇  Would you like to include documentation?", delay: 100 },
+  { type: "output", text: "│  ● Yes (powered by Mintlify)", delay: 20 },
+  { type: "output", text: "│  ○ No", delay: 30 },
+  { type: "output", text: "", delay: 600 },
+  { type: "output", text: "◇  Should we initialize a Git repository?", delay: 100 },
+  { type: "output", text: "│  ● Yes", delay: 20 },
+  { type: "output", text: "│  ○ No", delay: 30 },
+  { type: "output", text: "", delay: 600 },
+  { type: "output", text: "◇  Should we install dependencies?", delay: 100 },
   { type: "output", text: "│  ● Yes", delay: 20 },
   { type: "output", text: "│  ○ No", delay: 30 },
   { type: "output", text: "", delay: 600 },
@@ -36,13 +46,18 @@ const cliFlow: CliLine[] = [
     delay: 2200,
   },
   { type: "output", text: "✔ Git repository initialized", delay: 300 },
+  { type: "output", text: "✔ Documentation setup complete!", delay: 300 },
   { type: "output", text: "", delay: 100 },
   { type: "output", text: "Done!", delay: 200 },
   { type: "output", text: "", delay: 100 },
-  { type: "output", text: "cd my-mf2-app", delay: 50 },
-  { type: "output", text: "npm run dev", delay: 50 },
+  { type: "output", text: "cd my-startup", delay: 50 },
+  { type: "output", text: "cp .env.example .env.local", delay: 50 },
+  { type: "output", text: "", delay: 50 },
+  { type: "output", text: "Run in separate terminals:", delay: 50 },
+  { type: "output", text: "1. npm run dev", delay: 50 },
+  { type: "output", text: "2. npx convex dev", delay: 50 },
   { type: "output", text: "", delay: 100 },
-  { type: "output", text: "Move F*cking Fast", delay: 150 },
+  { type: "output", text: "Move F*cking Fast.", delay: 150 },
 ];
 
 export function CliPreview() {
@@ -112,7 +127,7 @@ export function CliPreview() {
                       <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-green-500" />
                     </div>
                     <div className="p-4 sm:p-4 md:p-6 font-mono text-xs sm:text-sm md:text-base">
-                      <div className="space-y-1 min-h-[650px] sm:min-h-[650px] md:min-h-[800px]">
+                      <div className="space-y-1 min-h-[1200px] sm:min-h-[1200px] md:min-h-[1200px]">
                         {cliFlow.slice(0, displayedLines).map((line, index) => (
                           <div key={index} className="min-h-[1.5em]">
                             {line.type === "command" && (

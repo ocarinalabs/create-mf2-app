@@ -59,7 +59,7 @@ interface HeroProps {
 
 const Hero = ({ heading, description, buttons }: HeroProps) => {
   const [copied, setCopied] = useState(false);
-  const installCommand = "npx create-mf2-app@latest ultrathink";
+  const installCommand = "npx create-mf2-app@latest";
 
   const githubRepo = useQuery(api.stats.getGithubRepo, {
     name: "korrect-ai/create-mf2-app",
