@@ -75,7 +75,7 @@ const pricingTiers: PricingTier[] = [
     name: "Pro",
     price: {
       monthly: "$20",
-      yearly: "$200",  // 2 months free
+      yearly: "$200", // 2 months free
     },
     description:
       "Add your premium features here. This is where you showcase what makes the upgrade worth it.",

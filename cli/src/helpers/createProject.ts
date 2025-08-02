@@ -4,36 +4,54 @@ import path from "path";
 interface CreateProjectOptions {
   projectName: string;
   platform: string;
-  needsBackend: boolean;
+  template: string;
 }
 
 export async function createProject(
   options: CreateProjectOptions
 ): Promise<string> {
-  const { projectName, needsBackend } = options;
-  const projectDir = path.join(process.cwd(), projectName);
+  const { projectName, template } = options;
+  const isCurrentDir = projectName === ".";
+  const projectDir = isCurrentDir ? process.cwd() : path.join(process.cwd(), projectName);
+  const actualProjectName = isCurrentDir ? path.basename(process.cwd()) : projectName;
 
   const ora = (await import("ora")).default;
-  const spinner = ora("Creating project directory...").start();
+  const spinner = ora(isCurrentDir ? "Setting up in current directory..." : "Creating project directory...").start();
 
   try {
-    try {
-      await fs.access(projectDir);
-      spinner.fail(`Directory ${projectName} already exists`);
-      throw new Error(`Directory ${projectName} already exists`);
-    } catch {}
+    if (isCurrentDir) {
+      // Check if current directory is empty (allow .git and common hidden files)
+      const files = await fs.readdir(projectDir);
+      const nonHiddenFiles = files.filter(file => 
+        !file.startsWith('.') && 
+        file !== 'node_modules' && 
+        file !== '.DS_Store'
+      );
+      
+      if (nonHiddenFiles.length > 0) {
+        spinner.fail("Current directory is not empty");
+        throw new Error("Current directory is not empty. Please run this command in an empty directory.");
+      }
+    } else {
+      // Check if directory already exists
+      try {
+        await fs.access(projectDir);
+        spinner.fail(`Directory ${projectName} already exists`);
+        throw new Error(`Directory ${projectName} already exists`);
+      } catch {}
 
-    await fs.mkdir(projectDir, { recursive: true });
+      await fs.mkdir(projectDir, { recursive: true });
+    }
 
     spinner.text = "Copying template files...";
-    const templateName = needsBackend ? "base-fullstack" : "base-frontend";
-    // Use Node.js __dirname which is available in CommonJS
-    // When bundled by tsup, this will be cli/dist/, so we go up one level
+    const templateName = template === "frontend" ? "base-frontend" : 
+                        template === "fullstack" ? "base-fullstack" : 
+                        "base-fullstack-ai";
     const templateDir = path.join(__dirname, "..", "templates", templateName);
 
     await copyTemplate(templateDir, projectDir);
 
-    await updatePackageJson(projectDir, projectName);
+    await updatePackageJson(projectDir, actualProjectName);
 
     spinner.succeed("Project created successfully");
 
@@ -51,7 +69,6 @@ async function copyTemplate(templateDir: string, projectDir: string) {
     const srcPath = path.join(templateDir, file.name);
     const destPath = path.join(projectDir, file.name);
 
-    // Skip node_modules directory
     if (file.name === "node_modules") {
       continue;
     }
@@ -78,7 +95,15 @@ async function updatePackageJson(projectDir: string, projectName: string) {
   const packageJsonPath = path.join(projectDir, "package.json");
   const packageJson = JSON.parse(await fs.readFile(packageJsonPath, "utf-8"));
 
-  packageJson.name = projectName;
+  const npmName = projectName
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-._]/g, '')
+    .replace(/^[._]/, '')
+    .replace(/^-+/, '')
+    .replace(/-+$/, '');
+
+  packageJson.name = npmName || 'my-app';
 
   await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 }

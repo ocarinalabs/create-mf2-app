@@ -17,7 +17,6 @@ if (!process.env.CLERK_SECRET_KEY) {
   throw new Error("Missing CLERK_SECRET_KEY environment variable");
 }
 
-// Initialize Clerk client
 const clerkClient = createClerkClient({
   secretKey: process.env.CLERK_SECRET_KEY!,
 });
@@ -38,7 +37,6 @@ export const userLoginStatus = query(
   > => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
-      // no JWT token, user hasn't completed login flow yet
       return ["No JWT Token", null];
     }
     const user = await getCurrentUser(ctx);
@@ -72,6 +70,22 @@ export const updateOrCreateUser = internalMutation({
       const colors = ["red", "green", "blue"];
       const color = colors[Math.floor(Math.random() * colors.length)];
       await ctx.db.insert("users", { clerkUser, color });
+
+      const primaryEmail = clerkUser.email_addresses?.find(
+        (email) => email.id === clerkUser.primary_email_address_id
+      );
+
+      if (primaryEmail?.email_address) {
+        try {
+          await ctx.scheduler.runAfter(0, api.emails.sendWelcomeEmail, {
+            to: primaryEmail.email_address,
+            username: clerkUser.first_name || clerkUser.username || "User",
+          });
+        } catch (error) {
+          console.error("Failed to send welcome email:", error);
+          // Don't fail user creation if email fails
+        }
+      }
     } else {
       await ctx.db.patch(userRecord._id, { clerkUser });
     }

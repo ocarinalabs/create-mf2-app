@@ -4,9 +4,10 @@ import { validateAppName } from "./utils/validateAppName.js";
 export interface CliResults {
   projectName: string;
   platform: "web" | "mobile" | "desktop" | "extension";
-  needsBackend: boolean;
+  template: "frontend" | "fullstack" | "fullstack-ai";
   git: boolean;
   install: boolean;
+  docs: boolean;
 }
 
 export async function runCli(): Promise<CliResults> {
@@ -24,7 +25,7 @@ export async function runCli(): Promise<CliResults> {
   const providedName = program.args[0];
 
   const projectName = await p.text({
-    message: providedName ? "Project name" : "Project name?",
+    message: "What will your project be called?",
     initialValue: providedName,
     placeholder: providedName ? undefined : "my-startup",
     validate: validateAppName,
@@ -38,12 +39,27 @@ export async function runCli(): Promise<CliResults> {
   let platform: "web" | "mobile" | "desktop" | "extension";
   while (true) {
     const selectedPlatform = await p.select({
-      message: "Platform?",
+      message: "Which platform are you building for?",
       options: [
-        { value: "web", label: "Web" },
-        { value: "mobile", label: "Mobile (Coming Soon)" },
-        { value: "desktop", label: "Desktop (Coming Soon)" },
-        { value: "extension", label: "Extension (Coming Soon)" },
+        { 
+          value: "web", 
+          label: "Web"
+        },
+        { 
+          value: "mobile", 
+          label: "Mobile",
+          hint: "coming soon"
+        },
+        { 
+          value: "desktop", 
+          label: "Desktop",
+          hint: "coming soon"
+        },
+        { 
+          value: "extension", 
+          label: "Extension",
+          hint: "coming soon"
+        },
       ],
       initialValue: "web",
     });
@@ -74,25 +90,65 @@ export async function runCli(): Promise<CliResults> {
     break;
   }
 
-  const needsBackend = await p.select({
-    message: "Building?",
+  const template = await p.select({
+    message: "What are you building?",
     options: [
-      { value: true, label: "Full Stack" },
-      { value: false, label: "Frontend" },
+      { 
+        value: "fullstack", 
+        label: "Full Stack",
+        hint: "database, auth, payments, emails"
+      },
+      { 
+        value: "fullstack-ai", 
+        label: "Full Stack + AI",
+        hint: "agents, RAG, chat interface"
+      },
+      { 
+        value: "frontend", 
+        label: "Frontend",
+        hint: "landing pages, marketing sites"
+      },
+    ],
+    initialValue: "fullstack",
+  });
+
+  if (p.isCancel(template)) {
+    p.cancel("Operation cancelled");
+    process.exit(0);
+  }
+
+  const docs = await p.select({
+    message: "Would you like to include documentation?",
+    options: [
+      { 
+        value: true, 
+        label: "Yes",
+        hint: "powered by Mintlify"
+      },
+      { 
+        value: false, 
+        label: "No"
+      },
     ],
     initialValue: true,
   });
 
-  if (p.isCancel(needsBackend)) {
+  if (p.isCancel(docs)) {
     p.cancel("Operation cancelled");
     process.exit(0);
   }
 
   const git = await p.select({
-    message: "Git repo?",
+    message: "Should we initialize a Git repository?",
     options: [
-      { value: true, label: "Yes" },
-      { value: false, label: "No" },
+      { 
+        value: true, 
+        label: "Yes"
+      },
+      { 
+        value: false, 
+        label: "No"
+      },
     ],
     initialValue: true,
   });
@@ -103,10 +159,16 @@ export async function runCli(): Promise<CliResults> {
   }
 
   const install = await p.select({
-    message: "Install dependencies?",
+    message: "Should we install dependencies?",
     options: [
-      { value: true, label: "Yes" },
-      { value: false, label: "No" },
+      { 
+        value: true, 
+        label: "Yes"
+      },
+      { 
+        value: false, 
+        label: "No"
+      },
     ],
     initialValue: true,
   });
@@ -119,8 +181,9 @@ export async function runCli(): Promise<CliResults> {
   return {
     projectName: projectName as string,
     platform,
-    needsBackend: needsBackend as boolean,
+    template: template as "frontend" | "fullstack" | "fullstack-ai",
     git: git as boolean,
     install: install as boolean,
+    docs: docs as boolean,
   };
 }

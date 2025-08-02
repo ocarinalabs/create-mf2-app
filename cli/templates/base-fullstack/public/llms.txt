@@ -1,50 +1,35 @@
-# MF2 Stack
+# Your Product Name
 
-The opinionated SaaS starter with Next.js, Convex, Clerk, and Polar. Ship your startup in days, not months.
+A brief description of your product or service. Replace this with your own compelling product description.
 
 ## Overview
 
-MF2 Stack (Move F***ing Fast Stack) is a battle-tested, production-ready starter template that combines the best modern web technologies with zero-config abstractions. Built for founders and developers who want to focus on their product, not infrastructure.
+Customize this section to describe what makes your product unique and valuable to users.
 
-## Tech Stack
+## Key Features
 
-- **Next.js 15** - React framework with App Router
-- **Convex** - Real-time database and backend
-- **Clerk** - Authentication and user management
-- **Polar** - Developer-focused payments and subscriptions
-- **shadcn/ui** - Beautiful, accessible components
-- **Tailwind CSS** - Utility-first styling
-- **TypeScript** - Type safety throughout
-- **Framer Motion** - Smooth animations
-- **Vercel** - Deployment and analytics
+Describe your product's main features here. For example:
+- Feature 1: Brief description
+- Feature 2: Brief description
+- Feature 3: Brief description
+- Feature 4: Brief description
 
-## Features
+## Why Choose Us
 
-- 🔐 Authentication with Clerk (social logins, magic links)
-- 💳 Payments with Polar (subscriptions, one-time)
-- 🗄️ Real-time database with Convex
-- 🎨 Beautiful UI with shadcn/ui and Tailwind
-- 🌙 Dark mode support
-- 📊 Analytics with Vercel
-- 📧 Email with Resend
-- 🚀 One-click deploy to Vercel
+Explain the benefits and value proposition of your product:
+- Benefit 1
+- Benefit 2
+- Benefit 3
+- Benefit 4
 
 ## Getting Started
 
-```bash
-npx startdown@latest
-```
+Provide instructions on how users can get started with your product or service. This could include sign-up steps, installation instructions, or usage guidelines.
 
-Follow the prompts to set up your project. You'll need accounts with:
-- Convex (database)
-- Clerk (auth)
-- Polar (payments)
-- Vercel (hosting)
+## Contact
 
-## Documentation
+Add your contact information or support channels here.
 
-Full documentation available at https://mf2stack.dev/docs
+## Built With
 
-## License
-
-MIT
+Modern tools and technologies to help you build faster.

@@ -1,4 +1,8 @@
 export function validateAppName(name: string): string | undefined {
+  if (name === ".") {
+    return undefined;
+  }
+
   const validation = validateNpmName(name);
 
   if (validation.valid) {
