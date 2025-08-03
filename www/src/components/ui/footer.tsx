@@ -141,8 +141,8 @@ const defaultMenuItems: MenuItem[] = [
   {
     title: "About",
     links: [
-      { text: "Korrect", url: "https://korrect.ai" },
-      { text: "Blog", url: "https://korrect.ai/blog" },
+      { text: "Korrect", url: "https://korrectai.com" },
+      { text: "Blog", url: "https://korrectai.com/blog" },
     ],
   },
 ];
@@ -227,7 +227,7 @@ export function Footer({
                   <span className="font-sans">
                     {copyright} • Built by{" "}
                     <a
-                      href="https://korrect.ai"
+                      href="https://korrectai.com"
                       className="underline hover:text-foreground transition-colors"
                     >
                       ⊨ Korrect
