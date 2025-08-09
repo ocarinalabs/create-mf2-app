@@ -2,12 +2,14 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
 export const addToWaitlist = mutation({
-  args: { 
+  args: {
     email: v.string(),
-    metadata: v.optional(v.object({
-      source: v.optional(v.string()),
-      referrer: v.optional(v.string()),
-    }))
+    metadata: v.optional(
+      v.object({
+        source: v.optional(v.string()),
+        referrer: v.optional(v.string()),
+      })
+    ),
   },
   handler: async (ctx, args) => {
     // Check if email already exists
@@ -76,13 +78,18 @@ export const getWaitlistStats = query({
 
     // Get entries by day for the last 7 days
     const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
-    const recentEntries = waitlist.filter((entry) => entry.createdAt > sevenDaysAgo);
-    
-    const entriesByDay = recentEntries.reduce((acc, entry) => {
-      const date = new Date(entry.createdAt).toISOString().split('T')[0];
-      acc[date] = (acc[date] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const recentEntries = waitlist.filter(
+      (entry) => entry.createdAt > sevenDaysAgo
+    );
+
+    const entriesByDay = recentEntries.reduce(
+      (acc, entry) => {
+        const date = new Date(entry.createdAt).toISOString().split("T")[0];
+        acc[date] = (acc[date] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     return {
       total: waitlist.length,

@@ -8,15 +8,48 @@
  * @module
  */
 
+import type * as agents_fashion from "../agents/fashion.js";
+import type * as agents_simple from "../agents/simple.js";
+import type * as agents_story from "../agents/story.js";
+import type * as agents_weather from "../agents/weather.js";
+import type * as auth_config from "../auth/config.js";
+import type * as auth_users from "../auth/users.js";
+import type * as chat_basic from "../chat/basic.js";
+import type * as chat_human from "../chat/human.js";
+import type * as chat_streamAbort from "../chat/streamAbort.js";
+import type * as chat_streaming from "../chat/streaming.js";
 import type * as crons from "../crons.js";
-import type * as emailEvents from "../emailEvents.js";
-import type * as emails from "../emails.js";
+import type * as debugging_rawRequestResponseHandler from "../debugging/rawRequestResponseHandler.js";
+import type * as email_actions from "../email/actions.js";
+import type * as email_events from "../email/events.js";
+import type * as email_utils from "../email/utils.js";
+import type * as files_addFile from "../files/addFile.js";
+import type * as files_autoSave from "../files/autoSave.js";
+import type * as files_generateImage from "../files/generateImage.js";
+import type * as files_vacuum from "../files/vacuum.js";
 import type * as http from "../http.js";
-import type * as messages from "../messages.js";
-import type * as polar from "../polar.js";
-import type * as polarCleanup from "../polarCleanup.js";
-import type * as users from "../users.js";
+import type * as models from "../models.js";
+import type * as payments_cleanup from "../payments/cleanup.js";
+import type * as payments_polar from "../payments/polar.js";
+import type * as playground from "../playground.js";
+import type * as rag_ragAsPrompt from "../rag/ragAsPrompt.js";
+import type * as rag_ragAsTools from "../rag/ragAsTools.js";
+import type * as rag_tables from "../rag/tables.js";
+import type * as rag_utils from "../rag/utils.js";
+import type * as rate_limiting_rateLimiting from "../rate_limiting/rateLimiting.js";
+import type * as rate_limiting_tables from "../rate_limiting/tables.js";
+import type * as rate_limiting_utils from "../rate_limiting/utils.js";
+import type * as threads from "../threads.js";
+import type * as tools_agentAsTool from "../tools/agentAsTool.js";
+import type * as tools_searchMessages from "../tools/searchMessages.js";
+import type * as tools_updateThreadTitle from "../tools/updateThreadTitle.js";
+import type * as tools_weather from "../tools/weather.js";
+import type * as usage_tracking_invoicing from "../usage_tracking/invoicing.js";
+import type * as usage_tracking_tables from "../usage_tracking/tables.js";
+import type * as usage_tracking_usageHandler from "../usage_tracking/usageHandler.js";
+import type * as utils from "../utils.js";
 import type * as waitlist from "../waitlist.js";
+import type * as workflows_chaining from "../workflows/chaining.js";
 
 import type {
   ApiFromModules,
@@ -33,15 +66,48 @@ import type {
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  "agents/fashion": typeof agents_fashion;
+  "agents/simple": typeof agents_simple;
+  "agents/story": typeof agents_story;
+  "agents/weather": typeof agents_weather;
+  "auth/config": typeof auth_config;
+  "auth/users": typeof auth_users;
+  "chat/basic": typeof chat_basic;
+  "chat/human": typeof chat_human;
+  "chat/streamAbort": typeof chat_streamAbort;
+  "chat/streaming": typeof chat_streaming;
   crons: typeof crons;
-  emailEvents: typeof emailEvents;
-  emails: typeof emails;
+  "debugging/rawRequestResponseHandler": typeof debugging_rawRequestResponseHandler;
+  "email/actions": typeof email_actions;
+  "email/events": typeof email_events;
+  "email/utils": typeof email_utils;
+  "files/addFile": typeof files_addFile;
+  "files/autoSave": typeof files_autoSave;
+  "files/generateImage": typeof files_generateImage;
+  "files/vacuum": typeof files_vacuum;
   http: typeof http;
-  messages: typeof messages;
-  polar: typeof polar;
-  polarCleanup: typeof polarCleanup;
-  users: typeof users;
+  models: typeof models;
+  "payments/cleanup": typeof payments_cleanup;
+  "payments/polar": typeof payments_polar;
+  playground: typeof playground;
+  "rag/ragAsPrompt": typeof rag_ragAsPrompt;
+  "rag/ragAsTools": typeof rag_ragAsTools;
+  "rag/tables": typeof rag_tables;
+  "rag/utils": typeof rag_utils;
+  "rate_limiting/rateLimiting": typeof rate_limiting_rateLimiting;
+  "rate_limiting/tables": typeof rate_limiting_tables;
+  "rate_limiting/utils": typeof rate_limiting_utils;
+  threads: typeof threads;
+  "tools/agentAsTool": typeof tools_agentAsTool;
+  "tools/searchMessages": typeof tools_searchMessages;
+  "tools/updateThreadTitle": typeof tools_updateThreadTitle;
+  "tools/weather": typeof tools_weather;
+  "usage_tracking/invoicing": typeof usage_tracking_invoicing;
+  "usage_tracking/tables": typeof usage_tracking_tables;
+  "usage_tracking/usageHandler": typeof usage_tracking_usageHandler;
+  utils: typeof utils;
   waitlist: typeof waitlist;
+  "workflows/chaining": typeof workflows_chaining;
 }>;
 declare const fullApiWithMounts: typeof fullApi;
 
@@ -55,95 +121,6 @@ export declare const internal: FilterApi<
 >;
 
 export declare const components: {
-  actionCache: {
-    crons: {
-      purge: FunctionReference<
-        "mutation",
-        "internal",
-        { expiresAt?: number },
-        null
-      >;
-    };
-    lib: {
-      get: FunctionReference<
-        "query",
-        "internal",
-        { args: any; name: string; ttl: number | null },
-        { kind: "hit"; value: any } | { expiredEntry?: string; kind: "miss" }
-      >;
-      put: FunctionReference<
-        "mutation",
-        "internal",
-        {
-          args: any;
-          expiredEntry?: string;
-          name: string;
-          ttl: number | null;
-          value: any;
-        },
-        { cacheHit: boolean; deletedExpiredEntry: boolean }
-      >;
-      remove: FunctionReference<
-        "mutation",
-        "internal",
-        { args: any; name: string },
-        null
-      >;
-      removeAll: FunctionReference<
-        "mutation",
-        "internal",
-        { batchSize?: number; before?: number; name?: string },
-        null
-      >;
-    };
-  };
-  actionRetrier: {
-    public: {
-      cancel: FunctionReference<
-        "mutation",
-        "internal",
-        { runId: string },
-        boolean
-      >;
-      cleanup: FunctionReference<
-        "mutation",
-        "internal",
-        { runId: string },
-        any
-      >;
-      start: FunctionReference<
-        "mutation",
-        "internal",
-        {
-          functionArgs: any;
-          functionHandle: string;
-          options: {
-            base: number;
-            initialBackoffMs: number;
-            logLevel: "DEBUG" | "INFO" | "WARN" | "ERROR";
-            maxFailures: number;
-            onComplete?: string;
-            runAfter?: number;
-            runAt?: number;
-          };
-        },
-        string
-      >;
-      status: FunctionReference<
-        "query",
-        "internal",
-        { runId: string },
-        | { type: "inProgress" }
-        | {
-            result:
-              | { returnValue: any; type: "success" }
-              | { error: string; type: "failed" }
-              | { type: "canceled" };
-            type: "completed";
-          }
-      >;
-    };
-  };
   agent: {
     apiKeys: {
       destroy: FunctionReference<
@@ -2230,311 +2207,6 @@ export declare const components: {
       };
     };
   };
-  persistentTextStreaming: {
-    lib: {
-      addChunk: FunctionReference<
-        "mutation",
-        "internal",
-        { final: boolean; streamId: string; text: string },
-        any
-      >;
-      createStream: FunctionReference<"mutation", "internal", {}, any>;
-      getStreamStatus: FunctionReference<
-        "query",
-        "internal",
-        { streamId: string },
-        "pending" | "streaming" | "done" | "error" | "timeout"
-      >;
-      getStreamText: FunctionReference<
-        "query",
-        "internal",
-        { streamId: string },
-        {
-          status: "pending" | "streaming" | "done" | "error" | "timeout";
-          text: string;
-        }
-      >;
-      setStreamStatus: FunctionReference<
-        "mutation",
-        "internal",
-        {
-          status: "pending" | "streaming" | "done" | "error" | "timeout";
-          streamId: string;
-        },
-        any
-      >;
-    };
-  };
-  rateLimiter: {
-    lib: {
-      checkRateLimit: FunctionReference<
-        "query",
-        "internal",
-        {
-          config:
-            | {
-                capacity?: number;
-                kind: "token bucket";
-                maxReserved?: number;
-                period: number;
-                rate: number;
-                shards?: number;
-                start?: null;
-              }
-            | {
-                capacity?: number;
-                kind: "fixed window";
-                maxReserved?: number;
-                period: number;
-                rate: number;
-                shards?: number;
-                start?: number;
-              };
-          count?: number;
-          key?: string;
-          name: string;
-          reserve?: boolean;
-          throws?: boolean;
-        },
-        { ok: true; retryAfter?: number } | { ok: false; retryAfter: number }
-      >;
-      clearAll: FunctionReference<
-        "mutation",
-        "internal",
-        { before?: number },
-        null
-      >;
-      getServerTime: FunctionReference<"mutation", "internal", {}, number>;
-      getValue: FunctionReference<
-        "query",
-        "internal",
-        {
-          config:
-            | {
-                capacity?: number;
-                kind: "token bucket";
-                maxReserved?: number;
-                period: number;
-                rate: number;
-                shards?: number;
-                start?: null;
-              }
-            | {
-                capacity?: number;
-                kind: "fixed window";
-                maxReserved?: number;
-                period: number;
-                rate: number;
-                shards?: number;
-                start?: number;
-              };
-          key?: string;
-          name: string;
-          sampleShards?: number;
-        },
-        {
-          config:
-            | {
-                capacity?: number;
-                kind: "token bucket";
-                maxReserved?: number;
-                period: number;
-                rate: number;
-                shards?: number;
-                start?: null;
-              }
-            | {
-                capacity?: number;
-                kind: "fixed window";
-                maxReserved?: number;
-                period: number;
-                rate: number;
-                shards?: number;
-                start?: number;
-              };
-          shard: number;
-          ts: number;
-          value: number;
-        }
-      >;
-      rateLimit: FunctionReference<
-        "mutation",
-        "internal",
-        {
-          config:
-            | {
-                capacity?: number;
-                kind: "token bucket";
-                maxReserved?: number;
-                period: number;
-                rate: number;
-                shards?: number;
-                start?: null;
-              }
-            | {
-                capacity?: number;
-                kind: "fixed window";
-                maxReserved?: number;
-                period: number;
-                rate: number;
-                shards?: number;
-                start?: number;
-              };
-          count?: number;
-          key?: string;
-          name: string;
-          reserve?: boolean;
-          throws?: boolean;
-        },
-        { ok: true; retryAfter?: number } | { ok: false; retryAfter: number }
-      >;
-      resetRateLimit: FunctionReference<
-        "mutation",
-        "internal",
-        { key?: string; name: string },
-        null
-      >;
-    };
-    time: {
-      getServerTime: FunctionReference<"mutation", "internal", {}, number>;
-    };
-  };
-  migrations: {
-    lib: {
-      cancel: FunctionReference<
-        "mutation",
-        "internal",
-        { name: string },
-        {
-          batchSize?: number;
-          cursor?: string | null;
-          error?: string;
-          isDone: boolean;
-          latestEnd?: number;
-          latestStart: number;
-          name: string;
-          next?: Array<string>;
-          processed: number;
-          state: "inProgress" | "success" | "failed" | "canceled" | "unknown";
-        }
-      >;
-      cancelAll: FunctionReference<
-        "mutation",
-        "internal",
-        { sinceTs?: number },
-        Array<{
-          batchSize?: number;
-          cursor?: string | null;
-          error?: string;
-          isDone: boolean;
-          latestEnd?: number;
-          latestStart: number;
-          name: string;
-          next?: Array<string>;
-          processed: number;
-          state: "inProgress" | "success" | "failed" | "canceled" | "unknown";
-        }>
-      >;
-      clearAll: FunctionReference<
-        "mutation",
-        "internal",
-        { before?: number },
-        null
-      >;
-      getStatus: FunctionReference<
-        "query",
-        "internal",
-        { limit?: number; names?: Array<string> },
-        Array<{
-          batchSize?: number;
-          cursor?: string | null;
-          error?: string;
-          isDone: boolean;
-          latestEnd?: number;
-          latestStart: number;
-          name: string;
-          next?: Array<string>;
-          processed: number;
-          state: "inProgress" | "success" | "failed" | "canceled" | "unknown";
-        }>
-      >;
-      migrate: FunctionReference<
-        "mutation",
-        "internal",
-        {
-          batchSize?: number;
-          cursor?: string | null;
-          dryRun: boolean;
-          fnHandle: string;
-          name: string;
-          next?: Array<{ fnHandle: string; name: string }>;
-        },
-        {
-          batchSize?: number;
-          cursor?: string | null;
-          error?: string;
-          isDone: boolean;
-          latestEnd?: number;
-          latestStart: number;
-          name: string;
-          next?: Array<string>;
-          processed: number;
-          state: "inProgress" | "success" | "failed" | "canceled" | "unknown";
-        }
-      >;
-    };
-  };
-  presence: {
-    public: {
-      disconnect: FunctionReference<
-        "mutation",
-        "internal",
-        { sessionToken: string },
-        null
-      >;
-      heartbeat: FunctionReference<
-        "mutation",
-        "internal",
-        {
-          interval?: number;
-          roomId: string;
-          sessionId: string;
-          userId: string;
-        },
-        { roomToken: string; sessionToken: string }
-      >;
-      list: FunctionReference<
-        "query",
-        "internal",
-        { limit?: number; roomToken: string },
-        Array<{ lastDisconnected: number; online: boolean; userId: string }>
-      >;
-      listRoom: FunctionReference<
-        "query",
-        "internal",
-        { limit?: number; onlineOnly?: boolean; roomId: string },
-        Array<{ lastDisconnected: number; online: boolean; userId: string }>
-      >;
-      listUser: FunctionReference<
-        "query",
-        "internal",
-        { limit?: number; onlineOnly?: boolean; userId: string },
-        Array<{ lastDisconnected: number; online: boolean; roomId: string }>
-      >;
-      removeRoom: FunctionReference<
-        "mutation",
-        "internal",
-        { roomId: string },
-        null
-      >;
-      removeRoomUser: FunctionReference<
-        "mutation",
-        "internal",
-        { roomId: string; userId: string },
-        null
-      >;
-    };
-  };
   rag: {
     chunks: {
       insert: FunctionReference<
@@ -2867,6 +2539,594 @@ export declare const components: {
             startOrder: number;
           }>;
         }
+      >;
+    };
+  };
+  actionCache: {
+    crons: {
+      purge: FunctionReference<
+        "mutation",
+        "internal",
+        { expiresAt?: number },
+        null
+      >;
+    };
+    lib: {
+      get: FunctionReference<
+        "query",
+        "internal",
+        { args: any; name: string; ttl: number | null },
+        { kind: "hit"; value: any } | { expiredEntry?: string; kind: "miss" }
+      >;
+      put: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          args: any;
+          expiredEntry?: string;
+          name: string;
+          ttl: number | null;
+          value: any;
+        },
+        { cacheHit: boolean; deletedExpiredEntry: boolean }
+      >;
+      remove: FunctionReference<
+        "mutation",
+        "internal",
+        { args: any; name: string },
+        null
+      >;
+      removeAll: FunctionReference<
+        "mutation",
+        "internal",
+        { batchSize?: number; before?: number; name?: string },
+        null
+      >;
+    };
+  };
+  actionRetrier: {
+    public: {
+      cancel: FunctionReference<
+        "mutation",
+        "internal",
+        { runId: string },
+        boolean
+      >;
+      cleanup: FunctionReference<
+        "mutation",
+        "internal",
+        { runId: string },
+        any
+      >;
+      start: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          functionArgs: any;
+          functionHandle: string;
+          options: {
+            base: number;
+            initialBackoffMs: number;
+            logLevel: "DEBUG" | "INFO" | "WARN" | "ERROR";
+            maxFailures: number;
+            onComplete?: string;
+            runAfter?: number;
+            runAt?: number;
+          };
+        },
+        string
+      >;
+      status: FunctionReference<
+        "query",
+        "internal",
+        { runId: string },
+        | { type: "inProgress" }
+        | {
+            result:
+              | { returnValue: any; type: "success" }
+              | { error: string; type: "failed" }
+              | { type: "canceled" };
+            type: "completed";
+          }
+      >;
+    };
+  };
+  persistentTextStreaming: {
+    lib: {
+      addChunk: FunctionReference<
+        "mutation",
+        "internal",
+        { final: boolean; streamId: string; text: string },
+        any
+      >;
+      createStream: FunctionReference<"mutation", "internal", {}, any>;
+      getStreamStatus: FunctionReference<
+        "query",
+        "internal",
+        { streamId: string },
+        "pending" | "streaming" | "done" | "error" | "timeout"
+      >;
+      getStreamText: FunctionReference<
+        "query",
+        "internal",
+        { streamId: string },
+        {
+          status: "pending" | "streaming" | "done" | "error" | "timeout";
+          text: string;
+        }
+      >;
+      setStreamStatus: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          status: "pending" | "streaming" | "done" | "error" | "timeout";
+          streamId: string;
+        },
+        any
+      >;
+    };
+  };
+  rateLimiter: {
+    lib: {
+      checkRateLimit: FunctionReference<
+        "query",
+        "internal",
+        {
+          config:
+            | {
+                capacity?: number;
+                kind: "token bucket";
+                maxReserved?: number;
+                period: number;
+                rate: number;
+                shards?: number;
+                start?: null;
+              }
+            | {
+                capacity?: number;
+                kind: "fixed window";
+                maxReserved?: number;
+                period: number;
+                rate: number;
+                shards?: number;
+                start?: number;
+              };
+          count?: number;
+          key?: string;
+          name: string;
+          reserve?: boolean;
+          throws?: boolean;
+        },
+        { ok: true; retryAfter?: number } | { ok: false; retryAfter: number }
+      >;
+      clearAll: FunctionReference<
+        "mutation",
+        "internal",
+        { before?: number },
+        null
+      >;
+      getServerTime: FunctionReference<"mutation", "internal", {}, number>;
+      getValue: FunctionReference<
+        "query",
+        "internal",
+        {
+          config:
+            | {
+                capacity?: number;
+                kind: "token bucket";
+                maxReserved?: number;
+                period: number;
+                rate: number;
+                shards?: number;
+                start?: null;
+              }
+            | {
+                capacity?: number;
+                kind: "fixed window";
+                maxReserved?: number;
+                period: number;
+                rate: number;
+                shards?: number;
+                start?: number;
+              };
+          key?: string;
+          name: string;
+          sampleShards?: number;
+        },
+        {
+          config:
+            | {
+                capacity?: number;
+                kind: "token bucket";
+                maxReserved?: number;
+                period: number;
+                rate: number;
+                shards?: number;
+                start?: null;
+              }
+            | {
+                capacity?: number;
+                kind: "fixed window";
+                maxReserved?: number;
+                period: number;
+                rate: number;
+                shards?: number;
+                start?: number;
+              };
+          shard: number;
+          ts: number;
+          value: number;
+        }
+      >;
+      rateLimit: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          config:
+            | {
+                capacity?: number;
+                kind: "token bucket";
+                maxReserved?: number;
+                period: number;
+                rate: number;
+                shards?: number;
+                start?: null;
+              }
+            | {
+                capacity?: number;
+                kind: "fixed window";
+                maxReserved?: number;
+                period: number;
+                rate: number;
+                shards?: number;
+                start?: number;
+              };
+          count?: number;
+          key?: string;
+          name: string;
+          reserve?: boolean;
+          throws?: boolean;
+        },
+        { ok: true; retryAfter?: number } | { ok: false; retryAfter: number }
+      >;
+      resetRateLimit: FunctionReference<
+        "mutation",
+        "internal",
+        { key?: string; name: string },
+        null
+      >;
+    };
+    time: {
+      getServerTime: FunctionReference<"mutation", "internal", {}, number>;
+    };
+  };
+  workflow: {
+    journal: {
+      load: FunctionReference<
+        "query",
+        "internal",
+        { workflowId: string },
+        {
+          journalEntries: Array<{
+            _creationTime: number;
+            _id: string;
+            step: {
+              args: any;
+              argsSize: number;
+              completedAt?: number;
+              functionType: "query" | "mutation" | "action";
+              handle: string;
+              inProgress: boolean;
+              name: string;
+              runResult?:
+                | { kind: "success"; returnValue: any }
+                | { error: string; kind: "failed" }
+                | { kind: "canceled" };
+              startedAt: number;
+              workId?: string;
+            };
+            stepNumber: number;
+            workflowId: string;
+          }>;
+          logLevel: "DEBUG" | "TRACE" | "INFO" | "REPORT" | "WARN" | "ERROR";
+          ok: boolean;
+          workflow: {
+            _creationTime: number;
+            _id: string;
+            args: any;
+            generationNumber: number;
+            logLevel?: any;
+            name?: string;
+            onComplete?: { context?: any; fnHandle: string };
+            runResult?:
+              | { kind: "success"; returnValue: any }
+              | { error: string; kind: "failed" }
+              | { kind: "canceled" };
+            startedAt?: any;
+            state?: any;
+            workflowHandle: string;
+          };
+        }
+      >;
+      startStep: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          generationNumber: number;
+          name: string;
+          retry?:
+            | boolean
+            | { base: number; initialBackoffMs: number; maxAttempts: number };
+          schedulerOptions?: { runAt?: number } | { runAfter?: number };
+          step: {
+            args: any;
+            argsSize: number;
+            completedAt?: number;
+            functionType: "query" | "mutation" | "action";
+            handle: string;
+            inProgress: boolean;
+            name: string;
+            runResult?:
+              | { kind: "success"; returnValue: any }
+              | { error: string; kind: "failed" }
+              | { kind: "canceled" };
+            startedAt: number;
+            workId?: string;
+          };
+          workflowId: string;
+          workpoolOptions?: {
+            defaultRetryBehavior?: {
+              base: number;
+              initialBackoffMs: number;
+              maxAttempts: number;
+            };
+            logLevel?: "DEBUG" | "TRACE" | "INFO" | "REPORT" | "WARN" | "ERROR";
+            maxParallelism?: number;
+            retryActionsByDefault?: boolean;
+          };
+        },
+        {
+          _creationTime: number;
+          _id: string;
+          step: {
+            args: any;
+            argsSize: number;
+            completedAt?: number;
+            functionType: "query" | "mutation" | "action";
+            handle: string;
+            inProgress: boolean;
+            name: string;
+            runResult?:
+              | { kind: "success"; returnValue: any }
+              | { error: string; kind: "failed" }
+              | { kind: "canceled" };
+            startedAt: number;
+            workId?: string;
+          };
+          stepNumber: number;
+          workflowId: string;
+        }
+      >;
+    };
+    workflow: {
+      cancel: FunctionReference<
+        "mutation",
+        "internal",
+        { workflowId: string },
+        null
+      >;
+      cleanup: FunctionReference<
+        "mutation",
+        "internal",
+        { workflowId: string },
+        boolean
+      >;
+      complete: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          generationNumber: number;
+          runResult:
+            | { kind: "success"; returnValue: any }
+            | { error: string; kind: "failed" }
+            | { kind: "canceled" };
+          workflowId: string;
+        },
+        null
+      >;
+      create: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          maxParallelism?: number;
+          onComplete?: { context?: any; fnHandle: string };
+          startAsync?: boolean;
+          workflowArgs: any;
+          workflowHandle: string;
+          workflowName: string;
+        },
+        string
+      >;
+      getStatus: FunctionReference<
+        "query",
+        "internal",
+        { workflowId: string },
+        {
+          inProgress: Array<{
+            _creationTime: number;
+            _id: string;
+            step: {
+              args: any;
+              argsSize: number;
+              completedAt?: number;
+              functionType: "query" | "mutation" | "action";
+              handle: string;
+              inProgress: boolean;
+              name: string;
+              runResult?:
+                | { kind: "success"; returnValue: any }
+                | { error: string; kind: "failed" }
+                | { kind: "canceled" };
+              startedAt: number;
+              workId?: string;
+            };
+            stepNumber: number;
+            workflowId: string;
+          }>;
+          logLevel: "DEBUG" | "TRACE" | "INFO" | "REPORT" | "WARN" | "ERROR";
+          workflow: {
+            _creationTime: number;
+            _id: string;
+            args: any;
+            generationNumber: number;
+            logLevel?: any;
+            name?: string;
+            onComplete?: { context?: any; fnHandle: string };
+            runResult?:
+              | { kind: "success"; returnValue: any }
+              | { error: string; kind: "failed" }
+              | { kind: "canceled" };
+            startedAt?: any;
+            state?: any;
+            workflowHandle: string;
+          };
+        }
+      >;
+    };
+  };
+  migrations: {
+    lib: {
+      cancel: FunctionReference<
+        "mutation",
+        "internal",
+        { name: string },
+        {
+          batchSize?: number;
+          cursor?: string | null;
+          error?: string;
+          isDone: boolean;
+          latestEnd?: number;
+          latestStart: number;
+          name: string;
+          next?: Array<string>;
+          processed: number;
+          state: "inProgress" | "success" | "failed" | "canceled" | "unknown";
+        }
+      >;
+      cancelAll: FunctionReference<
+        "mutation",
+        "internal",
+        { sinceTs?: number },
+        Array<{
+          batchSize?: number;
+          cursor?: string | null;
+          error?: string;
+          isDone: boolean;
+          latestEnd?: number;
+          latestStart: number;
+          name: string;
+          next?: Array<string>;
+          processed: number;
+          state: "inProgress" | "success" | "failed" | "canceled" | "unknown";
+        }>
+      >;
+      clearAll: FunctionReference<
+        "mutation",
+        "internal",
+        { before?: number },
+        null
+      >;
+      getStatus: FunctionReference<
+        "query",
+        "internal",
+        { limit?: number; names?: Array<string> },
+        Array<{
+          batchSize?: number;
+          cursor?: string | null;
+          error?: string;
+          isDone: boolean;
+          latestEnd?: number;
+          latestStart: number;
+          name: string;
+          next?: Array<string>;
+          processed: number;
+          state: "inProgress" | "success" | "failed" | "canceled" | "unknown";
+        }>
+      >;
+      migrate: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          batchSize?: number;
+          cursor?: string | null;
+          dryRun: boolean;
+          fnHandle: string;
+          name: string;
+          next?: Array<{ fnHandle: string; name: string }>;
+        },
+        {
+          batchSize?: number;
+          cursor?: string | null;
+          error?: string;
+          isDone: boolean;
+          latestEnd?: number;
+          latestStart: number;
+          name: string;
+          next?: Array<string>;
+          processed: number;
+          state: "inProgress" | "success" | "failed" | "canceled" | "unknown";
+        }
+      >;
+    };
+  };
+  presence: {
+    public: {
+      disconnect: FunctionReference<
+        "mutation",
+        "internal",
+        { sessionToken: string },
+        null
+      >;
+      heartbeat: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          interval?: number;
+          roomId: string;
+          sessionId: string;
+          userId: string;
+        },
+        { roomToken: string; sessionToken: string }
+      >;
+      list: FunctionReference<
+        "query",
+        "internal",
+        { limit?: number; roomToken: string },
+        Array<{ lastDisconnected: number; online: boolean; userId: string }>
+      >;
+      listRoom: FunctionReference<
+        "query",
+        "internal",
+        { limit?: number; onlineOnly?: boolean; roomId: string },
+        Array<{ lastDisconnected: number; online: boolean; userId: string }>
+      >;
+      listUser: FunctionReference<
+        "query",
+        "internal",
+        { limit?: number; onlineOnly?: boolean; userId: string },
+        Array<{ lastDisconnected: number; online: boolean; roomId: string }>
+      >;
+      removeRoom: FunctionReference<
+        "mutation",
+        "internal",
+        { roomId: string },
+        null
+      >;
+      removeRoomUser: FunctionReference<
+        "mutation",
+        "internal",
+        { roomId: string; userId: string },
+        null
       >;
     };
   };

@@ -11,6 +11,14 @@ crons.interval(
   internal.crons.cleanupResend
 );
 
+// Clean up unused files every hour
+crons.interval(
+  "deleteUnusedFiles",
+  { hours: 1 },
+  internal.files.vacuum.deleteUnusedFiles,
+  {},
+);
+
 const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 export const cleanupResend = internalMutation({
   args: {},

@@ -67,14 +67,14 @@ export async function POST(request: NextRequest) {
 
     // Add to waitlist using Convex
     try {
-      const result = await convex.mutation(api.waitlist.addToWaitlist, {
+      await convex.mutation(api.waitlist.addToWaitlist, {
         email,
         metadata,
       });
 
       // Send confirmation email
       try {
-        await convex.action(api.emails.sendWaitlistConfirmationEmail, {
+        await convex.action(api.email.actions.sendWaitlistConfirmationEmail, {
           to: email,
         });
       } catch (emailError) {

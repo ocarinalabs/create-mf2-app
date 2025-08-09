@@ -52,7 +52,7 @@ if (typeof window !== "undefined" && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
 // Helper functions for identifying users
 export const posthogIdentify = (
   userId: string,
-  properties?: Record<string, any>
+  properties?: Record<string, unknown>
 ) => {
   if (typeof window !== "undefined" && posthog) {
     posthog.identify(userId, properties);

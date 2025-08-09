@@ -11,7 +11,7 @@ import shardedCounter from "@convex-dev/sharded-counter/convex.config";
 
 const app = defineApp();
 
-// Backend components
+// Backend infrastructure
 app.use(actionCache);
 app.use(actionRetrier);
 app.use(rateLimiter);
@@ -21,7 +21,7 @@ app.use(migrations);
 app.use(presence);
 app.use(shardedCounter);
 
-// Integration components
+// Third-party integrations
 app.use(polar);
 app.use(r2);
 app.use(resend);

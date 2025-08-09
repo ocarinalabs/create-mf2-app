@@ -25,7 +25,7 @@ export default function CheckoutSuccessPage() {
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <p className="text-sm text-muted-foreground text-center">
-            We've sent a confirmation email with your receipt and next steps.
+            We&apos;ve sent a confirmation email with your receipt and next steps.
           </p>
           <div className="flex flex-col gap-2">
             <Button asChild>

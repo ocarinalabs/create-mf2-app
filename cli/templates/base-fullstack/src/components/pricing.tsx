@@ -114,7 +114,7 @@ export function Pricing() {
               <CardFooter>
                 {plan.productId ? (
                   <CheckoutLink
-                    polarApi={api.polar}
+                    polarApi={api.payments.polar}
                     productIds={[plan.productId]}
                     className="w-full"
                   >
