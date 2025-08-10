@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
 
     // Add to waitlist using Convex
     try {
-      await convex.mutation(api.waitlist.addToWaitlist, {
+      await convex.mutation(api.waitlist.index.addToWaitlist, {
         email,
         metadata,
       });

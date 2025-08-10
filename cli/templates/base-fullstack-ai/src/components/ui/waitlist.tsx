@@ -45,7 +45,7 @@ export function Waitlist() {
   const [error, setError] = useState("");
   const confettiRef = useRef<ConfettiRef>(null);
 
-  const waitlistCount = useQuery(api.waitlist.getWaitlistCount);
+  const waitlistCount = useQuery(api.waitlist.index.getWaitlistCount);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
