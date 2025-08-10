@@ -1,13 +1,8 @@
-// See the docs at https://docs.convex.dev/agents/context
 import { components } from "../_generated/api";
 import { createTool, fetchContextMessages } from "@convex-dev/agent";
 import z from "zod";
 import { embed } from "ai";
 import { textEmbedding } from "../models";
-
-/**
- * Manual search
- */
 
 export const searchMessages = createTool({
   description: "Search for messages in the thread",
@@ -20,8 +15,8 @@ export const searchMessages = createTool({
       threadId: ctx.threadId,
       messages: [{ role: "user", content: query }],
       contextOptions: {
-        searchOtherThreads: !!ctx.userId, // search other threads if the user is logged in
-        recentMessages: 0, // only search older messages
+        searchOtherThreads: !!ctx.userId,
+        recentMessages: 0,
         searchOptions: {
           textSearch: true,
           vectorSearch: true,

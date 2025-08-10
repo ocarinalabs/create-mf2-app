@@ -20,12 +20,6 @@ const clerkClient = createClerkClient({
   secretKey: process.env.CLERK_SECRET_KEY!,
 });
 
-/**
- * Whether the current user is fully logged in, including having their information
- * synced from Clerk via webhook.
- *
- * Like all Convex queries, errors on expired Clerk token.
- */
 export const userLoginStatus = query(
   async (
     ctx
@@ -40,18 +34,14 @@ export const userLoginStatus = query(
     }
     const user = await getCurrentUser(ctx);
     if (user === null) {
-      // If Clerk has not told us about this user we're still waiting for the
-      // webhook notification.
       return ["No Clerk User", null];
     }
     return ["Logged In", user];
   }
 );
 
-/** The current user, containing user preferences and Clerk user info. */
 export const currentUser = query((ctx: QueryCtx) => getCurrentUser(ctx));
 
-/** Get user by Clerk use id (AKA "subject" on auth)  */
 export const getUser = internalQuery({
   args: { subject: v.string() },
   async handler(ctx, args) {
@@ -59,9 +49,8 @@ export const getUser = internalQuery({
   },
 });
 
-/** Create a new Clerk user or update existing Clerk user data. */
 export const updateOrCreateUser = internalMutation({
-  args: { clerkUser: v.any() }, // no runtime validation, trust Clerk
+  args: { clerkUser: v.any() },
   async handler(ctx, { clerkUser }: { clerkUser: UserJSON }) {
     const userRecord = await userQuery(ctx, clerkUser.id);
 
@@ -80,7 +69,6 @@ export const updateOrCreateUser = internalMutation({
           });
         } catch (error) {
           console.error("Failed to send welcome email:", error);
-          // Don't fail user creation if email fails
         }
       }
     } else {
@@ -89,7 +77,6 @@ export const updateOrCreateUser = internalMutation({
   },
 });
 
-/** Delete a user by clerk user ID. */
 export const deleteUserByClerkId = internalMutation({
   args: { id: v.string() },
   async handler(ctx, { id }) {
@@ -102,9 +89,6 @@ export const deleteUserByClerkId = internalMutation({
     }
   },
 });
-
-
-// Helpers
 
 export async function userQuery(
   ctx: QueryCtx,
@@ -137,7 +121,6 @@ export async function mustGetCurrentUser(ctx: QueryCtx): Promise<Doc<"users">> {
   return userRecord;
 }
 
-// Delete a user from all services
 export const deleteUser = action({
   args: {},
   handler: async (ctx) => {
@@ -146,12 +129,10 @@ export const deleteUser = action({
       throw new Error("Can't get current user");
     }
 
-    // 1. Delete user from Clerk
     await ctx.runAction(internal.auth.users.deleteClerkUser, {
       clerkUserId: user.clerkUser.id,
     });
 
-    // 2. Delete user from Convex
     await ctx.runMutation(internal.auth.users.deleteConvexUser, {
       userId: user._id,
     });
@@ -160,11 +141,9 @@ export const deleteUser = action({
   },
 });
 
-// Delete a user from Clerk only
 export const deleteClerkUser = internalAction({
   args: { clerkUserId: v.string() },
   handler: async (_, { clerkUserId }) => {
-    // Delete from Clerk using SDK
     try {
       await clerkClient.users.deleteUser(clerkUserId);
       console.log("Successfully deleted user from Clerk:", clerkUserId);
@@ -177,7 +156,6 @@ export const deleteClerkUser = internalAction({
   },
 });
 
-// Delete a user from Convex database
 export const deleteConvexUser = internalMutation({
   args: { userId: v.id("users") },
   handler: async (ctx, { userId }) => {
@@ -187,7 +165,6 @@ export const deleteConvexUser = internalMutation({
       return null;
     }
 
-    // Delete the user document
     await ctx.db.delete(userId);
     console.log("Successfully deleted user from Convex:", userId);
     return null;

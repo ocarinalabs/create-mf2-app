@@ -1,4 +1,3 @@
-// See the docs at https://docs.convex.dev/agents/rag
 import {
   getThreadMetadata,
   listMessages,
@@ -13,10 +12,6 @@ import { getAuthUserId } from "../utils";
 import { rag } from "./ragAsPrompt";
 import { components } from "../_generated/api";
 
-/**
- * Lists messages for a thread including the context used to generate them,
- * based on context saved when using RAG.
- */
 export const listMessagesWithContext = query({
   args: {
     threadId: v.string(),
@@ -50,7 +45,7 @@ export const listMessagesWithContext = query({
             .query("contextUsed")
             .withIndex("messageId", (q) => q.eq("messageId", message._id))
             .first(),
-        })),
+        }))
       ),
     };
   },

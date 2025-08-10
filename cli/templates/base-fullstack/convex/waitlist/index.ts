@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { mutation, query } from "../_generated/server";
 
 export const addToWaitlist = mutation({
   args: {
@@ -12,7 +12,6 @@ export const addToWaitlist = mutation({
     ),
   },
   handler: async (ctx, args) => {
-    // Check if email already exists
     const existing = await ctx.db
       .query("waitlist")
       .withIndex("by_email", (q) => q.eq("email", args.email))
@@ -22,7 +21,6 @@ export const addToWaitlist = mutation({
       throw new Error("Email already exists in waitlist");
     }
 
-    // Add to waitlist
     const waitlistId = await ctx.db.insert("waitlist", {
       email: args.email,
       createdAt: Date.now(),
@@ -54,7 +52,6 @@ export const getWaitlistPosition = query({
       return null;
     }
 
-    // Count how many entries are before this one
     const position = await ctx.db
       .query("waitlist")
       .withIndex("by_created")
@@ -76,7 +73,6 @@ export const getWaitlistStats = query({
     const notified = waitlist.filter((entry) => entry.notified).length;
     const pending = waitlist.length - notified;
 
-    // Get entries by day for the last 7 days
     const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
     const recentEntries = waitlist.filter(
       (entry) => entry.createdAt > sevenDaysAgo

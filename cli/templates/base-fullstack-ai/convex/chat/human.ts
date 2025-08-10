@@ -1,4 +1,3 @@
-// See the docs at https://docs.convex.dev/agents/human-agents
 import {
   saveMessage,
   listMessages,
@@ -20,20 +19,6 @@ import { z } from "zod";
 import { tool } from "ai";
 import { agent } from "../agents/simple";
 
-/**
- * ===============================
- * OPTION 1: Sending messages as an "assistant" role
- * ===============================
- */
-
-/**
- * Sending a message from a human agent.
- * This does not kick off an LLM response.
- * This is an internal mutation that can be called from other functions.
- * To have a logged in support agent send it, you could use a public mutation
- * along with auth to find the support agent's name and ensure they have access
- * to the specified thread.
- */
 export const sendMessageFromHumanAgent = internalMutation({
   args: { agentName: v.string(), message: v.string(), threadId: v.string() },
   handler: async (ctx, args) => {
@@ -49,26 +34,16 @@ export const sendMessageFromHumanAgent = internalMutation({
   },
 });
 
-/**
- * Sending a message from a user
- */
 export const sendMessageFromUser = mutation({
   args: { message: v.string(), threadId: v.string() },
   handler: async (ctx, args) => {
     await authorizeThreadAccess(ctx, args.threadId);
     await saveMessage(ctx, components.agent, {
       threadId: args.threadId,
-      // prompt is shorthand for message: { role: "user", content: prompt }
       prompt: args.message,
     });
   },
 });
-
-/**
- * ===============================
- * OPTION 2: Sending messages as a tool call
- * ===============================
- */
 
 export const askHuman = tool({
   description: "Ask a human a question",
@@ -86,7 +61,7 @@ export const ask = action({
       {
         prompt: question,
         tools: { askHuman },
-      },
+      }
     );
     const supportRequests = result.toolCalls
       .filter((tc) => tc.toolName === "askHuman")
@@ -95,12 +70,6 @@ export const ask = action({
         question,
       }));
     if (supportRequests.length > 0) {
-      // Do something so the support agent knows they need to respond,
-      // e.g. save a message to their inbox
-      // await ctx.runMutation(internal.example.sendToSupport, {
-      //   threadId,
-      //   supportRequests,
-      // });
     }
     return {
       response: result.text,
@@ -139,24 +108,13 @@ export const humanResponseAsToolCall = internalAction({
         },
       },
     });
-    // Continue generating a response from the LLM
     await agent.generateText(
       ctx,
       { threadId: args.threadId },
-      { promptMessageId: args.messageId },
+      { promptMessageId: args.messageId }
     );
   },
 });
-
-/**
- * ===============================
- * Other things
- * ===============================
- */
-
-/**
- * Listing messages without using an agent
- */
 
 export const getMessages = query({
   args: {

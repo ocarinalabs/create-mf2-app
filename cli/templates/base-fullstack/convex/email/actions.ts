@@ -18,7 +18,6 @@ export const handleEmailEvent = internalAction({
   returns: v.null(),
   handler: async (ctx, args) => {
     console.log("Got called back!", args.id, args.event);
-    // Probably do something with the event if you care about deliverability!
     return null;
   },
 });
@@ -72,7 +71,7 @@ export const sendVerificationCodeEmail = action({
   args: {
     to: v.string(),
     code: v.string(),
-    expires: v.number(), // timestamp
+    expires: v.number(),
   },
   returns: v.null(),
   handler: async (ctx, args) => {
@@ -80,7 +79,7 @@ export const sendVerificationCodeEmail = action({
       ctx,
       VerificationCodeEmail({
         validationCode: args.code,
-        expiresInMinutes: Math.floor((args.expires - Date.now()) / (60 * 1000))
+        expiresInMinutes: Math.floor((args.expires - Date.now()) / (60 * 1000)),
       }),
       "Verify your email",
       args.to
@@ -98,7 +97,7 @@ export const sendWaitlistConfirmationEmail = action({
     await sendEmailWithResend(
       ctx,
       WaitlistConfirmationEmail({
-        userFirstname: args.to.split("@")[0] // Use email prefix as firstname
+        userFirstname: args.to.split("@")[0],
       }),
       "You're on the waitlist!",
       args.to
@@ -111,7 +110,7 @@ export const sendOTPEmail = action({
   args: {
     to: v.string(),
     code: v.string(),
-    expires: v.number(), // timestamp
+    expires: v.number(),
   },
   returns: v.null(),
   handler: async (ctx, args) => {
@@ -119,7 +118,7 @@ export const sendOTPEmail = action({
       ctx,
       VerificationCodeEmail({
         validationCode: args.code,
-        expiresInMinutes: Math.floor((args.expires - Date.now()) / (60 * 1000))
+        expiresInMinutes: Math.floor((args.expires - Date.now()) / (60 * 1000)),
       }),
       "Sign in to MF2 Stack",
       args.to
@@ -140,7 +139,7 @@ export const sendPasswordResetEmail = action({
       ctx,
       PasswordResetEmail({
         userFirstname: args.userFirstname,
-        resetPasswordLink: args.resetPasswordLink
+        resetPasswordLink: args.resetPasswordLink,
       }),
       "Reset your password",
       args.to

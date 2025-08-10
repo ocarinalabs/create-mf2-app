@@ -1,4 +1,3 @@
-// See the docs at https://docs.convex.dev/agents/files
 import { createThread, saveMessage } from "@convex-dev/agent";
 import { components } from "../_generated/api";
 import { internalAction } from "../_generated/server";
@@ -6,14 +5,6 @@ import { v } from "convex/values";
 import OpenAI from "openai";
 import { getAuthUserIdAsString } from "../utils";
 
-/**
- * Generating images
- */
-
-// Generate an image and save it in an assistant message
-// This differs in that it's saving the file implicitly by passing the bytes in.
-// It will save the file and make a fileId automatically when the input file
-// is too big (>100k).
 export const replyWithImage = internalAction({
   args: {
     prompt: v.string(),
@@ -24,10 +15,8 @@ export const replyWithImage = internalAction({
       userId,
       title: "Image for: " + prompt,
     });
-    // Save the user message
     await saveMessage(ctx, components.agent, { threadId, prompt });
 
-    // Generate the image
     const provider = "openai";
     const model = "dall-e-2";
     const imgResponse = await new OpenAI().images.generate({
@@ -39,7 +28,7 @@ export const replyWithImage = internalAction({
     const url = imgResponse.data?.[0].url;
     if (!url) {
       throw new Error(
-        "No image URL found. Response: " + JSON.stringify(imgResponse),
+        "No image URL found. Response: " + JSON.stringify(imgResponse)
       );
     }
     console.debug("short-lived url:", url);
@@ -50,11 +39,10 @@ export const replyWithImage = internalAction({
     const mimeType = image.headers.get("content-type")!;
     if (!mimeType) {
       throw new Error(
-        "No MIME type found. Response: " + JSON.stringify(image.headers),
+        "No MIME type found. Response: " + JSON.stringify(image.headers)
       );
     }
 
-    // // Save the image in an assistant message
     const { message } = await saveMessage(ctx, components.agent, {
       threadId,
       message: {
@@ -62,8 +50,6 @@ export const replyWithImage = internalAction({
         content: [
           {
             type: "file",
-            // NOTE: passing in the bytes directly!
-            // It will be saved automatically in file storage.
             data: await image.arrayBuffer(),
             mimeType: image.headers.get("content-type")!,
           },

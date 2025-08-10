@@ -1,4 +1,3 @@
-// See the docs at https://docs.convex.dev/agents/messages
 import { components, internal } from "../_generated/api";
 import { action, internalAction, mutation, query } from "../_generated/server";
 import { saveMessage } from "@convex-dev/agent";
@@ -6,11 +5,6 @@ import { v } from "convex/values";
 import { agent } from "../agents/simple";
 import { authorizeThreadAccess } from "../threads";
 import { paginationOptsValidator } from "convex/server";
-
-/**
- * OPTION 1 (BASIC):
- * Generating via a single action call
- */
 
 export const generateTextInAnAction = action({
   args: { prompt: v.string(), threadId: v.string() },
@@ -21,13 +15,6 @@ export const generateTextInAnAction = action({
   },
 });
 
-/**
- * OPTION 2 (RECOMMENDED):
- * Generating via a mutation & async action
- * This enables optimistic updates on the client.
- */
-
-// Save a user message, and kick off an async response.
 export const sendMessage = mutation({
   args: { prompt: v.string(), threadId: v.string() },
   handler: async (ctx, { prompt, threadId }) => {
@@ -43,21 +30,12 @@ export const sendMessage = mutation({
   },
 });
 
-// Generate a response to a user message.
-// Any clients listing the messages will automatically get the new message.
 export const generateResponse = internalAction({
   args: { promptMessageId: v.string(), threadId: v.string() },
   handler: async (ctx, { promptMessageId, threadId }) => {
     await agent.generateText(ctx, { threadId }, { promptMessageId });
   },
 });
-
-// Equivalent:
-// export const generateResponse = agent.asTextAction();
-
-/**
- * Query & subscribe to messages & threads
- */
 
 export const listMessages = query({
   args: {
@@ -71,7 +49,6 @@ export const listMessages = query({
       threadId,
       paginationOpts,
     });
-    // You could add more fields here, join with other tables, etc.
     return messages;
   },
 });

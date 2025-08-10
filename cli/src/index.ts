@@ -11,7 +11,8 @@ import { getPkgManager } from "./utils/getPkgManager.js";
 async function main() {
   renderTitle();
 
-  const { projectName, platform, template, git, install, docs } = await runCli();
+  const { projectName, platform, template, git, install, docs } =
+    await runCli();
 
   const projectDir = await createProject({
     projectName,
@@ -39,7 +40,8 @@ async function main() {
     logger.info(`cd ${projectName}`);
   }
 
-  const isBackendTemplate = template === "fullstack" || template === "fullstack-ai";
+  const isBackendTemplate =
+    template === "fullstack" || template === "fullstack-ai";
 
   if (!install) {
     if (isBackendTemplate) {
@@ -51,13 +53,13 @@ async function main() {
 
   if (isBackendTemplate) {
     logger.info(`cp .env.example .env.local`);
-    
+
     if (template === "fullstack-ai") {
       logger.info(`\nSet up AI features:`);
       logger.info(`npx convex env set OPENAI_API_KEY "your-api-key"`);
       logger.info(`See AI_SETUP.md for detailed configuration`);
     }
-    
+
     logger.info(`\nRun in separate terminals:`);
     logger.info(`1. ${pkgManager} run dev`);
     logger.info(`2. npx convex dev`);

@@ -41,24 +41,24 @@ export async function runCli(): Promise<CliResults> {
     const selectedPlatform = await p.select({
       message: "Which platform are you building for?",
       options: [
-        { 
-          value: "web", 
-          label: "Web"
+        {
+          value: "web",
+          label: "Web",
         },
-        { 
-          value: "mobile", 
+        {
+          value: "mobile",
           label: "Mobile",
-          hint: "coming soon"
+          hint: "coming soon",
         },
-        { 
-          value: "desktop", 
+        {
+          value: "desktop",
           label: "Desktop",
-          hint: "coming soon"
+          hint: "coming soon",
         },
-        { 
-          value: "extension", 
+        {
+          value: "extension",
           label: "Extension",
-          hint: "coming soon"
+          hint: "coming soon",
         },
       ],
       initialValue: "web",
@@ -93,20 +93,20 @@ export async function runCli(): Promise<CliResults> {
   const template = await p.select({
     message: "What are you building?",
     options: [
-      { 
-        value: "fullstack", 
+      {
+        value: "fullstack",
         label: "Full Stack",
-        hint: "database, auth, payments, emails"
+        hint: "database, auth, payments, emails",
       },
-      { 
-        value: "fullstack-ai", 
+      {
+        value: "fullstack-ai",
         label: "Full Stack + AI",
-        hint: "agents, RAG, chat interface"
+        hint: "agents, RAG, chat interface",
       },
-      { 
-        value: "frontend", 
+      {
+        value: "frontend",
         label: "Frontend",
-        hint: "landing pages, marketing sites"
+        hint: "landing pages, marketing sites",
       },
     ],
     initialValue: "fullstack",
@@ -120,14 +120,14 @@ export async function runCli(): Promise<CliResults> {
   const docs = await p.select({
     message: "Would you like to include documentation?",
     options: [
-      { 
-        value: true, 
+      {
+        value: true,
         label: "Yes",
-        hint: "powered by Mintlify"
+        hint: "powered by Mintlify",
       },
-      { 
-        value: false, 
-        label: "No"
+      {
+        value: false,
+        label: "No",
       },
     ],
     initialValue: true,
@@ -141,13 +141,13 @@ export async function runCli(): Promise<CliResults> {
   const git = await p.select({
     message: "Should we initialize a Git repository?",
     options: [
-      { 
-        value: true, 
-        label: "Yes"
+      {
+        value: true,
+        label: "Yes",
       },
-      { 
-        value: false, 
-        label: "No"
+      {
+        value: false,
+        label: "No",
       },
     ],
     initialValue: true,
@@ -161,13 +161,13 @@ export async function runCli(): Promise<CliResults> {
   const install = await p.select({
     message: "Should we install dependencies?",
     options: [
-      { 
-        value: true, 
-        label: "Yes"
+      {
+        value: true,
+        label: "Yes",
       },
-      { 
-        value: false, 
-        label: "No"
+      {
+        value: false,
+        label: "No",
       },
     ],
     initialValue: true,

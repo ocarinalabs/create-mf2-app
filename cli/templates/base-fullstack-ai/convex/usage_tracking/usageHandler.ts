@@ -1,4 +1,3 @@
-// See the docs at https://docs.convex.dev/agents/usage-tracking
 import { internalMutation } from "../_generated/server";
 import { v } from "convex/values";
 import { UsageHandler, vProviderMetadata, vUsage } from "@convex-dev/agent";

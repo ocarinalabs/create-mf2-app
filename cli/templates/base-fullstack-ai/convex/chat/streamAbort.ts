@@ -1,4 +1,3 @@
-// See the docs at https://docs.convex.dev/agents/messages
 import { v } from "convex/values";
 import { components } from "../_generated/api";
 import {
@@ -12,9 +11,6 @@ import { agent } from "../agents/simple";
 import { smoothStream } from "ai";
 import { authorizeThreadAccess } from "../threads";
 
-/**
- * Abort a stream by its order
- */
 export const abortStreamByOrder = mutation({
   args: { threadId: v.string(), order: v.number() },
   handler: async (ctx, { threadId, order }) => {
@@ -33,7 +29,6 @@ export const abortStreamByOrder = mutation({
   },
 });
 
-// Test it out by streaming a message and then aborting it
 export const streamThenAbortAsync = action({
   args: {},
   handler: async (ctx) => {
@@ -48,7 +43,7 @@ export const streamThenAbortAsync = action({
           console.error(error);
         },
       },
-      { saveStreamDeltas: { chunking: "line" } },
+      { saveStreamDeltas: { chunking: "line" } }
     );
     let canceled = false;
     try {
@@ -68,10 +63,6 @@ export const streamThenAbortAsync = action({
     }
   },
 });
-
-/**
- * Abort a stream by its streamId
- */
 
 export const list = query({
   args: { threadId: v.string() },
@@ -97,10 +88,6 @@ export const abortStreamByStreamId = internalMutation({
   },
 });
 
-/**
- * Abort a stream with the abortSignal parameter
- */
-
 export const streamThenUseAbortSignal = action({
   args: {},
   handler: async (ctx) => {
@@ -114,7 +101,7 @@ export const streamThenUseAbortSignal = action({
         abortSignal: abortController.signal,
         experimental_transform: smoothStream({ chunking: "line" }),
       },
-      { saveStreamDeltas: { chunking: "line" } },
+      { saveStreamDeltas: { chunking: "line" } }
     );
     setTimeout(() => {
       abortController.abort();

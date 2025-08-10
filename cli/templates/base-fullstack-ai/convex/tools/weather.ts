@@ -1,4 +1,3 @@
-// See the docs at https://docs.convex.dev/agents/tools
 import { tool } from "ai";
 import { z } from "zod";
 
@@ -63,11 +62,6 @@ export const getWeather = tool({
   },
 });
 
-/**
- * Weather from https://open-meteo.com/en/docs?hourly=temperature_2m,weather_code
- * @param code WMO code
- * @returns text description of the weather
- */
 function nameOfWeatherCode(code: number) {
   switch (code) {
     case 0:

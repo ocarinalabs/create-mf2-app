@@ -1,4 +1,3 @@
-// See the docs at https://docs.convex.dev/agents/usage-tracking
 import { internalMutation, MutationCtx } from "../_generated/server";
 import { v } from "convex/values";
 import { internal } from "../_generated/api";
@@ -8,10 +7,6 @@ const HOUR_IN_MS = 60 * 60 * 1000;
 
 const provider = v.string();
 const model = v.string();
-/**
- * Called from a cron monthly to calculate the
- * invoices for the previous billing period
- */
 export const generateInvoices = internalMutation({
   args: {
     billingPeriod: v.optional(v.string()),
@@ -27,21 +22,20 @@ export const generateInvoices = internalMutation({
               inputTokens: v.number(),
               outputTokens: v.number(),
               cachedInputTokens: v.number(),
-            }),
-          ),
+            })
+          )
         ),
-      }),
+      })
     ),
   },
   handler: async (ctx, args) => {
-    // Assume we're billing within a week of the previous billing period
     const weekAgo = Date.now() - 7 * 24 * HOUR_IN_MS;
     const billingPeriod = args.billingPeriod ?? getBillingPeriod(weekAgo);
 
     const result = await ctx.db
       .query("rawUsage")
       .withIndex("billingPeriod_userId", (q) =>
-        q.eq("billingPeriod", billingPeriod),
+        q.eq("billingPeriod", billingPeriod)
       )
       .paginate({
         cursor: args.cursor ?? null,
@@ -85,7 +79,7 @@ export const generateInvoices = internalMutation({
           billingPeriod,
           cursor: result.continueCursor,
           inProgress: currentInvoice,
-        },
+        }
       );
     }
   },
@@ -121,7 +115,7 @@ async function createInvoice(
       >
     >;
   },
-  billingPeriod: string,
+  billingPeriod: string
 ) {
   let amount = 0;
   for (const provider of Object.keys(invoice.usage)) {
@@ -139,17 +133,16 @@ async function createInvoice(
         (outputTokens / MILLION) * outputPrice;
     }
   }
-  // Check if the invoice already exists
   const existingInvoice = await ctx.db
     .query("invoices")
     .withIndex("billingPeriod_userId", (q) =>
-      q.eq("billingPeriod", billingPeriod).eq("userId", invoice.userId),
+      q.eq("billingPeriod", billingPeriod).eq("userId", invoice.userId)
     )
     .filter((q) => q.neq(q.field("status"), "failed"))
     .first();
   if (existingInvoice) {
     console.error(
-      `Invoice already exists for ${invoice.userId} ${billingPeriod}`,
+      `Invoice already exists for ${invoice.userId} ${billingPeriod}`
     );
   } else {
     await ctx.db.insert("invoices", {

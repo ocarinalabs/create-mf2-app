@@ -1,4 +1,3 @@
-// See the docs at https://docs.convex.dev/agents/tools
 import { components } from "../_generated/api";
 import { Agent, createTool } from "@convex-dev/agent";
 import { openai } from "@ai-sdk/openai";
@@ -43,7 +42,6 @@ export const runAgentAsTool = action({
         ]),
       }),
       handler: async (ctx, args) => {
-        // Create a nested thread to call the agent with tools
         const { thread } = await agentWithTools.createThread(ctx, {
           userId: ctx.userId,
         });

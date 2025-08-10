@@ -5,10 +5,6 @@ import { Polar as PolarSdk } from "@polar-sh/sdk";
 import { type Product } from "@polar-sh/sdk/models/components/product";
 
 export const polar = new Polar(components.polar, {
-  // Required: provide a function the component can use to get the current user's ID and
-  // email - this will be used for retrieving the correct subscription data for the
-  // current user. The function should return an object with `userId` and `email`
-  // properties.
   getUserInfo: async (ctx): Promise<{ userId: string; email: string }> => {
     const user = await ctx.runQuery(api.auth.users.currentUser);
     if (!user) {
@@ -19,15 +15,12 @@ export const polar = new Polar(components.polar, {
       email: user.clerkUser.email_addresses?.[0]?.email_address || "",
     };
   },
-  // Optional: Configure static keys for referencing your products.
-  // These use environment variables that should be set in your deployment
   products: {
     starter: process.env.NEXT_PUBLIC_POLAR_STARTER_PRODUCT_ID || "",
     pro: process.env.NEXT_PUBLIC_POLAR_PRO_PRODUCT_ID || "",
   },
 });
 
-// Export API functions from the Polar client
 export const {
   changeCurrentSubscription,
   cancelCurrentSubscription,
@@ -37,7 +30,6 @@ export const {
   generateCustomerPortalUrl,
 } = polar.api();
 
-// Internal action that does the actual sync work
 export const _syncPolarProducts = internalAction({
   handler: async (
     ctx
@@ -48,7 +40,6 @@ export const _syncPolarProducts = internalAction({
     skipped: number;
     polarArchivedCount?: number;
   }> => {
-    // First clean up any duplicates
     await ctx.runAction(internal.payments.cleanup.cleanupDuplicateProducts);
 
     const stats = {
@@ -65,7 +56,6 @@ export const _syncPolarProducts = internalAction({
         (process.env.POLAR_SERVER as "sandbox" | "production") || "production",
     });
 
-    // First, get count of archived products in Polar
     const archivedPages = await polarSdk.products.list({ isArchived: true });
     for await (const page of archivedPages) {
       if (page.result.items) {
@@ -73,7 +63,6 @@ export const _syncPolarProducts = internalAction({
       }
     }
 
-    // Fetch all active products from Polar
     const polarProducts: Product[] = [];
     const pages = await polarSdk.products.list({ isArchived: false });
     for await (const page of pages) {
@@ -82,7 +71,6 @@ export const _syncPolarProducts = internalAction({
       }
     }
 
-    // Get existing Convex products
     const convexProducts = await ctx.runQuery(
       components.polar.lib.listProducts,
       {
@@ -90,7 +78,6 @@ export const _syncPolarProducts = internalAction({
       }
     );
 
-    // Archive products that aren't in Polar anymore
     for (const convexProduct of convexProducts) {
       if (!polarProducts.some((p) => p.id === convexProduct.id)) {
         await ctx.runMutation(components.polar.lib.updateProduct, {
@@ -103,21 +90,17 @@ export const _syncPolarProducts = internalAction({
       }
     }
 
-    // Upsert Polar products, filtering out incompatible ones
     for (const polarProduct of polarProducts) {
-      // Skip non-recurring products (one-time payments)
       if (!polarProduct.isRecurring) {
         console.log(`Skipping non-recurring product: ${polarProduct.name}`);
         stats.skipped++;
         continue;
       }
 
-      // Filter out prices with custom pricing
       const validPrices = polarProduct.prices.filter(
         (price: any) => price.amountType !== "custom" && !price.isArchived
       );
 
-      // Skip if no valid prices
       if (validPrices.length === 0) {
         console.log(
           `Skipping product with only custom pricing: ${polarProduct.name}`
@@ -126,7 +109,6 @@ export const _syncPolarProducts = internalAction({
         continue;
       }
 
-      // Convert to database format
       const product = {
         id: polarProduct.id,
         name: polarProduct.name,
@@ -177,7 +159,6 @@ export const _syncPolarProducts = internalAction({
         }
       } catch (error) {
         console.error(`Failed to sync product ${polarProduct.name}:`, error);
-        // If it's a duplicate error, try to update instead
         if (error instanceof Error && error.message.includes("unique()")) {
           try {
             await ctx.runMutation(components.polar.lib.updateProduct, {
@@ -210,7 +191,6 @@ export const _syncPolarProducts = internalAction({
   },
 });
 
-// Public action to sync products from Polar (callable from dashboard/UI)
 export const syncProducts = action({
   args: {},
   handler: async (
@@ -240,18 +220,15 @@ export const syncProducts = action({
   },
 });
 
-// Action to clear all products by archiving them (useful for testing)
 export const clearAllProducts = action({
   args: {},
   handler: async (
     ctx
   ): Promise<{ archivedCount: number; cleanedDuplicates: number }> => {
-    // First clean up any duplicates
     const cleanupResult = await ctx.runAction(
       internal.payments.cleanup.cleanupDuplicateProducts
     );
 
-    // Then archive remaining products
     const products = await ctx.runQuery(components.polar.lib.listProducts, {
       includeArchived: false,
     });

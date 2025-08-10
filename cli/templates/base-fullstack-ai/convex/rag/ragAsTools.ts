@@ -1,4 +1,3 @@
-// See the docs at https://docs.convex.dev/agents/rag
 import { openai } from "@ai-sdk/openai";
 import { createTool } from "@convex-dev/agent";
 import { RAG } from "@convex-dev/rag";
@@ -30,7 +29,7 @@ export const sendMessage = action({
           }),
           handler: async (ctx, args) => {
             await rag.add(ctx, {
-              namespace: userId ?? "",  // Provide empty string as fallback
+              namespace: userId ?? "",
               title: args.title,
               text: args.text,
             });
@@ -45,11 +44,10 @@ export const sendMessage = action({
           }),
           handler: async (ctx, args) => {
             const context = await rag.search(ctx, {
-              namespace: userId ?? "",  // Provide empty string as fallback
+              namespace: userId ?? "",
               query: args.query,
               limit: 5,
             });
-            // To show the context in the demo UI, we record the context used
             await ctx.runMutation(internal.rag.utils.recordContextUsed, {
               messageId,
               entries: context.entries,

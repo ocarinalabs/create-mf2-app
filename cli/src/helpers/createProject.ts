@@ -12,25 +12,36 @@ export async function createProject(
 ): Promise<string> {
   const { projectName, template } = options;
   const isCurrentDir = projectName === ".";
-  const projectDir = isCurrentDir ? process.cwd() : path.join(process.cwd(), projectName);
-  const actualProjectName = isCurrentDir ? path.basename(process.cwd()) : projectName;
+  const projectDir = isCurrentDir
+    ? process.cwd()
+    : path.join(process.cwd(), projectName);
+  const actualProjectName = isCurrentDir
+    ? path.basename(process.cwd())
+    : projectName;
 
   const ora = (await import("ora")).default;
-  const spinner = ora(isCurrentDir ? "Setting up in current directory..." : "Creating project directory...").start();
+  const spinner = ora(
+    isCurrentDir
+      ? "Setting up in current directory..."
+      : "Creating project directory..."
+  ).start();
 
   try {
     if (isCurrentDir) {
       // Check if current directory is empty (allow .git and common hidden files)
       const files = await fs.readdir(projectDir);
-      const nonHiddenFiles = files.filter(file => 
-        !file.startsWith('.') && 
-        file !== 'node_modules' && 
-        file !== '.DS_Store'
+      const nonHiddenFiles = files.filter(
+        (file) =>
+          !file.startsWith(".") &&
+          file !== "node_modules" &&
+          file !== ".DS_Store"
       );
-      
+
       if (nonHiddenFiles.length > 0) {
         spinner.fail("Current directory is not empty");
-        throw new Error("Current directory is not empty. Please run this command in an empty directory.");
+        throw new Error(
+          "Current directory is not empty. Please run this command in an empty directory."
+        );
       }
     } else {
       // Check if directory already exists
@@ -44,9 +55,12 @@ export async function createProject(
     }
 
     spinner.text = "Copying template files...";
-    const templateName = template === "frontend" ? "base-frontend" : 
-                        template === "fullstack" ? "base-fullstack" : 
-                        "base-fullstack-ai";
+    const templateName =
+      template === "frontend"
+        ? "base-frontend"
+        : template === "fullstack"
+        ? "base-fullstack"
+        : "base-fullstack-ai";
     const templateDir = path.join(__dirname, "..", "templates", templateName);
 
     await copyTemplate(templateDir, projectDir);
@@ -97,13 +111,13 @@ async function updatePackageJson(projectDir: string, projectName: string) {
 
   const npmName = projectName
     .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-._]/g, '')
-    .replace(/^[._]/, '')
-    .replace(/^-+/, '')
-    .replace(/-+$/, '');
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-._]/g, "")
+    .replace(/^[._]/, "")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
 
-  packageJson.name = npmName || 'my-app';
+  packageJson.name = npmName || "my-app";
 
   await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 }

@@ -48,7 +48,8 @@ import type * as usage_tracking_invoicing from "../usage_tracking/invoicing.js";
 import type * as usage_tracking_tables from "../usage_tracking/tables.js";
 import type * as usage_tracking_usageHandler from "../usage_tracking/usageHandler.js";
 import type * as utils from "../utils.js";
-import type * as waitlist from "../waitlist.js";
+import type * as waitlist_index from "../waitlist/index.js";
+import type * as waitlist_tables from "../waitlist/tables.js";
 import type * as workflows_chaining from "../workflows/chaining.js";
 
 import type {
@@ -106,7 +107,8 @@ declare const fullApi: ApiFromModules<{
   "usage_tracking/tables": typeof usage_tracking_tables;
   "usage_tracking/usageHandler": typeof usage_tracking_usageHandler;
   utils: typeof utils;
-  waitlist: typeof waitlist;
+  "waitlist/index": typeof waitlist_index;
+  "waitlist/tables": typeof waitlist_tables;
   "workflows/chaining": typeof workflows_chaining;
 }>;
 declare const fullApiWithMounts: typeof fullApi;

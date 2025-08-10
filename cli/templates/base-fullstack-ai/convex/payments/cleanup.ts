@@ -1,15 +1,12 @@
 import { internalAction } from "../_generated/server";
 import { components } from "../_generated/api";
 
-// Internal action to clean up duplicate products
 export const cleanupDuplicateProducts = internalAction({
   handler: async (ctx) => {
-    // Get all products from the component including archived
     const allProducts = await ctx.runQuery(components.polar.lib.listProducts, {
       includeArchived: true,
     });
 
-    // Group by product ID
     const productsByExternalId = new Map<string, typeof allProducts>();
     for (const product of allProducts) {
       const externalId = product.id;
@@ -21,14 +18,12 @@ export const cleanupDuplicateProducts = internalAction({
 
     let archivedCount = 0;
 
-    // For each external ID with duplicates, archive all but one
     for (const [externalId, duplicates] of productsByExternalId) {
       if (duplicates.length > 1) {
         console.log(
           `Found ${duplicates.length} duplicates for product ${externalId}`
         );
 
-        // Keep the first one, archive the rest
         for (let i = 1; i < duplicates.length; i++) {
           try {
             await ctx.runMutation(components.polar.lib.updateProduct, {

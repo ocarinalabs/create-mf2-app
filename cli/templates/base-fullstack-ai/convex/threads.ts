@@ -1,4 +1,3 @@
-// See the docs at https://docs.convex.dev/agents/threads
 import { components } from "./_generated/api";
 
 import { v } from "convex/values";
@@ -29,7 +28,7 @@ export const listThreads = query({
     const userId = await getAuthUserIdAsString(ctx);
     const threads = await ctx.runQuery(
       components.agent.threads.listThreadsByUserId,
-      { userId, paginationOpts: args.paginationOpts },
+      { userId, paginationOpts: args.paginationOpts }
     );
     return threads;
   },
@@ -82,7 +81,7 @@ export const updateThreadTitle = action({
         }),
         prompt: "Generate a title and summary for this thread.",
       },
-      { storageOptions: { saveMessages: "none" } },
+      { storageOptions: { saveMessages: "none" } }
     );
     await thread.updateMetadata({ title, summary });
   },
@@ -91,7 +90,7 @@ export const updateThreadTitle = action({
 export async function authorizeThreadAccess(
   ctx: QueryCtx | MutationCtx | ActionCtx,
   threadId: string,
-  requireUser?: boolean,
+  requireUser?: boolean
 ) {
   const userId = await getAuthUserIdAsString(ctx);
   if (requireUser && !userId) {
@@ -100,7 +99,7 @@ export async function authorizeThreadAccess(
   const { userId: threadUserId } = await getThreadMetadata(
     ctx,
     components.agent,
-    { threadId },
+    { threadId }
   );
   if (requireUser && threadUserId !== userId) {
     throw new Error("Unauthorized: user does not match thread user");

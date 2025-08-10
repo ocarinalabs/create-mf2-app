@@ -1,56 +1,42 @@
-# Name of our action
 name: Release
 
-# The event that will trigger the action
 on:
   push:
-    branches: [main]
+    tags:
+      - 'v*'
 
-# what the action will do
+permissions:
+  contents: write
+
 jobs:
   release:
-    # The operating system it will run on
     runs-on: ubuntu-latest
     # runs-on: blacksmith-4vcpu-ubuntu-2404
-    # This check needs to be in place to prevent a publish loop with auto and github actions
-    if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci')"
-    # The list of steps that the action will go through
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Prepare repository
-        run: git fetch --unshallow --tags
-
-      - name: Install Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
         with:
-          run_install: false
-
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm ci
 
-      - name: Build CLI
-        run: npx tsup
+      - name: Build
+        run: npm run build
+        env:
+          SKIP_ENV_VALIDATION: true
 
       - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          draft: false
+          prerelease: false
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx auto shipit
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

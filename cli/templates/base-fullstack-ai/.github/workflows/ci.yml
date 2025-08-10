@@ -1,28 +1,65 @@
-name: Build
+name: CI
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
 
+env:
+  NODE_VERSION: '20'
+
 jobs:
-  build:
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     # runs-on: blacksmith-4vcpu-ubuntu-2404
-    if: ${{ !contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci') }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
-
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
       - name: Install dependencies
         run: npm ci
+      
+      - name: Run linter
+        run: npm run lint
 
-      - name: Create .env.local file
+  typecheck:
+    name: Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run type check
+        run: npx tsc --noEmit
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Create .env.local
         run: |
           cat > .env.local << EOF
           # Convex
@@ -54,11 +91,8 @@ jobs:
           NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
           ARCJET_KEY=ajkey_placeholder
           EOF
-
+      
       - name: Build application
         run: npm run build
         env:
           SKIP_ENV_VALIDATION: true
-
-      - name: Run linter
-        run: npm run lint

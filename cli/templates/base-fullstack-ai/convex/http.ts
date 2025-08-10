@@ -22,7 +22,7 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
     });
   }
   switch (event.type) {
-    case "user.created": // intentional fallthrough
+    case "user.created":
     case "user.updated": {
       const existingUser = await ctx.runQuery(internal.auth.users.getUser, {
         subject: event.data.id,
@@ -37,7 +37,6 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
       break;
     }
     case "user.deleted": {
-      // Clerk docs say this is required, but the types say optional?
       const id = event.data.id!;
       await ctx.runMutation(internal.auth.users.deleteUserByClerkId, { id });
       break;

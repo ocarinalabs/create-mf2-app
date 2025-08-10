@@ -4,7 +4,6 @@ import { internalMutation } from "./_generated/server";
 
 const crons = cronJobs();
 
-// Clean up old emails every hour
 crons.interval(
   "Remove old emails from the resend component",
   { hours: 1 },
@@ -21,7 +20,6 @@ export const cleanupResend = internalMutation({
     await ctx.scheduler.runAfter(
       0,
       components.resend.lib.cleanupAbandonedEmails,
-      // These generally indicate a bug, so keep them around for longer.
       { olderThan: 4 * ONE_WEEK_MS }
     );
   },

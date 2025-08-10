@@ -10,7 +10,11 @@ export const handleEmailEventMutation = internalMutation({
   },
   returns: v.null(),
   handler: async (ctx, args) => {
-    await ctx.scheduler.runAfter(0, internal.email.actions.handleEmailEvent, args);
+    await ctx.scheduler.runAfter(
+      0,
+      internal.email.actions.handleEmailEvent,
+      args
+    );
     return null;
   },
 });

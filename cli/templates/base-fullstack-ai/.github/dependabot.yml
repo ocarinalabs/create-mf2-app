@@ -1,16 +1,39 @@
 version: 2
 updates:
-
-  # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
-    open-pull-requests-limit: 10
     schedule:
       interval: "monthly"
+    open-pull-requests-limit: 5
 
-  # Maintain dependencies for npm
   - package-ecosystem: "npm"
     directory: "/"
-    open-pull-requests-limit: 10
     schedule:
-      interval: "monthly"
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    groups:
+      next:
+        patterns:
+          - "next"
+          - "@next/*"
+      convex:
+        patterns:
+          - "convex"
+          - "@convex-dev/*"
+      clerk:
+        patterns:
+          - "@clerk/*"
+      ai:
+        patterns:
+          - "ai"
+          - "@ai-sdk/*"
+          - "openai"
+          - "@anthropic-ai/*"
+          - "@google-ai/*"
+      ui:
+        patterns:
+          - "@radix-ui/*"
+          - "tailwind*"
+          - "class-variance-authority"
+          - "clsx"

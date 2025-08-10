@@ -15,23 +15,19 @@ import workflow from "@convex-dev/workflow/convex.config";
 
 const app = defineApp();
 
-// AI components
 app.use(agent);
 app.use(rag);
 
-// Backend infrastructure
 app.use(actionCache);
 app.use(actionRetrier);
 app.use(persistentTextStreaming);
 app.use(rateLimiter);
 app.use(workflow);
 
-// Database components
 app.use(migrations);
 app.use(presence);
 app.use(shardedCounter);
 
-// Third-party integrations
 app.use(polar);
 app.use(r2);
 app.use(resend);
