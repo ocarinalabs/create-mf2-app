@@ -255,6 +255,18 @@ export function Footer({
                 <div className="flex items-center gap-x-2 text-muted-foreground text-sm">
                   <LogoComponent className="transition h-5 w-auto -mt-0.5" />
                   <span className="font-sans">{copyright}</span>
+                  <span className="font-sans mx-1">•</span>
+                  <span className="font-sans">
+                    Built with{" "}
+                    <a
+                      href="https://mf2.dev"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-primary transition-colors underline"
+                    >
+                      ❃ MF2
+                    </a>
+                  </span>
                 </div>
               </div>
               <div className="flex space-x-4 text-foreground">

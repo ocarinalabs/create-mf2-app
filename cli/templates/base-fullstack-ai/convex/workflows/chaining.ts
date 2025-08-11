@@ -6,7 +6,7 @@ import { v } from "convex/values";
 import { z } from "zod";
 import { weatherAgent } from "../agents/weather";
 import { fashionAgent } from "../agents/fashion";
-import { getAuthUserId, getAuthUserIdAsString } from "../utils";
+import { getAuthUserIdAsString } from "../utils";
 
 export const getAdvice = action({
   args: { location: v.string(), threadId: v.string() },
