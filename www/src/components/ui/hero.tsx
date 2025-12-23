@@ -22,8 +22,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Copy, Check, Star } from "lucide-react";
 import { useState } from "react";
-import { useQuery } from "convex/react";
-import { api } from "../../../convex/_generated/api";
 
 const GithubIcon = () => (
   <svg
@@ -60,10 +58,6 @@ interface HeroProps {
 const Hero = ({ heading, description, buttons }: HeroProps) => {
   const [copied, setCopied] = useState(false);
   const installCommand = "npx create-mf2-app@latest";
-
-  const githubRepo = useQuery(api.stats.getGithubRepo, {
-    name: "korrect-ai/create-mf2-app",
-  });
 
   const copyToClipboard = async () => {
     try {
@@ -175,7 +169,7 @@ const Hero = ({ heading, description, buttons }: HeroProps) => {
                     >
                       <GithubIcon />
                       <span className="flex items-center gap-1 text-muted-foreground">
-                        <span>{githubRepo?.starCount || "..."}</span>
+                        Star
                         <Star className="h-4 w-4 fill-yellow-500 text-yellow-500" />
                       </span>
                     </a>
