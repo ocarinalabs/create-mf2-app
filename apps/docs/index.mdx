@@ -1,18 +1,26 @@
 ---
 title: Overview
-description: A SaaS monorepo built with Next.js, Convex, and Bun.
+description: The startup-in-a-command monorepo built for the agent era.
 ---
 
-**mf²** (Move Fawking Fast) is an opinionated Turborepo template for Next.js apps, built for the agent era. Auth, payments, email, analytics, and deployment ship pre-configured. Based on [next-forge](https://github.com/haydenbleasel/next-forge), adapted with Convex as the backend and Bun as the runtime.
+**mf²** (Move Fawking Fast) is an opinionated Turborepo monorepo designed for AI-assisted development. Auth, payments, email, analytics, and deployment ship pre-configured. Every tool stores its configuration in typed code, not dashboards. Agents like Claude Code and Cursor read the source, write the code, and let the type checker verify it.
 
 ```bash
 bunx create-mf2-app
 ```
 
-The monorepo splits into **apps** (six deployable applications) and **packages** (shared libraries). Every integration is type-safe, and every tool stores its configuration in code, not dashboards.
+The monorepo splits into **apps** (six deployable applications) and **packages** (shared libraries that wrap one concern each). Agents navigate the codebase the same way you do: follow the types, read the package, make the change. The type checker catches mistakes before anything ships.
 
-Read [Why This Stack?](/philosophy) for the full reasoning behind each choice.
+## Built for agents
+
+mf² treats AI agents as first-class contributors. `CLAUDE.md`, `AGENTS.md`, and [agent skills](/skills) ship pre-configured. [Colocation](/colocation) keeps related files together so agents find what they need immediately. [Typed packages](/structure) give agents clear boundaries and fast feedback from the compiler.
+
+Read [Why This Stack?](/philosophy) for the reasoning behind each choice.
+
+## Where this is headed
+
+mf² is becoming a startup-in-a-command. The web stack ships today. Mobile apps, desktop apps, and browser extensions are next. See the [roadmap](/roadmap).
 
 ## Credits
 
-mf² is based on [next-forge](https://github.com/haydenbleasel/next-forge) by [Hayden Bleasel](https://www.haydenbleasel.com/). Licensed under MIT.
+Based on [next-forge](https://github.com/haydenbleasel/next-forge) by [Hayden Bleasel](https://www.haydenbleasel.com/). Licensed under MIT.

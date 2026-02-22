@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "sequoia",
   "name": "mf²",
-  "description": "SaaS monorepo built with Next.js, Convex, and Bun. Designed for the agent era.",
+  "description": "The startup-in-a-command monorepo built for the agent era. Ship with AI agents, not around them.",
   "colors": {
     "primary": "#5B6478",
     "light": "#6E7A91",
@@ -75,8 +75,12 @@
         "pages": ["deployment/vercel", "deployment/domains"]
       },
       {
+        "group": "Agents",
+        "pages": ["skills", "components"]
+      },
+      {
         "group": "Other",
-        "pages": ["components", "skills", "addons"]
+        "pages": ["addons", "roadmap"]
       }
     ],
     "global": {

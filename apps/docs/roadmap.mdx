@@ -1,0 +1,36 @@
+---
+title: What's Next
+description: Where mf² is headed.
+---
+
+mf² ships a complete web stack today. The goal is a startup-in-a-command: every platform a product needs, in one monorepo, with AI agents building across all of them.
+
+## The vision
+
+Most startups need more than a web app. They need a mobile app, a desktop client, a browser extension, docs, email, and a marketing site. Today each lives in a separate repo with separate tooling. Every AI agent must learn a different codebase for every platform.
+
+mf² puts everything in one monorepo with shared packages. An agent that understands `@repo/auth` in the web app understands it in the mobile app, the desktop client, and the extension. Same types, same patterns, one context.
+
+## Coming soon
+
+### Mobile: React Native + Expo
+
+An `apps/mobile` workspace using [Expo](https://expo.dev) and React Native. It consumes the same `@repo/auth`, `@repo/analytics`, `@repo/design-system` (via [NativeWind](https://www.nativewind.dev/)), and `@repo/backend` packages. One Convex backend serves both web and mobile. An agent writes a feature once; it runs on both platforms.
+
+### Desktop: Electron
+
+An `apps/desktop` workspace using [Electron](https://www.electronjs.org/). The desktop app runs the same React frontend from the monorepo in a native window. It imports from `@repo/auth`, `@repo/design-system`, and `@repo/backend` directly. No separate codebase, no second set of conventions for the agent to learn.
+
+### Browser extension: Plasmo
+
+An `apps/extension` workspace using [Plasmo](https://www.plasmo.com) for Chrome, Firefox, and Safari extensions. Plasmo handles manifest generation, content scripts, and hot reload. The extension imports from `@repo/auth` and `@repo/design-system` like any other app in the monorepo.
+
+## The stack is opinionated
+
+Every tool in mf² earns its place. One solution per problem, configured fully. AI agents write better code when the stack is predictable. Fewer choices mean fewer mistakes.
+
+The same principle applies to new platforms. One mobile framework, one desktop toolkit, one extension framework, all wired into the same monorepo with the same conventions.
+
+## Contributing
+
+Open an issue on [GitHub](https://github.com/ocarinalabs/create-mf2-app) or submit a pull request.
