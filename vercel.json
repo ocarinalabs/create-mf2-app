@@ -1,0 +1,45 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/_mintlify/:path*",
+      "destination": "https://mf2.mintlify.app/_mintlify/:path*"
+    },
+    {
+      "source": "/api/request",
+      "destination": "https://mf2.mintlify.app/_mintlify/api/request"
+    },
+    {
+      "source": "/docs",
+      "destination": "https://mf2.mintlify.app/docs"
+    },
+    {
+      "source": "/docs/llms.txt",
+      "destination": "https://mf2.mintlify.app/llms.txt"
+    },
+    {
+      "source": "/docs/llms-full.txt",
+      "destination": "https://mf2.mintlify.app/llms-full.txt"
+    },
+    {
+      "source": "/docs/sitemap.xml",
+      "destination": "https://mf2.mintlify.app/sitemap.xml"
+    },
+    {
+      "source": "/docs/robots.txt",
+      "destination": "https://mf2.mintlify.app/robots.txt"
+    },
+    {
+      "source": "/docs/mcp",
+      "destination": "https://mf2.mintlify.app/mcp"
+    },
+    {
+      "source": "/docs/:path*",
+      "destination": "https://mf2.mintlify.app/docs/:path*"
+    },
+    {
+      "source": "/mintlify-assets/:path+",
+      "destination": "https://mf2.mintlify.app/mintlify-assets/:path+"
+    }
+  ]
+}
