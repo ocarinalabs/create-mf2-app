@@ -18,3 +18,4 @@ apps/cli/template/bun.lock
 .env.*
 
 *.tsbuildinfo
+.next/
