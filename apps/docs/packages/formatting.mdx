@@ -1,0 +1,17 @@
+---
+title: Formatting
+description: Code quality with Ultracite and Biome.
+---
+
+mf² uses [Ultracite](https://ultracite.ai) for linting and formatting. Ultracite is a zero-config preset built on [Biome](https://biomejs.dev), a Rust-based toolchain that replaces ESLint and Prettier.
+
+```bash
+bun run check    # lint and format check
+bun run fix      # auto-fix issues
+```
+
+A [Lefthook](https://lefthook.dev/) pre-commit hook runs `ultracite check` before every commit.
+
+Configuration lives in `biome.jsonc` at the project root. Ultracite provides the defaults; override individual rules as needed.
+
+See [Ultracite docs](https://docs.ultracite.ai).

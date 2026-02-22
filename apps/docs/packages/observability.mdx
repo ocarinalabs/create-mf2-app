@@ -1,0 +1,48 @@
+---
+title: Observability
+description: Error tracking and logging with Sentry and BetterStack.
+---
+
+`@repo/observability` tracks errors with [Sentry](https://docs.sentry.io) and aggregates logs with [BetterStack](https://betterstack.com/docs). Separate configs for client and server.
+
+## Usage
+
+Initialize on the client:
+
+```ts title="apps/app/instrumentation-client.ts"
+import { initClientObservability } from "@repo/observability/client";
+
+initClientObservability();
+```
+
+Initialize on the server:
+
+```ts title="apps/app/instrumentation.ts"
+import { initServerObservability } from "@repo/observability/server";
+
+initServerObservability();
+```
+
+## Structured Logging
+
+Send structured logs to BetterStack:
+
+```ts title="apps/api/routes/payments.ts"
+import { log } from "@repo/observability/server";
+
+log.info("Checkout session created", {
+  userId: session.userId,
+  priceId: session.priceId,
+});
+```
+
+Sentry captures unhandled errors automatically. Use `captureError()` from `@repo/observability/error` only for caught exceptions you want to track.
+
+## Environment Variables
+
+See [Environment Variables — Error tracking](/setup/env#error-tracking-sentry) and [Observability](/setup/env#observability-betterstack).
+
+## Learn More
+
+- [Sentry documentation](https://docs.sentry.io)
+- [BetterStack documentation](https://betterstack.com/docs)

@@ -1,0 +1,33 @@
+---
+title: Structure
+description: How the mf² monorepo is organized.
+---
+
+mf² is a monorepo: multiple packages in a single repository, managed by [Turborepo](https://turborepo.com) and [Bun](https://bun.sh) workspaces.
+
+## Apps
+
+Each app in `apps/` is self-contained and deployable independently. Apps should not depend on other apps. Each has an `env.ts` file at the root that composes environment variables from the packages it uses.
+
+Add your deployment URLs to your [environment variables](/setup/env) under `NEXT_PUBLIC_APP_URL`, `NEXT_PUBLIC_WEB_URL`, and `NEXT_PUBLIC_DOCS_URL`.
+
+| App | Port | Subdomain | Purpose |
+|-----|------|-----------|---------|
+| [app](/apps/app) | 3000 | `app.{yourdomain}.com` | Main SaaS application |
+| [web](/apps/web) | 3001 | `www.{yourdomain}.com` | Marketing website |
+| [api](/apps/api) | 3002 | `api.{yourdomain}.com` | Webhooks and cron jobs |
+| [email](/apps/email) | 3003 | — | Email templates |
+| [docs](/apps/docs) | 3004 | `docs.{yourdomain}.com` | Documentation site |
+| [storybook](/apps/storybook) | 6006 | — | Component workshop |
+
+## Packages
+
+Each package in `packages/` wraps a single concern behind a typed interface. This makes swapping implementations easy. For example, the `backend` package contains everything related to Convex (schema, functions, agents). Swap the backend without touching the rest of the app.
+
+Packages export everything the apps need: middleware, hooks, components, and [environment variables](/setup/env). Every package is scoped under `@repo/`:
+
+```ts title="Example imports"
+import { auth } from "@repo/auth";
+import { Button } from "@repo/design-system/components/ui/button";
+import { analytics } from "@repo/analytics";
+```

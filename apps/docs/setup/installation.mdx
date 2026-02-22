@@ -1,0 +1,50 @@
+---
+title: Installation
+description: Create and run a new mf² project.
+---
+
+Complete the [Prerequisites](/setup/prerequisites) first.
+
+## Scaffold the project
+
+```bash
+bunx create-mf2-app my-app
+cd my-app
+bun install
+```
+
+## Initialize Convex
+
+```bash
+bunx convex dev
+```
+
+Follow the prompts to create or link a Convex project. This watches your backend code and pushes changes automatically.
+
+## Configure environment variables
+
+Fill in your API keys in the `.env.local` files. See [Environment Variables](/setup/env).
+
+## Start development
+
+```bash
+bun run dev
+```
+
+All apps start in parallel:
+
+| App | URL |
+|-----|-----|
+| App | http://localhost:3000 |
+| Web | http://localhost:3001 |
+| API | http://localhost:3002 |
+| Docs | http://localhost:3004 |
+
+To run a single app:
+
+```bash
+bun run dev --filter=app
+```
+
+Replace `app` with `web`, `api`, `docs`, `email`, or `storybook`.
+

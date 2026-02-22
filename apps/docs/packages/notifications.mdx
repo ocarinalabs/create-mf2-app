@@ -1,0 +1,66 @@
+---
+title: Notifications
+description: In-app notification feeds powered by Knock.
+---
+
+`@repo/notifications` delivers in-app notifications with real-time feeds and user preference management through [Knock](https://docs.knock.app).
+
+## Usage
+
+Trigger a notification from the server:
+
+```ts title="apps/api/routes/comments.ts"
+import { notify } from "@repo/notifications";
+
+await notify({
+  key: "new-comment",
+  recipients: [comment.threadAuthorId],
+  data: {
+    commentId: comment.id,
+    authorName: comment.authorName,
+    threadUrl: `/threads/${comment.threadId}`,
+  },
+});
+```
+
+## Notification Feed
+
+Render the feed in your app:
+
+```tsx title="apps/app/components/notification-bell.tsx"
+import { NotificationFeed } from "@repo/notifications";
+
+export function NotificationBell() {
+  return (
+    <NotificationFeed
+      onNotificationClick={(notification) => {
+        window.location.href = notification.data.url;
+      }}
+    />
+  );
+}
+```
+
+Wrap your app with `NotificationProvider` to enable real-time delivery:
+
+```tsx title="apps/app/layout.tsx"
+import { NotificationProvider } from "@repo/notifications";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <NotificationProvider userId={currentUserId}>
+      {children}
+    </NotificationProvider>
+  );
+}
+```
+
+Configure workflows (delivery channels, templates, batching) in the Knock dashboard, not in code.
+
+## Environment Variables
+
+See [Environment Variables — Notifications](/setup/env#notifications-knock).
+
+## Learn More
+
+- [Knock documentation](https://docs.knock.app)

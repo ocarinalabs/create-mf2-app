@@ -1,0 +1,122 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "sequoia",
+  "name": "mf²",
+  "description": "SaaS monorepo built with Next.js, Convex, and Bun. Designed for the agent era.",
+  "colors": {
+    "primary": "#5B6478",
+    "light": "#6E7A91",
+    "dark": "#4E566A"
+  },
+  "background": {
+    "decoration": "grid"
+  },
+  "fonts": {
+    "heading": {
+      "family": "Geist Mono"
+    },
+    "body": {
+      "family": "Geist"
+    }
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "groups": [
+      {
+        "group": "Getting Started",
+        "pages": ["index", "philosophy", "structure", "colocation", "commands"]
+      },
+      {
+        "group": "Setup",
+        "pages": ["setup/prerequisites", "setup/installation", "setup/env"]
+      },
+      {
+        "group": "Apps",
+        "pages": [
+          "apps/api",
+          "apps/app",
+          "apps/docs",
+          "apps/email",
+          "apps/storybook",
+          "apps/web"
+        ]
+      },
+      {
+        "group": "Packages",
+        "pages": [
+          "packages/ai",
+          "packages/analytics",
+          "packages/auth",
+          "packages/cms",
+          "packages/collaboration",
+          "packages/convex",
+          "packages/cron",
+          "packages/backend",
+          "packages/design-system",
+          "packages/email",
+          "packages/feature-flags",
+          "packages/formatting",
+          "packages/i18n",
+          "packages/observability",
+          "packages/next-config",
+          "packages/notifications",
+          "packages/payments",
+          "packages/rate-limit",
+          "packages/security",
+          "packages/seo",
+          "packages/storage",
+          "packages/toolbar",
+          "packages/typescript-config",
+          "packages/webhooks"
+        ]
+      },
+      {
+        "group": "Deployment",
+        "pages": ["deployment/vercel", "deployment/domains"]
+      },
+      {
+        "group": "Other",
+        "pages": ["components", "skills", "addons"]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "GitHub",
+          "href": "https://github.com/ocarinalabs/create-mf2-app",
+          "icon": "github"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Home",
+        "href": "https://mf2.dev"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Get Started",
+      "href": "https://mf2.dev/setup/installation"
+    }
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true,
+    "raiseIssue": true
+  },
+  "contextual": {
+    "options": ["copy", "view", "claude", "chatgpt", "perplexity"]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/ocarinalabs/create-mf2-app"
+    }
+  }
+}

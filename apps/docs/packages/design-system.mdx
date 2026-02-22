@@ -1,0 +1,60 @@
+---
+title: Design System
+description: Shared UI components built on shadcn/ui, Radix, and Tailwind CSS 4.
+---
+
+`@repo/design-system` provides 50+ accessible, themeable components built on [shadcn/ui](https://ui.shadcn.com), [Radix UI](https://www.radix-ui.com), and [Tailwind CSS 4](https://tailwindcss.com). All components support keyboard navigation and dark mode.
+
+## Usage
+
+Import components by path:
+
+```tsx title="apps/app/components/settings.tsx"
+import { Button } from "@repo/design-system/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@repo/design-system/components/ui/card";
+import { Input } from "@repo/design-system/components/ui/input";
+
+export function SettingsForm() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Settings</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Input placeholder="Display name" />
+        <Button type="submit">Save changes</Button>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+## Theming
+
+Components use CSS variables for theming. Wrap your app in `ThemeProvider` for dark mode:
+
+```tsx title="apps/app/layout.tsx"
+import { ThemeProvider } from "@repo/design-system/components/theme-provider";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+## Adding Components
+
+Add new shadcn/ui components to the shared package (not to individual apps):
+
+```bash
+bunx shadcn@latest add calendar -c packages/design-system
+```
+
+## Learn More
+
+- [shadcn/ui documentation](https://ui.shadcn.com)
+- [Radix UI primitives](https://www.radix-ui.com/primitives)
+- [Tailwind CSS documentation](https://tailwindcss.com/docs)

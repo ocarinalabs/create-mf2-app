@@ -1,0 +1,63 @@
+---
+title: Backend
+description: Real-time database and serverless functions powered by Convex.
+---
+
+`@repo/backend` runs your database, serverless functions, scheduled jobs, and webhook handlers on [Convex](https://docs.convex.dev).
+
+## Schema
+
+Define tables in a single file:
+
+```ts title="packages/backend/convex/schema.ts"
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
+
+export default defineSchema({
+  users: defineTable({
+    clerkId: v.string(),
+    email: v.string(),
+    name: v.optional(v.string()),
+  }).index("by_clerk_id", ["clerkId"]),
+});
+```
+
+## Usage
+
+Convex uses file-based routing. A function in `convex/chat/streaming.ts` becomes `api.chat.streaming`:
+
+```ts title="apps/app/components/chat.tsx"
+import { api } from "@repo/backend";
+import { useAction } from "convex/react";
+
+const streamChat = useAction(api.chat.streaming.send);
+```
+
+## Webhooks
+
+Inbound webhooks from Clerk, Stripe, and Resend route through `convex/http.ts`:
+
+```ts title="packages/backend/convex/http.ts"
+import { httpRouter } from "convex/server";
+
+const http = httpRouter();
+
+http.route({
+  path: "/clerk",
+  method: "POST",
+  handler: clerkWebhook,
+});
+```
+
+## Commands
+
+| Command | Purpose |
+|---------|---------|
+| `bunx convex dev` | Start local dev server |
+| `bunx convex deploy` | Deploy to production |
+
+All Convex functions require argument and return validators. Omitting them causes type errors and deployment failures.
+
+## Learn More
+
+- [Convex documentation](https://docs.convex.dev)

@@ -1,0 +1,43 @@
+---
+title: Internationalization
+description: Multi-language support for your application.
+---
+
+`@repo/internationalization` adds multi-language support: locale detection, translation files, pluralization, and date/currency formatting.
+
+## Usage
+
+```tsx
+import { useTranslation } from "@repo/internationalization";
+
+export function Greeting() {
+  const { t } = useTranslation();
+  return <h1>{t("dashboard.welcome")}</h1>;
+}
+```
+
+Pass dynamic values with interpolation:
+
+```tsx
+const { t } = useTranslation();
+t("billing.plan", { plan: "Pro" }); // "Current plan: Pro"
+```
+
+## Locale Middleware
+
+```ts
+import { i18nMiddleware } from "@repo/internationalization";
+
+export default i18nMiddleware({
+  defaultLocale: "en",
+  locales: ["en", "es", "fr", "de", "ja"],
+});
+```
+
+## Adding a Locale
+
+Create a JSON file in `packages/internationalization/locales/` and add the locale code to the `locales` array in your middleware.
+
+## Learn More
+
+- [Next.js internationalization guide](https://nextjs.org/docs/app/building-your-application/routing/internationalization)

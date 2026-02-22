@@ -1,0 +1,28 @@
+---
+title: Collaboration
+description: Real-time collaboration features powered by Liveblocks.
+---
+
+`@repo/collaboration` adds live cursors, avatar stacks, and presence indicators to your app. It wraps [Liveblocks](https://liveblocks.io/docs).
+
+## Usage
+
+```tsx
+import { LiveCursors, AvatarStack, usePresence } from "@repo/collaboration";
+import { CollaborationProvider } from "@repo/collaboration";
+
+// Wrap collaborative pages with the provider
+<CollaborationProvider roomId="document-123">
+  <AvatarStack users={others} />
+  <LiveCursors />
+</CollaborationProvider>
+```
+
+## Environment Variables
+
+See [Environment Variables — Collaboration](/setup/env#collaboration-liveblocks).
+
+## Learn More
+
+- [Liveblocks documentation](https://liveblocks.io/docs)
+- [Liveblocks React guide](https://liveblocks.io/docs/get-started/react)

@@ -1,0 +1,58 @@
+---
+title: Analytics
+description: Product analytics and event tracking with PostHog.
+---
+
+`@repo/analytics` tracks events, identifies users, and records sessions through [PostHog](https://posthog.com/docs).
+
+## Usage
+
+Wrap your app with the provider, then track events from any component:
+
+```tsx title="apps/app/layout.tsx"
+import { AnalyticsProvider } from "@repo/analytics";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <AnalyticsProvider>
+      {children}
+    </AnalyticsProvider>
+  );
+}
+```
+
+```tsx title="apps/app/components/upgrade-button.tsx"
+import { useAnalytics } from "@repo/analytics";
+
+export function UpgradeButton() {
+  const { track } = useAnalytics();
+
+  return (
+    <button onClick={() => track("upgrade_clicked", { plan: "pro" })}>
+      Upgrade to Pro
+    </button>
+  );
+}
+```
+
+## Server-Side Tracking
+
+Track events from API routes with `trackServerEvent`:
+
+```ts title="apps/api/routes/checkout.ts"
+import { trackServerEvent } from "@repo/analytics";
+
+await trackServerEvent("checkout_completed", {
+  userId,
+  plan: "pro",
+  revenue: 29.99,
+});
+```
+
+## Environment Variables
+
+See [Environment Variables — Analytics](/setup/env#analytics-posthog).
+
+## Learn More
+
+- [PostHog documentation](https://posthog.com/docs)

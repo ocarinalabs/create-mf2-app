@@ -1,0 +1,23 @@
+---
+title: App
+description: The main user-facing SaaS application.
+---
+
+The `apps/app` directory contains the core SaaS application built on [Next.js](https://nextjs.org). It wires together authentication, real-time data, AI chat, billing, and collaboration.
+
+## Overview
+
+The primary application your users interact with. It splits into authenticated and unauthenticated route groups, so public pages and protected dashboards coexist in the same codebase.
+
+```bash
+turbo dev --filter=app
+```
+
+## Features
+
+- **[Design System](/packages/design-system)**: shadcn/ui components, hooks, and utilities.
+- **[Authentication](/packages/auth)**: Clerk login, sign-up, organizations, and route protection. Email login included; extend it for other providers.
+- **[Backend](/packages/backend)**: Real-time data from Convex. Queries update the UI automatically when data changes.
+- **[Payments](/packages/payments)**: Stripe billing and subscription management.
+- **[Collaboration](/packages/collaboration)**: Avatar Stack and Live Cursor components via Liveblocks.
+- **[AI](/packages/ai)**: Streaming chat with Vercel AI SDK.

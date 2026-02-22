@@ -1,0 +1,35 @@
+---
+title: Email
+description: Email templates built with React Email.
+---
+
+The `apps/email` directory contains [React Email](https://react.email/) templates and a preview server for viewing them in the browser.
+
+## Overview
+
+Build transactional emails with React components and TypeScript. The preview server renders templates live as you edit.
+
+```bash
+turbo dev --filter=email
+```
+
+## Creating a template
+
+Add a `.tsx` file in `apps/email/templates/`. Export a default React component. Set default props to provide preview data in the dev server.
+
+## Sending emails
+
+Send templates through `@repo/email`, which wraps [Resend](https://resend.com):
+
+```ts title="apps/app/actions/welcome.ts"
+import { sendEmail } from "@repo/email";
+import Welcome from "@repo/email/templates/welcome";
+
+await sendEmail({
+  to: "user@example.com",
+  subject: "Welcome aboard",
+  react: Welcome({ name: "Jane" }),
+});
+```
+
+Set `RESEND_TOKEN` in your [environment variables](/setup/env) to enable delivery.

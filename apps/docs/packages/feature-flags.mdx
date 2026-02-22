@@ -1,0 +1,53 @@
+---
+title: Feature Flags
+description: Feature flag management for gradual rollouts.
+---
+
+`@repo/feature-flags` controls feature rollouts with boolean and multivariate flags. Supports per-user targeting, percentage-based rollouts, and A/B testing.
+
+## Usage
+
+Server-side:
+
+```tsx
+import { getFlag } from "@repo/feature-flags";
+
+const showNewEditor = await getFlag("new-editor");
+```
+
+Client-side:
+
+```tsx
+"use client";
+import { useFlag } from "@repo/feature-flags";
+
+const showBeta = useFlag("beta-features");
+```
+
+## Defining Flags
+
+```ts
+import { defineFlags } from "@repo/feature-flags";
+
+export const flags = defineFlags({
+  "new-editor": {
+    defaultValue: false,
+    description: "Enable the new rich text editor",
+  },
+  "beta-features": {
+    defaultValue: false,
+    targeting: { percentage: 10 },
+  },
+});
+```
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `FLAGS_SECRET` | Secret key for flag evaluation |
+
+## Learn More
+
+- [Vercel Flags documentation](https://vercel.com/docs/flags)
+- [Feature flag best practices](https://martinfowler.com/articles/feature-toggles.html)

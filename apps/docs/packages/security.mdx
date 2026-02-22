@@ -1,0 +1,71 @@
+---
+title: Security
+description: Bot detection, rate limiting, and secure headers with Arcjet.
+---
+
+`@repo/security` protects your app with bot detection, rate limiting, and DDoS protection through [Arcjet](https://arcjet.com/docs). Secure HTTP headers come from [Nosecone](https://docs.arcjet.com/nosecone/quick-start).
+
+## Usage
+
+Apply security rules in middleware:
+
+```ts title="apps/app/middleware.ts"
+import { secure } from "@repo/security";
+
+export default secure({
+  rateLimit: {
+    max: 100,
+    window: "1m",
+  },
+  botProtection: true,
+});
+```
+
+## Rate Limiting
+
+Lock down specific routes:
+
+```ts title="apps/api/routes/auth.ts"
+import { rateLimit } from "@repo/security";
+
+const limiter = rateLimit({
+  max: 5,
+  window: "15m",
+});
+
+export async function POST(request: Request) {
+  const decision = await limiter.protect(request);
+
+  if (decision.isDenied()) {
+    return new Response("Too many requests", { status: 429 });
+  }
+
+  // Handle request
+}
+```
+
+## Secure Headers
+
+Nosecone sets Content-Security-Policy, X-Frame-Options, and other headers on all responses:
+
+```ts title="apps/app/middleware.ts"
+import { withSecureHeaders } from "@repo/security";
+
+export default withSecureHeaders({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+    },
+  },
+});
+```
+
+## Environment Variables
+
+See [Environment Variables — Security](/setup/env#security-arcjet).
+
+## Learn More
+
+- [Arcjet documentation](https://arcjet.com/docs)
+- [Nosecone documentation](https://docs.arcjet.com/nosecone/quick-start)

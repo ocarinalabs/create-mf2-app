@@ -1,0 +1,110 @@
+---
+title: Convex Components
+description: Modular backend building blocks from the Convex ecosystem.
+---
+
+[Convex Components](https://www.convex.dev/components) are independent, sandboxed TypeScript modules that add features to your Convex backend. Each component manages its own tables, functions, and state. Install with npm, register in `convex.config.ts`, and start using.
+
+## Pre-installed
+
+mf² ships with five components already registered:
+
+| Component | Package | Purpose |
+|-----------|---------|---------|
+| [Stripe](/packages/payments) | `@convex-dev/stripe` | Checkout sessions, subscriptions, customer management, webhook sync |
+| [Resend](/packages/email) | `@convex-dev/resend` | Transactional email delivery with event tracking |
+| [Workflow](https://github.com/get-convex/workflow) | `@convex-dev/workflow` | Durable, long-running code flows with retries and delays |
+| [Action Retrier](https://github.com/get-convex/action-retrier) | `@convex-dev/action-retrier` | Automatic retry with backoff for unreliable external calls |
+| [Migrations](https://github.com/get-convex/migrations) | `@convex-dev/migrations` | Schema migrations for live data without downtime |
+
+Register them in `packages/backend/convex/convex.config.ts`:
+
+```ts title="packages/backend/convex/convex.config.ts"
+import { defineApp } from "convex/server";
+import actionRetrier from "@convex-dev/action-retrier/convex.config.js";
+import migrations from "@convex-dev/migrations/convex.config.js";
+import resend from "@convex-dev/resend/convex.config.js";
+import stripe from "@convex-dev/stripe/convex.config.js";
+import workflow from "@convex-dev/workflow/convex.config.js";
+
+const app = defineApp();
+app.use(actionRetrier);
+app.use(migrations);
+app.use(resend);
+app.use(stripe);
+app.use(workflow);
+
+export default app;
+```
+
+## Adding a component
+
+Install the package and register it:
+
+```bash
+bun add @convex-dev/rate-limiter
+```
+
+```ts title="packages/backend/convex/convex.config.ts"
+import rateLimiter from "@convex-dev/rate-limiter/convex.config.js";
+
+app.use(rateLimiter);
+```
+
+Then use it in your Convex functions via the generated `components` object:
+
+```ts title="packages/backend/convex/example.ts"
+import { components } from "./_generated/api";
+```
+
+Each component sandboxes its own tables. They don't mix with your app tables and can only interact through explicitly defined APIs.
+
+## Recommended
+
+Components that pair well with the mf² stack:
+
+### AI
+
+| Component | Package | What it does |
+|-----------|---------|-------------|
+| [AI Agent](https://www.convex.dev/components/ai-agent) | `@convex-dev/agent` | Thread management, tool integration, streaming, and message history for AI agents |
+| [RAG](https://www.convex.dev/components/rag) | `@convex-dev/rag` | Vector search and retrieval-augmented generation with configurable embeddings |
+| [Persistent Text Streaming](https://www.convex.dev/components/persistent-text-streaming) | `@convex-dev/persistent-text-streaming` | Stream AI text to the browser while storing it to the database |
+| [Action Cache](https://www.convex.dev/components/action-cache) | `@convex-dev/action-cache` | Cache expensive AI calls with optional expiration |
+
+### Backend
+
+| Component | Package | What it does |
+|-----------|---------|-------------|
+| [Rate Limiter](https://www.convex.dev/components/rate-limiter) | `@convex-dev/rate-limiter` | Type-safe, transactional rate limiting with token bucket and fixed window strategies |
+| [Presence](https://www.convex.dev/components/presence) | `@convex-dev/presence` | Track which users are online in real time |
+| [Workpool](https://www.convex.dev/components/workpool) | `@convex-dev/workpool` | Priority queues for async operations with customizable concurrency |
+
+### Database
+
+| Component | Package | What it does |
+|-----------|---------|-------------|
+| [Aggregate](https://www.convex.dev/components/aggregate) | `@convex-dev/aggregate` | Denormalized sums and counts that scale |
+| [Sharded Counter](https://www.convex.dev/components/sharded-counter) | `@convex-dev/sharded-counter` | High-throughput increment/decrement counters |
+| [Geospatial](https://www.convex.dev/components/geospatial) | `@convex-dev/geospatial` | Query points on a map within a selected region |
+
+### Integrations
+
+| Component | Package | What it does |
+|-----------|---------|-------------|
+| [Collaborative Text Editor](https://www.convex.dev/components/prosemirror-sync) | `@convex-dev/prosemirror-sync` | Real-time collaborative editing with Tiptap or BlockNote |
+| [Cloudflare R2](https://www.convex.dev/components/cloudflare-r2) | `@convex-dev/r2` | File storage and serving from Cloudflare R2 |
+| [Expo Push Notifications](https://www.convex.dev/components/expo-push-notifications) | `@convex-dev/expo-push-notifications` | Push notifications with batching and retries |
+
+### Payments
+
+| Component | Package | What it does |
+|-----------|---------|-------------|
+| [Polar](https://www.convex.dev/components/polar) | `@convex-dev/polar` | Subscriptions and billing via Polar |
+| [Autumn](https://www.convex.dev/components/autumn) | `@useautumn/convex` | Usage-based pricing and billing database |
+
+## Learn More
+
+[Convex Components directory](https://www.convex.dev/components)
+
+[Component authoring docs](https://docs.convex.dev/components)

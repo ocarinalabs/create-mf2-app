@@ -1,0 +1,50 @@
+---
+title: Authentication
+description: User authentication and route protection powered by Clerk.
+---
+
+`@repo/auth` handles sign-in, sign-up, session management, and route protection through [Clerk](https://clerk.com/docs).
+
+## Usage
+
+Check the session in server components:
+
+```ts title="apps/app/page.tsx"
+import { auth } from "@repo/auth";
+
+export default async function DashboardPage() {
+  const session = await auth();
+
+  if (!session.userId) {
+    redirect("/sign-in");
+  }
+
+  return <Dashboard userId={session.userId} />;
+}
+```
+
+## Route Protection
+
+Lock down routes in middleware:
+
+```ts title="apps/app/middleware.ts"
+import { authMiddleware } from "@repo/auth";
+
+export default authMiddleware({
+  publicRoutes: ["/", "/sign-in", "/sign-up", "/api/webhook(.*)"],
+});
+```
+
+## User Sync
+
+Clerk webhooks sync user data to Convex. When a user signs up, updates their profile, or deletes their account, Clerk posts to your Convex HTTP endpoint at `/webhooks/clerk`. The handler validates the webhook signature and upserts or removes the user record.
+
+This gives your Convex queries direct access to user data without extra API calls to Clerk. See the [Convex Provider](/packages/convex#user-sync-via-webhooks) page for the full setup guide.
+
+## Environment Variables
+
+See [Environment Variables — Authentication](/setup/env#1-authentication-clerk).
+
+## Learn More
+
+- [Clerk documentation](https://clerk.com/docs)

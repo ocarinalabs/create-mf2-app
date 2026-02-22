@@ -1,0 +1,36 @@
+---
+title: Storybook
+description: Frontend workshop for the design system.
+---
+
+The `apps/storybook` directory runs [Storybook](https://storybook.js.org/) as a frontend workshop for the design system.
+
+## Overview
+
+Storybook ships pre-configured with every [shadcn/ui](https://ui.shadcn.com/) component, the correct fonts, and matching providers so it renders the same as your app.
+
+```bash
+turbo dev --filter=storybook
+```
+
+The preview opens at [localhost:6006](http://localhost:6006).
+
+## Adding stories
+
+Create `.stories.tsx` files in `apps/storybook/stories`. Each component gets its own file:
+
+```tsx title="apps/storybook/stories/button.stories.tsx"
+import type { Meta, StoryObj } from "@storybook/react";
+import { Button } from "@repo/design-system/components/ui/button";
+
+const meta: Meta<typeof Button> = {
+  title: "Components/Button",
+  component: Button,
+};
+
+export default meta;
+
+export const Default: StoryObj<typeof Button> = {
+  args: { children: "Click me", variant: "default" },
+};
+```

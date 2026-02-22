@@ -1,0 +1,93 @@
+---
+title: Commands
+description: Scripts and tasks available in the monorepo.
+---
+
+All commands run from the project root with `bun run`.
+
+## Development
+
+| Command | What it does |
+|---------|-------------|
+| `bun run dev` | Start all apps in development mode |
+| `turbo dev --filter=app` | Start a single app |
+| `bunx convex dev` | Start Convex backend separately |
+
+## Code Quality
+
+| Command | What it does |
+|---------|-------------|
+| `bun run check` | Lint and format check with [Ultracite](/packages/formatting) (Biome) |
+| `bun run fix` | Auto-fix linting and formatting issues |
+| `bun run convex-lint` | Lint Convex functions with ESLint |
+
+Ultracite handles all TypeScript, React, and CSS linting via [Biome](https://biomejs.dev). A [Lefthook](https://lefthook.dev/) pre-commit hook runs `ultracite fix` on staged files automatically.
+
+Convex functions use a separate ESLint plugin (`@convex-dev/eslint-plugin`) because Biome does not support Convex-specific rules. The plugin enforces argument validators, object syntax for registered functions, explicit table IDs, and correct runtime imports.
+
+## Build and Test
+
+| Command | What it does |
+|---------|-------------|
+| `bun run build` | Build all apps (runs tests first) |
+| `bun run test` | Run all tests with Vitest |
+| `bun run analyze` | Bundle analysis (`ANALYZE=true`) |
+| `turbo build --filter=app` | Build a single app |
+
+## Environment Variables
+
+| Command | What it does |
+|---------|-------------|
+| `bun run env:init` | Create `.env.local` + `.env.production` from `.env.example` |
+| `bun run env:check` | Validate all env files have required keys |
+| `bun run env:push` | Sync env vars to Vercel and Convex |
+
+See [Environment Variables](/setup/env#env-scripts) for details.
+
+## Upgrading Dependencies
+
+| Command | What it does |
+|---------|-------------|
+| `bun run bump-deps` | Update all npm dependencies to latest |
+| `bun run bump-ui` | Update all shadcn/ui components in the design system |
+| `bun run clean` | Remove all `node_modules` directories |
+
+### bump-deps
+
+Updates every dependency across all `package.json` files and installs the new versions. Run `bun run build` afterward to verify the project still builds, then `bun run dev` to check runtime behavior.
+
+### bump-ui
+
+Runs `npx shadcn@latest add --all --overwrite` against `packages/design-system`, replacing every component with the latest version from shadcn/ui.
+
+<Warning>
+  This overrides all customizations you've made to shadcn/ui components. If you've modified components in `packages/design-system/components/ui/`, this command overwrites them. To protect customizations, create wrapper components in a separate folder (e.g., `packages/design-system/components/custom/`) instead of editing the originals.
+</Warning>
+
+<Warning>
+  The `shadcn` CLI may make unwanted changes to your Tailwind config and `globals.css`. Review the diff before committing.
+</Warning>
+
+## Convex
+
+| Command | What it does |
+|---------|-------------|
+| `bunx convex dev` | Start Convex in development mode |
+| `bunx convex deploy` | Deploy Convex to production |
+| `turbo codegen` | Generate TypeScript types from Convex schema |
+| `bun run convex-lint` | Lint Convex functions |
+
+`codegen` outputs typed APIs into `convex/_generated/`. Turbo caches the output, so unchanged schemas skip regeneration.
+
+## Turbo Filtering
+
+Run any task for a specific app or package:
+
+```bash
+turbo dev --filter=app           # Only the main app
+turbo build --filter=web         # Only the marketing site
+turbo test --filter=backend      # Only backend tests
+turbo build --filter=app...      # App and all its dependencies
+```
+
+The `--filter` flag accepts app/package names from their `package.json`. Append `...` to include dependencies.

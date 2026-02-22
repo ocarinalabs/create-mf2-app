@@ -1,0 +1,52 @@
+---
+title: Next.js Config
+description: Shared Next.js configuration across all apps.
+---
+
+`@repo/next-config` provides the base Next.js configuration that all apps extend. It sets security headers, image domains, and bundle analysis.
+
+## Usage
+
+```ts
+import { config } from "@repo/next-config";
+
+export default config;
+```
+
+Override per app:
+
+```ts
+import { config } from "@repo/next-config";
+
+export default {
+  ...config,
+  images: {
+    ...config.images,
+    remotePatterns: [
+      ...(config.images?.remotePatterns ?? []),
+      { hostname: "cdn.example.com" },
+    ],
+  },
+};
+```
+
+## Security Headers
+
+| Header | Value |
+|--------|-------|
+| `X-Frame-Options` | `DENY` |
+| `X-Content-Type-Options` | `nosniff` |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` |
+| `Strict-Transport-Security` | `max-age=31536000; includeSubDomains` |
+
+## Bundle Analysis
+
+```bash
+ANALYZE=true bun run build
+```
+
+Changes to `packages/next-config/` affect all apps. Test across the monorepo after modifying it.
+
+## Learn More
+
+- [Next.js configuration reference](https://nextjs.org/docs/app/api-reference/config/next-config-js)

@@ -1,0 +1,51 @@
+---
+title: Domains
+description: Where to register and manage your domains.
+---
+
+You need at least one domain for your production deployment. Most mf² setups use subdomains for each app:
+
+| App | Subdomain |
+|-----|-----------|
+| Main application | `app.yourdomain.com` |
+| Marketing website | `www.yourdomain.com` |
+| API | `api.yourdomain.com` |
+| Documentation | `docs.yourdomain.com` |
+
+## Recommended Registrars
+
+### Vercel Domains
+
+Buy and manage domains directly from your Vercel dashboard. Domains connect to your projects without configuration: no DNS records to set, no SSL certificates to manage.
+
+Best for teams already deploying on Vercel who want the simplest setup.
+
+[Vercel Domains](https://vercel.com/domains)
+
+### Porkbun
+
+Low prices, free WHOIS privacy, and a clean dashboard. Porkbun consistently offers the cheapest renewal rates among reputable registrars. Connect to Vercel by pointing nameservers or adding DNS records.
+
+[Porkbun](https://porkbun.com)
+
+### Cloudflare Registrar
+
+Domains at wholesale cost with no markup. Cloudflare charges exactly what the registry charges. You also get their DNS, DDoS protection, and CDN. Connect to Vercel through DNS records.
+
+[Cloudflare Registrar](https://www.cloudflare.com/products/registrar/)
+
+## Which to Pick
+
+| Registrar | Best For | Pricing |
+|-----------|----------|---------|
+| Vercel | Zero-config setup, everything in one dashboard | Standard |
+| Porkbun | Cheapest renewals, good for multiple domains | Low |
+| Cloudflare | At-cost pricing, DDoS protection, CDN | Wholesale |
+
+If you want the fastest path from purchase to production, buy through Vercel. If you want the lowest price and don't mind configuring DNS, use Porkbun or Cloudflare.
+
+## Connecting to Vercel
+
+If you bought your domain outside of Vercel, add it in your Vercel project settings under **Domains**. Vercel provides the DNS records you need to add at your registrar. Vercel provisions SSL certificates automatically.
+
+For Mintlify docs, configure your docs subdomain in the [Mintlify dashboard](https://dashboard.mintlify.com) separately.

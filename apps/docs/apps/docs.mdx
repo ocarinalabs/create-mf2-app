@@ -1,0 +1,52 @@
+---
+title: Documentation
+description: The Mintlify documentation site.
+---
+
+The `apps/docs` directory contains [Mintlify](https://mintlify.com)-powered documentation. Each page is an `.mdx` file written in Markdown with built-in UI components.
+
+## Overview
+
+Mintlify turns MDX files into a documentation site with search, syntax highlighting, and interactive components. All configuration lives in `docs.json`.
+
+```bash
+turbo dev --filter=docs
+```
+
+Or directly with the Mint CLI:
+
+```bash
+mint dev --port 3004
+```
+
+## Creating a page
+
+Add an MDX file to `apps/docs`. The file name becomes the URL slug:
+
+```mdx title="apps/docs/hello-world.mdx"
+---
+title: 'Hello World'
+description: 'A new documentation page.'
+---
+```
+
+Learn more about supported [page metadata](https://mintlify.com/docs/organize/pages).
+
+## Adding a page to the navigation
+
+Add it to `docs.json`:
+
+```json title="docs.json"
+"navigation": {
+  "groups": [
+    {
+      "group": "Getting Started",
+      "pages": ["hello-world"]
+    }
+  ]
+}
+```
+
+## Configuration
+
+Customize global settings, themes, and components through `docs.json`. See Mintlify's docs on [settings](https://mintlify.com/docs/organize/settings) and [components](https://mintlify.com/docs/components).

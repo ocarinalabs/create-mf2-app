@@ -1,0 +1,35 @@
+---
+title: CMS
+description: Content management with BaseHub.
+---
+
+`@repo/cms` provides headless content management through [BaseHub](https://basehub.com/docs). Use it for blog posts, legal pages, and marketing copy.
+
+## Usage
+
+```tsx
+import { fetchBlogPost } from "@repo/cms";
+
+export default async function BlogPost({ params }: { params: { slug: string } }) {
+  const post = await fetchBlogPost(params.slug);
+
+  return (
+    <article>
+      <h1>{post.title}</h1>
+      <time dateTime={post.publishedAt}>{post.formattedDate}</time>
+      <div>{post.content}</div>
+    </article>
+  );
+}
+```
+
+## Environment Variables
+
+See [Environment Variables — CMS](/setup/env#cms-basehub).
+
+Content changes appear on the next request. Statically generated pages need a revalidation or redeploy.
+
+## Learn More
+
+- [BaseHub documentation](https://basehub.com/docs)
+- [BaseHub SDK reference](https://basehub.com/docs/sdk)

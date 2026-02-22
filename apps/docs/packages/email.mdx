@@ -1,0 +1,51 @@
+---
+title: Transactional Emails
+description: Transactional email via Resend.
+---
+
+`@repo/email` sends transactional email (verification, password resets, receipts) through [Resend](https://resend.com/docs). Templates live in `apps/email/` as React Email components.
+
+## Usage
+
+Send an email from any server context:
+
+```ts title="apps/api/routes/invite.ts"
+import { sendEmail } from "@repo/email";
+
+await sendEmail({
+  to: email,
+  subject: `You've been invited to ${teamName}`,
+  template: "team-invitation",
+  props: { teamName, inviteUrl },
+});
+```
+
+## Templates
+
+Templates are React components in `apps/email/`:
+
+```tsx title="apps/email/emails/welcome.tsx"
+import { Html, Head, Body, Text } from "@react-email/components";
+
+export default function WelcomeEmail({ name }: { name: string }) {
+  return (
+    <Html>
+      <Head />
+      <Body>
+        <Text>Welcome, {name}! Your account is ready.</Text>
+      </Body>
+    </Html>
+  );
+}
+```
+
+Preview templates locally: `bun run dev --filter=email`.
+
+## Environment Variables
+
+See [Environment Variables — Email](/setup/env#email-resend).
+
+## Learn More
+
+- [Resend documentation](https://resend.com/docs)
+- [React Email documentation](https://react.email/docs)

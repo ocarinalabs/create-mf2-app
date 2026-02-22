@@ -1,0 +1,11 @@
+{
+  "name": "docs",
+  "private": true,
+  "scripts": {
+    "dev": "mint dev --port 3004",
+    "lint": "mint broken-links"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

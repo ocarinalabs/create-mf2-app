@@ -1,0 +1,124 @@
+---
+title: Rate Limiting
+description: Application-layer rate limiting with Upstash and Convex.
+---
+
+mf² includes two rate limiting approaches: Upstash Redis for Next.js API routes and server actions, and the Convex Rate Limiter component for Convex functions.
+
+## Upstash rate limiting
+
+`@repo/rate-limit` protects your API routes from abuse using [Upstash Ratelimit](https://upstash.com/docs/redis/sdks/ratelimit-ts/overview) backed by [Upstash Redis](https://upstash.com/docs/redis/overall/getstarted). Use this for anything running in Next.js (API routes, server actions, middleware).
+
+```ts title="apps/api/routes/chat.ts"
+import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
+
+const limiter = createRateLimiter({
+  limiter: slidingWindow(10, "10 s"),
+  prefix: "chat",
+});
+
+export async function POST(request: Request) {
+  const identifier = request.headers.get("x-forwarded-for") ?? "anonymous";
+  const { success } = await limiter.limit(identifier);
+
+  if (!success) {
+    return new Response("Too many requests", { status: 429 });
+  }
+
+  // Handle request
+}
+```
+
+Pass any supported window to `slidingWindow`:
+
+```ts title="apps/api/routes/auth.ts"
+const authLimiter = createRateLimiter({
+  limiter: slidingWindow(5, "15 m"),
+  prefix: "auth",
+});
+```
+
+The package also exports the configured Redis client for direct use:
+
+```ts title="apps/api/lib/cache.ts"
+import { redis } from "@repo/rate-limit";
+
+await redis.set("key", "value", { ex: 60 });
+const value = await redis.get("key");
+```
+
+## Convex rate limiting
+
+For rate limiting inside Convex functions (mutations, queries, actions), use the [`@convex-dev/rate-limiter`](https://www.convex.dev/components/rate-limiter) component. It runs inside the Convex transaction, so limits roll back if your mutation fails.
+
+### Install
+
+```bash
+bun add @convex-dev/rate-limiter
+```
+
+Register the component in your Convex config:
+
+```ts title="packages/backend/convex/convex.config.ts"
+import { defineApp } from "convex/server";
+import rateLimiter from "@convex-dev/rate-limiter/convex.config";
+
+const app = defineApp();
+app.use(rateLimiter);
+
+export default app;
+```
+
+### Define limits
+
+```ts title="packages/backend/convex/rateLimits.ts"
+import { HOUR, MINUTE, RateLimiter } from "@convex-dev/rate-limiter";
+import { components } from "./_generated/api";
+
+export const rateLimiter = new RateLimiter(components.rateLimiter, {
+  sendMessage: { kind: "token bucket", rate: 10, period: MINUTE, capacity: 3 },
+  freeTrialSignUp: { kind: "fixed window", rate: 100, period: HOUR },
+});
+```
+
+Two strategies are available:
+
+- **Token bucket**: tokens accumulate over time, allowing bursts up to `capacity`.
+- **Fixed window**: hard limit per time period, resets each window.
+
+### Use in mutations
+
+```ts title="packages/backend/convex/chat/streaming.ts"
+import { rateLimiter } from "../rateLimits";
+
+export const send = mutation({
+  args: { body: v.string() },
+  handler: async (ctx, args) => {
+    const user = await getCurrentUserOrThrow(ctx);
+
+    await rateLimiter.limit(ctx, "sendMessage", {
+      key: user._id,
+      throws: true,
+    });
+
+    // Handle message
+  },
+});
+```
+
+The `throws` option raises a `ConvexError` when the limit is exceeded. Without it, `limit()` returns `{ ok, retryAfter }` for manual handling.
+
+You can also check without consuming (`rateLimiter.check`) and reset limits after events like successful login (`rateLimiter.reset`).
+
+## Which to use
+
+Use Upstash for Next.js API routes, server actions, and middleware. Use the Convex rate limiter for Convex mutations and actions that need transactional guarantees (limits roll back if the mutation fails).
+
+## Environment Variables
+
+See [Environment Variables](/setup/env) for Upstash Redis configuration.
+
+## Learn More
+
+- [Upstash Ratelimit documentation](https://upstash.com/docs/redis/sdks/ratelimit-ts/overview)
+- [Convex Rate Limiter component](https://www.convex.dev/components/rate-limiter)

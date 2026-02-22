@@ -1,0 +1,86 @@
+---
+title: Agent Skills
+description: Pre-installed AI agent skills that ship with mf².
+---
+
+mf² ships with agent skills in `.claude/skills/` that teach AI coding agents (Claude Code, Cursor, Copilot) how to work with the stack. Each skill gives the agent procedural knowledge for specific tools and patterns, so it writes correct code without guessing.
+
+## Pre-installed Skills
+
+### Authentication
+
+| Skill | Description |
+|-------|-------------|
+| **clerk** | Router skill that detects your task and routes to the right sub-skill |
+| **clerk-setup** | Framework detection and quickstart guides. Covers 12+ frameworks and migration from NextAuth, Supabase, Firebase, Auth0 |
+| **clerk-nextjs-patterns** | Advanced Next.js patterns: `await auth()` vs `useAuth()`, middleware strategies, Server Actions, caching |
+| **clerk-custom-ui** | Theme customization, layout, colors, fonts, and CSS overrides for Clerk components |
+| **clerk-orgs** | Multi-tenant B2B: org switching, role-based access, verified domains, enterprise SSO |
+| **clerk-webhooks** | Webhook event handling for user sync with Convex. Covers event types, signature verification, local testing |
+| **clerk-testing** | E2E testing with Playwright or Cypress. Auth state persistence and test setup |
+
+### Analytics
+
+| Skill | Description |
+|-------|-------------|
+| **posthog-instrumentation** | Event tracking, feature flags, and user identification. Covers React hooks, server-side tracking, and naming conventions |
+
+### Build System
+
+| Skill | Description |
+|-------|-------------|
+| **turborepo** | Task pipelines, caching, environment variables, CI/CD, and filtering. 45+ reference docs covering configuration, anti-patterns, and Vercel integration |
+
+### React and Performance
+
+| Skill | Description |
+|-------|-------------|
+| **vercel-react-best-practices** | 57 rules across 8 categories: eliminating waterfalls, bundle size, server-side performance, re-render optimization, rendering, JS performance |
+| **vercel-composition-patterns** | Component architecture without boolean prop sprawl. Compound components, context interfaces, React 19 patterns |
+
+### UI and Design
+
+| Skill | Description |
+|-------|-------------|
+| **web-design-guidelines** | Reviews UI code against Vercel's Web Interface Guidelines |
+| **web-interface-guidelines** | Full guideline reference: accessibility, focus states, forms, animation, typography, dark mode, hydration safety, anti-patterns |
+
+### Discovery
+
+| Skill | Description |
+|-------|-------------|
+| **find-skills** | Search and install new skills from the [skills.sh](https://skills.sh) ecosystem |
+
+## Adding Skills
+
+Browse available skills at [skills.sh](https://skills.sh) or use the find-skills skill to search from your editor. Install with:
+
+```bash
+npx skills add <github-owner/repo> --skill <skill-name>
+```
+
+### Recommended Additions
+
+Skills that pair well with the mf² stack but are not included by default:
+
+| Skill | Install Command | Why |
+|-------|-----------------|-----|
+| **convex** | `npx skills add waynesutton/convexskills --skill convex` | Convex functions, schema, real-time patterns, security |
+| **convex-best-practices** | `npx skills add waynesutton/convexskills --skill convex-best-practices` | Production Convex: query patterns, validation, error handling |
+| **next-best-practices** | `npx skills add vercel-labs/next-skills --skill next-best-practices` | 23+ Next.js topics: RSC boundaries, async patterns, metadata, fonts |
+| **tailwind-design-system** | `npx skills add wshobson/agents --skill tailwind-design-system` | Tailwind v4 design systems: tokens, variants, OKLCH colors |
+| **ai-sdk** | `npx skills add vercel/ai --skill ai-sdk` | Vercel AI SDK: streaming, tools, agents, provider integration |
+| **frontend-design** | `npx skills add anthropics/skills --skill frontend-design` | Distinctive UI direction: typography, color, motion, layout |
+
+## How Skills Work
+
+Each skill is a folder in `.claude/skills/` containing a `SKILL.md` file. The markdown defines when the skill activates, what it knows, and how it behaves. Some skills include `references/` or `rules/` subdirectories with deeper guidance.
+
+Agents read these files when they match a task. For example, when you ask an agent to "add Clerk auth to a page," the `clerk-nextjs-patterns` skill provides the correct server vs client patterns without the agent needing to search documentation.
+
+Skills work across Claude Code, Cursor (via `.cursor/rules/`), GitHub Copilot, and other agents that support the format.
+
+## Learn More
+
+- [Skills directory](https://skills.sh)
+- [Claude Code skills documentation](https://docs.anthropic.com/en/docs/claude-code/skills)

@@ -1,0 +1,148 @@
+---
+title: Payments
+description: Subscription billing and checkout with Stripe and Convex.
+---
+
+mf² includes two Stripe integrations: the [`@convex-dev/stripe`](https://www.convex.dev/components/stripe) component for checkout, subscriptions, and webhook sync inside Convex, and `@repo/payments` for direct Stripe SDK access and AI agent tooling.
+
+## Convex Stripe component
+
+The [`@convex-dev/stripe`](https://www.convex.dev/components/stripe) component handles checkout sessions, subscription management, customer creation, and webhook sync. Stripe data auto-syncs to your Convex database, so queries and subscriptions update in real time.
+
+### Setup
+
+Register the component in `convex/convex.config.ts` and configure webhook routes in `convex/http.ts`:
+
+```ts title="packages/backend/convex/convex.config.ts"
+import { defineApp } from "convex/server";
+import stripe from "@convex-dev/stripe/convex.config.js";
+
+const app = defineApp();
+app.use(stripe);
+
+export default app;
+```
+
+```ts title="packages/backend/convex/http.ts"
+import { registerRoutes } from "@convex-dev/stripe";
+
+registerRoutes(http, components.stripe, {
+  webhookPath: "/stripe/webhook",
+});
+```
+
+### Create a checkout
+
+```ts title="packages/backend/convex/stripe/index.ts"
+import { StripeSubscriptions } from "@convex-dev/stripe";
+import { components } from "../_generated/api";
+
+const stripeClient = new StripeSubscriptions(components.stripe, {});
+
+export const createSubscriptionCheckout = action({
+  args: { priceId: v.string() },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+
+    const customer = await stripeClient.getOrCreateCustomer(ctx, {
+      userId: identity.subject,
+      email: identity.email,
+      name: identity.name,
+    });
+
+    return stripeClient.createCheckoutSession(ctx, {
+      priceId: args.priceId,
+      customerId: customer.customerId,
+      mode: "subscription",
+      successUrl: `${getAppUrl()}/settings/billing?success=true`,
+      cancelUrl: `${getAppUrl()}/settings/billing?canceled=true`,
+      subscriptionMetadata: { userId: identity.subject },
+    });
+  },
+});
+```
+
+Use `mode: "payment"` for one-time purchases instead of subscriptions.
+
+### Query subscriptions and payments
+
+Because Stripe data syncs to Convex via webhooks, you query it like any other Convex data:
+
+```ts title="packages/backend/convex/stripe/index.ts"
+export const getUserSubscriptions = query({
+  args: {},
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) return [];
+    return ctx.runQuery(components.stripe.public.listSubscriptionsByUserId, {
+      userId: identity.subject,
+    });
+  },
+});
+```
+
+### Cancel and reactivate
+
+```ts title="packages/backend/convex/stripe/index.ts"
+await stripeClient.cancelSubscription(ctx, {
+  stripeSubscriptionId: subscriptionId,
+  cancelAtPeriodEnd: true, // false for immediate cancellation
+});
+
+await stripeClient.reactivateSubscription(ctx, {
+  stripeSubscriptionId: subscriptionId,
+});
+```
+
+### Customer portal
+
+```ts title="packages/backend/convex/stripe/index.ts"
+const { url } = await stripeClient.createCustomerPortalSession(ctx, {
+  customerId: customer.customerId,
+  returnUrl: `${getAppUrl()}/settings/billing`,
+});
+```
+
+### Seat-based pricing
+
+Update subscription quantity for team billing:
+
+```ts title="packages/backend/convex/stripe/index.ts"
+await stripeClient.updateSubscriptionQuantity(ctx, {
+  stripeSubscriptionId: subscriptionId,
+  quantity: seatCount,
+});
+```
+
+### Configure the webhook in Stripe
+
+1. Go to **Developers > Webhooks** in the [Stripe dashboard](https://dashboard.stripe.com/webhooks) and click **Add endpoint**.
+2. Set the endpoint URL to `https://<your-deployment>.convex.site/stripe/webhook`.
+3. Select these events: `checkout.session.completed`, `customer.created`, `customer.updated`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `payment_intent.succeeded`, `payment_intent.payment_failed`, `invoice.created`, `invoice.finalized`, `invoice.paid`, `invoice.payment_failed`.
+4. Copy the **Signing secret** (starts with `whsec_`) and set it as `STRIPE_WEBHOOK_SECRET` in your [Convex dashboard](https://dashboard.convex.dev) environment variables.
+
+## Stripe SDK
+
+`@repo/payments` exports the raw [Stripe SDK](https://stripe.com/docs/api) for cases where you need direct API access outside of Convex, such as Next.js API routes or server actions:
+
+```ts title="apps/app/actions/billing.ts"
+import { stripe } from "@repo/payments";
+
+const prices = await stripe.prices.list({ product: productId });
+```
+
+The package also includes the [Stripe Agent Toolkit](https://github.com/stripe/agent-toolkit) for AI-powered payment operations:
+
+```ts title="packages/backend/convex/agents/billing.ts"
+import { paymentsAgentToolkit } from "@repo/payments/ai";
+```
+
+## Environment Variables
+
+See [Environment Variables — Payments](/setup/env#3-payments-stripe).
+
+## Learn More
+
+- [Stripe documentation](https://stripe.com/docs)
+- [Convex Stripe component](https://www.convex.dev/components/stripe)

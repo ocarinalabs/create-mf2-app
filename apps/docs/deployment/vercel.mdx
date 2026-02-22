@@ -1,0 +1,48 @@
+---
+title: Deploy to Vercel
+description: How to deploy your mf² apps to Vercel.
+---
+
+Each app in the monorepo deploys as a separate Vercel project.
+
+## Steps
+
+1. Push your monorepo to GitHub.
+2. Import the repo at [vercel.com/new](https://vercel.com/new). Create one Vercel project per app.
+3. Set the root directory for each project:
+
+| Vercel Project | Root Directory |
+|---------------|----------------|
+| Main application | `apps/app` |
+| Marketing website | `apps/web` |
+| API layer | `apps/api` |
+
+4. Add environment variables from your `.env` file to each project:
+
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_CONVEX_URL` | Production Convex deployment URL |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key |
+| `CLERK_SECRET_KEY` | Clerk server-side secret |
+| `NEXT_PUBLIC_APP_URL` | Production URL for the main app |
+| `NEXT_PUBLIC_WEB_URL` | Production URL for the marketing site |
+| `NEXT_PUBLIC_DOCS_URL` | Production URL for the docs |
+
+5. Deploy. Pushes to `main` trigger automatic deployments.
+
+## Vercel Integrations
+
+The [Clerk integration](https://vercel.com/integrations) and [Convex integration](https://vercel.com/integrations) auto-sync their keys to your Vercel projects.
+
+## Documentation
+
+The `apps/docs/` site deploys via [Mintlify](https://mintlify.com), not Vercel. Configure your docs domain in the Mintlify dashboard.
+
+## Monorepo Behavior
+
+Vercel detects Turborepo and scopes builds to the affected app. Only changed apps rebuild. Each Vercel project keeps its own environment variables; they are not shared across projects.
+
+## Learn More
+
+- [Vercel monorepo documentation](https://vercel.com/docs/monorepos)
+- [Vercel environment variables](https://vercel.com/docs/projects/environment-variables)

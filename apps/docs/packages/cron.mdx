@@ -1,0 +1,21 @@
+---
+title: Cron Jobs
+description: Scheduled tasks powered by Convex.
+---
+
+Convex runs cron jobs as serverless functions on a schedule. Define them in `packages/backend/convex/crons.ts`.
+
+```ts title="packages/backend/convex/crons.ts"
+import { cronJobs } from "convex/server";
+import { internal } from "./_generated/api";
+
+const crons = cronJobs();
+
+crons.interval("clean up expired sessions", { hours: 24 }, internal.auth.cleanup, {});
+
+export default crons;
+```
+
+Jobs run automatically in both development and production. Monitor them in the Convex dashboard under **Cron Jobs**.
+
+See [Convex cron docs](https://docs.convex.dev/scheduling/cron-jobs).

@@ -1,0 +1,44 @@
+---
+title: Webhooks
+description: Outbound webhook delivery with Svix.
+---
+
+`@repo/webhooks` sends outbound webhooks to external services through [Svix](https://docs.svix.com). Svix handles retries, exponential backoff, and signature verification.
+
+This package handles outbound webhooks (your app notifying others). The backend package handles inbound webhooks (Clerk, Stripe) in `convex/http.ts`.
+
+## Usage
+
+Send a webhook when an event occurs:
+
+```ts title="apps/api/routes/projects.ts"
+import { sendWebhook } from "@repo/webhooks";
+
+await sendWebhook({
+  eventType: "project.created",
+  payload: {
+    id: project.id,
+    name: project.name,
+    createdAt: project.createdAt,
+  },
+});
+```
+
+## Webhook Portal
+
+Give customers a self-service UI to manage their endpoints:
+
+```ts title="apps/api/routes/webhook-portal.ts"
+import { getPortalUrl } from "@repo/webhooks";
+
+const portalUrl = await getPortalUrl({ appId: userId });
+return Response.json({ url: portalUrl });
+```
+
+## Environment Variables
+
+See [Environment Variables — Webhooks](/setup/env#webhooks-svix).
+
+## Learn More
+
+- [Svix documentation](https://docs.svix.com)

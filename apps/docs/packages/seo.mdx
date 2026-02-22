@@ -1,0 +1,36 @@
+---
+title: SEO
+description: Search engine optimization, metadata, and structured data.
+---
+
+`@repo/seo` generates metadata, JSON-LD structured data, sitemaps, robots.txt, and OpenGraph images. Built on the Next.js Metadata API.
+
+## Usage
+
+```ts
+import { createMetadata } from "@repo/seo";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = createMetadata({
+  title: "mf² - Ship your SaaS faster",
+  description: "A production-ready monorepo template for modern SaaS.",
+  path: "/",
+});
+```
+
+## Key Exports
+
+| Export | Purpose |
+|--------|---------|
+| `createMetadata` | Page metadata with OpenGraph and Twitter cards |
+| `JsonLd` | JSON-LD structured data component |
+| `generateSitemap` | Sitemap from static and dynamic routes |
+| `generateRobots` | robots.txt configuration |
+| `generateOgImage` | Dynamic OpenGraph image rendering |
+
+`createMetadata` handles canonical URLs, title templates, and social cards automatically. Pass only page-specific values.
+
+## Learn More
+
+- [Next.js Metadata API](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)
+- [Google structured data documentation](https://developers.google.com/search/docs/appearance/structured-data)

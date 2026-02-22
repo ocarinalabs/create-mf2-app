@@ -1,0 +1,120 @@
+---
+title: Colocation
+description: How to structure components and logic within the App Router.
+---
+
+mf² follows a colocation-first approach: components, logic, and related files live inside the route folders that use them. This matches the [Next.js App Router](https://nextjs.org/docs/app) design and keeps features self-contained.
+
+## The Principle
+
+Place files next to the code that uses them. Route-specific components go in the route folder. Shared components go in the nearest common parent. Globally shared code lives in `packages/`.
+
+```
+apps/app/src/app/
+├── dashboard/
+│   ├── page.tsx
+│   ├── layout.tsx
+│   └── _components/         # Dashboard-specific components
+│       ├── stats-card.tsx
+│       └── recent-activity.tsx
+├── settings/
+│   ├── page.tsx
+│   └── _components/         # Settings-specific components
+│       └── settings-form.tsx
+└── (auth)/
+    ├── login/
+    │   ├── page.tsx
+    │   └── _components/     # Login-specific components
+    │       └── login-form.tsx
+    ├── register/
+    │   ├── page.tsx
+    │   └── _components/     # Register-specific components
+    │       └── register-form.tsx
+    └── _components/          # Shared across all auth routes
+        └── social-buttons.tsx
+```
+
+## Private Folders
+
+Prefix folders with an underscore (`_components/`, `_hooks/`, `_lib/`) to opt them out of the routing system. Next.js treats these as [private folders](https://nextjs.org/docs/app/getting-started/project-structure#private-folders) and ignores them for route matching.
+
+This prevents component files from accidentally becoming route segments and keeps routing logic separate from UI code.
+
+## Where Things Live
+
+| Scope | Location | Example |
+|-------|----------|---------|
+| Single route | `app/dashboard/_components/` | A chart that only the dashboard renders |
+| Route group | `app/(auth)/_components/` | Social login buttons shared by login and register |
+| Single app | `apps/app/src/components/` | A sidebar used across all routes in the app |
+| All apps | `packages/design-system/` | Buttons, cards, inputs from `@repo/design-system` |
+
+Move a component up only when a second consumer needs it. Start colocated, promote when reuse is proven.
+
+## Route Groups
+
+Route groups wrap related routes without affecting the URL. Parenthesized folder names like `(auth)` and `(marketing)` organize code while keeping paths clean:
+
+```
+apps/app/src/app/
+├── (auth)/          # /login, /register — no "(auth)" in URL
+│   ├── login/
+│   └── register/
+├── (app)/           # /dashboard, /settings — authenticated routes
+│   ├── dashboard/
+│   └── settings/
+└── layout.tsx       # Root layout wraps everything
+```
+
+Each group can have its own `layout.tsx` for shared UI like sidebars or navigation within that group.
+
+## Server and Client Boundaries
+
+Keep `"use client"` at the leaf level. Page files and layouts run as Server Components by default. Push client interactivity (state, events, hooks) into the `_components/` folder:
+
+```tsx title="apps/app/src/app/dashboard/page.tsx"
+import { StatsCard } from "./_components/stats-card";
+
+export default async function DashboardPage() {
+  const stats = await getStats(); // Server: fetch data
+  return <StatsCard data={stats} />; // Client: render interactive UI
+}
+```
+
+```tsx title="apps/app/src/app/dashboard/_components/stats-card.tsx"
+"use client";
+
+export function StatsCard({ data }: { data: Stats }) {
+  const [expanded, setExpanded] = useState(false);
+  // Client-side interactivity lives here
+}
+```
+
+## Colocating Non-Component Files
+
+Routes can colocate more than components. Schema validation, types, and constants that belong to a single route live in the same folder:
+
+```
+apps/app/src/app/settings/
+├── page.tsx
+├── _components/
+│   └── settings-form.tsx
+├── _lib/
+│   └── schema.ts            # Zod schema for settings form
+└── _hooks/
+    └── use-settings.ts       # Hook for settings state
+```
+
+When a schema or hook is reused across multiple routes, move it to `src/lib/` or `src/hooks/` in the app, or to a shared package.
+
+## In a Monorepo
+
+mf² splits shared code into packages. The colocation hierarchy extends across the monorepo:
+
+1. **Route folder**: used by one page
+2. **Route group `_components/`**: shared within a group
+3. **App-level `src/components/`**: shared across routes in one app
+4. **`@repo/design-system`**: shared across all apps
+5. **Other `@repo/*` packages**: shared utilities, hooks, configs
+
+This keeps each layer focused. A component in `@repo/design-system` serves every app. A component in `dashboard/_components/` serves one page.

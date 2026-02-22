@@ -1,0 +1,19 @@
+---
+title: API
+description: Isolated serverless functions for webhooks and cron jobs.
+---
+
+The `apps/api` directory houses webhooks, cron jobs, and external integrations behind a dedicated endpoint, separate from the main application.
+
+## Overview
+
+A standalone API gives non-web consumers (mobile apps, third-party services, IoT devices) their own endpoint. On Vercel, serverless functions scale independently regardless of how you split them. A separate app keeps concerns apart and routing clean.
+
+```bash
+turbo dev --filter=api
+```
+
+## Features
+
+- **Cron jobs**: Scheduled tasks defined in `apps/api/app/cron`. Each job is a `.ts` file that exports a route handler.
+- **Webhooks**: Inbound webhooks defined in `apps/api/app/webhooks`. Stripe and Clerk handlers are pre-configured.

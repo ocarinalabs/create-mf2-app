@@ -1,0 +1,63 @@
+---
+title: TypeScript Config
+description: Shared TypeScript configurations for all apps and packages.
+---
+
+`@repo/typescript-config` provides base [TypeScript](https://www.typescriptlang.org/docs) configurations that all apps and packages extend. It keeps compiler settings consistent across the monorepo.
+
+## Presets
+
+| Config | Extends | Used by |
+|--------|---------|---------|
+| `base.json` | — | Library packages |
+| `nextjs.json` | `base.json` | Next.js apps (`app`, `web`, `api`) |
+| `react-library.json` | `base.json` | React component packages (`design-system`) |
+| `convex.json` | — | Convex backend (`packages/backend/convex/`) |
+
+## Usage
+
+Extend a preset in your package's `tsconfig.json`:
+
+```json title="apps/app/tsconfig.json"
+{
+  "extends": "@repo/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
+```
+
+For library packages:
+
+```json title="packages/auth/tsconfig.json"
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
+}
+```
+
+For Convex functions:
+
+```json title="packages/backend/convex/tsconfig.json"
+{
+  "extends": "@repo/typescript-config/convex.json",
+  "include": ["./**/*"],
+  "exclude": ["./_generated"]
+}
+```
+
+## Key Settings
+
+All presets enable `strict` mode and `strictNullChecks`. The base config targets ES2022 with `NodeNext` module resolution. The Next.js preset switches to `Bundler` resolution and adds the `next` plugin.
+
+Changes to `packages/typescript-config/` affect every app and package. Run `bun run typecheck` across the monorepo after modifying it.
+
+## Learn More
+
+- [TypeScript tsconfig reference](https://www.typescriptlang.org/tsconfig)

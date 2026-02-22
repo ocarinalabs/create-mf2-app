@@ -1,0 +1,118 @@
+---
+title: Convex Provider
+description: React provider that connects Convex to Clerk authentication.
+---
+
+`@repo/convex` bridges [Convex](https://docs.convex.dev) and [Clerk](https://clerk.com/docs) in your Next.js app. It wraps `ConvexProviderWithClerk` so that all Convex queries and mutations run with the user's Clerk session.
+
+## Usage
+
+Wrap your app with the provider in a client component:
+
+```tsx title="apps/app/components/convex-client-provider.tsx"
+"use client";
+
+import { useAuth } from "@clerk/nextjs";
+import { ConvexClientProvider } from "@repo/convex/provider";
+
+export function ConvexProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <ConvexClientProvider useAuth={useAuth}>
+      {children}
+    </ConvexClientProvider>
+  );
+}
+```
+
+Then add it to your root layout:
+
+```tsx title="apps/app/app/layout.tsx"
+import { ConvexProvider } from "@/components/convex-client-provider";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <ConvexProvider>
+      {children}
+    </ConvexProvider>
+  );
+}
+```
+
+## How Auth Works
+
+The provider passes Clerk's `useAuth` hook to Convex. When a user signs in through Clerk, the provider attaches their JWT to every Convex request. Convex validates the token against your Clerk JWT issuer domain (configured in `convex/auth.config.ts`) and makes the identity available via `ctx.auth` in your backend functions.
+
+This means every query and mutation in `@repo/backend` can call `ctx.auth.getUserIdentity()` to get the current user's identity without extra setup.
+
+## User Sync via Webhooks
+
+Clerk JWTs contain basic identity fields, but your app needs richer user data in Convex for queries, foreign keys, and cross-user lookups. mf² solves this with a pre-built webhook sync.
+
+When a user signs up, updates their profile, or deletes their account, Clerk sends a webhook to your Convex HTTP endpoint at `/webhooks/clerk`. The handler in `convex/http.ts` validates the signature with [Svix](https://docs.svix.com), then upserts or deletes the user record in Convex:
+
+```ts title="packages/backend/convex/http.ts"
+switch (event.type) {
+  case "user.created":
+  case "user.updated":
+    await ctx.runMutation(internal.auth.users.updateOrCreateUser, {
+      clerkUser: event.data,
+    });
+    break;
+  case "user.deleted":
+    if (event.data.id) {
+      await ctx.runMutation(internal.auth.users.deleteUserByClerkId, {
+        id: event.data.id,
+      });
+    }
+    break;
+}
+```
+
+The `users` table stores the full Clerk user object and indexes by `clerkUser.id` for fast lookups. Deleting a user cascades to remove their threads, messages, and settings.
+
+### Configure the webhook in Clerk
+
+1. Go to **Webhooks** in the [Clerk dashboard](https://dashboard.clerk.com) and click **+ Add Endpoint**.
+2. Set the endpoint URL to `https://<your-deployment>.convex.site/webhooks/clerk` (note: `.site`, not `.cloud`).
+3. Under **Message Filtering**, select all **user** events.
+4. Copy the **Signing Secret** (starts with `whsec_`) and set it as `CLERK_WEBHOOK_SECRET` in your [Convex dashboard](https://dashboard.convex.dev) environment variables.
+
+### Querying user data
+
+Use the helpers in `convex/auth/users.ts` to access the current user in your backend functions:
+
+```ts title="packages/backend/convex/chat/streaming.ts"
+import { getCurrentUserOrThrow } from "../auth/users";
+
+export const send = mutation({
+  args: { body: v.string() },
+  handler: async (ctx, args) => {
+    const user = await getCurrentUserOrThrow(ctx);
+    await ctx.db.insert("messages", { body: args.body, userId: user._id });
+  },
+});
+```
+
+Because Convex queries are reactive, the client updates automatically when user data changes through the webhook. No polling or manual refetching needed.
+
+## HTTP Client
+
+For server-side Convex calls outside of React, use the HTTP client:
+
+```ts title="apps/app/lib/convex.ts"
+import { convexHttpClient } from "@repo/convex/http-client";
+import { api } from "@repo/backend";
+
+const user = await convexHttpClient.query(api.auth.users.getUser, { clerkId });
+```
+
+## Environment Variables
+
+See [Environment Variables — Backend](/setup/env#2-backend-convex) and [Clerk Webhooks](/setup/env#clerk-webhooks).
+
+## Learn More
+
+- [Convex React documentation](https://docs.convex.dev/client/react)
+- [Convex + Clerk integration](https://docs.convex.dev/auth/clerk)
+- [Storing users in Convex](https://docs.convex.dev/auth/database-auth)
+- [Webhook setup guide](https://docs.convex.dev/auth/database-auth#set-up-webhooks)

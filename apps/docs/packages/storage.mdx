@@ -1,0 +1,48 @@
+---
+title: Storage
+description: File upload and storage with Convex and Vercel Blob.
+---
+
+mf² includes two storage options: Convex file storage (default, with user ownership tracking) and Vercel Blob (for simple CDN uploads).
+
+## Convex file storage
+
+Convex stores files with a `files` table that tracks ownership per user. The functions live in `packages/backend/convex/files/`.
+
+```tsx title="Frontend upload"
+import { useMutation } from "convex/react";
+import { api } from "@repo/backend";
+
+const generateUploadUrl = useMutation(api.files.storage.generateUploadUrl);
+const saveFile = useMutation(api.files.storage.saveFile);
+
+async function handleUpload(file: File) {
+  const url = await generateUploadUrl();
+  const result = await fetch(url, { method: "POST", body: file });
+  const { storageId } = await result.json();
+  await saveFile({ storageId, filename: file.name, contentType: file.type });
+}
+```
+
+Four mutations available: `generateUploadUrl`, `saveFile`, `getUrl`, `deleteFile`. All enforce user ownership - users can only access their own files.
+
+## Vercel Blob
+
+`@repo/storage` re-exports `@vercel/blob` for simple file uploads to Vercel's CDN. No database tracking or user ownership.
+
+```ts title="Server-side upload"
+import { put } from "@repo/storage";
+
+const blob = await put("avatar.png", file, { access: "public" });
+```
+
+Requires `BLOB_READ_WRITE_TOKEN` in your environment.
+
+## Which to use
+
+Use Convex file storage when you need user-scoped access, file metadata, or cleanup on account deletion. Use Vercel Blob for public assets where ownership doesn't matter.
+
+## Learn More
+
+- [Convex file storage](https://docs.convex.dev/file-storage)
+- [Vercel Blob docs](https://vercel.com/docs/storage/vercel-blob)

@@ -1,0 +1,98 @@
+---
+title: Why This Stack?
+description: Why every choice in mf² earns its place.
+---
+
+AI agents write most of the code now. The bottleneck is no longer typing speed. It's how well your codebase helps an agent understand what exists, what to change, and whether it broke anything.
+
+Most stacks fight this. Schema in a dashboard, types in a separate file, queries in a third place, migrations managed by a CLI you hope the agent figures out. The agent guesses, hallucinates, and you spend an hour fixing a five-minute task.
+
+mf² is built for the agent era. Every tool in the stack was chosen because it keeps the source of truth in code, gives the type checker enough information to catch mistakes, and stays out of the way when an LLM is doing the work. Here's why each piece is here.
+
+## Convex
+
+SQL is not good enough for building applications.
+
+SQL excels at analytics, data warehousing, and reporting. But stuffing SQL into apps through ORMs, query builders, and migration tools is a losing game. You define your schema in one place, your types in another, your queries in a third, and pray they all agree. When they don't, you find out at runtime.
+
+We need better primitives: ones that don't force you to wire the database directly to the client, manage migrations by hand, or juggle six tools to move data from server to screen.
+
+The team that built and scaled Dropbox created Convex to solve application data problems: add new data types easily, handle queries and mutations between app and database, keep everything in sync, and provide TypeScript patterns that orchestrate how your app works. You deploy it all with one command. No dashboards to configure, no pieces to link.
+
+In the most practical sense, Convex is React for your backend. React replaced `getElementById` with components. Convex replaces database migrations and SQL strings with TypeScript. You write queries and mutations as functions. Those functions are the only way data gets in or out. The schema, the access layer, the sync engine, the real-time subscriptions all live in one `convex/` folder. Change the file, it deploys. Change the data, the UI updates. No extra wiring.
+
+### Type safety without ceremony
+
+Your schema generates types. Your queries return typed data. Your components consume typed props. Rename a field in the schema and you get a type error in the component that renders it, not in some intermediate layer.
+
+### AI agents treat it like any other code
+
+This is the big one. LLMs write good TypeScript. They write terrible dashboard configurations, RLS policies, and SQL migrations.
+
+Traditional stacks split your backend across dashboards, config files, ORMs, and migration CLIs. An AI agent working in that world has to infer what's in the database from migration history, guess at RLS policies it can't read, and hope the ORM types match reality. When it gets something wrong, you find out at runtime.
+
+Convex collapses all of that into TypeScript files in a folder. Any agent (Claude Code, Cursor, Codex) can read your schema, understand the access patterns, write a new query, and get a type error if it's wrong. No MCP server to talk to a dashboard. No special tooling. The agent opens the `convex/` folder and sees everything your backend does, just as it reads any other part of your codebase.
+
+Teams using Convex report that AI agents write correct backend code on the first try far more often than with traditional stacks. The agent reads typed source code; the type checker validates it.
+
+### Real-time by default
+
+When a mutation changes data, every subscribed client gets an update. No WebSocket library. No pub/sub layer. The primitives handle it.
+
+### No state to manage between environments
+
+Every developer runs `bunx convex dev` and gets their own isolated instance. No shared staging databases. No configuration drift. Clone the repo, run the command, start building.
+
+Convex is not for everything. If your data team needs ad-hoc SQL across billions of rows, use a separate analytics database and stream the data there. Convex is an application database. If your app is TypeScript and your users interact through a UI, nothing else comes close.
+
+## Next.js
+
+Nothing else lets you put a static marketing page and a dynamic app in the same project. The App Router handles the split between static and dynamic. Every component library, auth provider, analytics SDK, and AI coding agent supports React and Next.js.
+
+## Clerk
+
+Auth is the part most likely to break when an AI agent builds an app from scratch. The agent picks the wrong library, misconfigures session handling, or wires OAuth incorrectly.
+
+mf² sidesteps this. Clerk is already configured: sign-in, sign-up, social logins, session management, and organization support, all from a few environment variables. The components, middleware, and webhook sync to Convex are pre-built. An agent working in mf² never touches auth setup.
+
+Auth data doesn't belong in your application database. Clerk keeps sessions, tokens, and OAuth credentials separate from your app data. Different problems, different places.
+
+## Stripe
+
+Every alternative worth mentioning (Polar, Autumn, Lemonsqueezy) is built on top of Stripe anyway. mf² ships with webhook handling pre-configured through Convex HTTP endpoints so you don't have to solve the edge cases around subscription state, failed payments, and race conditions yourself.
+
+## Tailwind CSS + shadcn/ui
+
+Tailwind compiles to only the CSS you use. shadcn/ui components are source code you own, not a package you depend on. Every component lives in your codebase, fully customizable, fully deletable.
+
+## PostHog
+
+Product analytics for apps where users sign in. Event tracking, session replays, feature flags, experiments. Open source, self-hostable, pre-configured in mf².
+
+## Resend
+
+Transactional email with a clean API. Write email templates as React components. mf² includes templates for welcome emails, verification codes, password resets, and waitlist confirmations.
+
+## Vercel
+
+Push to GitHub, it deploys. Open a pull request, you get a preview. Fluid compute charges for CPU time, not wall-clock time. Next.js and Vercel work well together because the same company maintains both.
+
+## Bun + Turborepo
+
+Monorepos used to be painful. Dependency resolution broke constantly, workspace linking was fragile, and getting two packages to see each other's types required arcane config. Most developers gave up and kept everything in a single `package.json`.
+
+That changed. Bun's workspace support and Turborepo's build orchestration finally made monorepos first-class. Bun handles package installation with a global cache (no redundant network requests), resolves workspace dependencies correctly out of the box, and runs TypeScript natively. Turborepo caches build outputs so unchanged packages never rebuild, runs tasks in parallel, and gives you filtered commands to check or build just the package you touched.
+
+Together they turn `bun run dev` into a single command that spins up every app simultaneously, and `bun run build` into a cached pipeline that only rebuilds what changed. When an agent makes a change in one package, it runs the type checker on that package alone and gets instant feedback.
+
+## Why this matters for AI
+
+Every choice above follows the same principle: keep the source of truth in typed code, not in dashboards or scattered config.
+
+When an AI agent works in an mf² codebase, it finds the database schema in `convex/schema.ts`, the access layer in `convex/` query and mutation files, auth webhooks in `convex/http.ts`, payment handling in the same place. It reads TypeScript, writes TypeScript, and the type checker catches its mistakes.
+
+Each package in `packages/` wraps one concern behind a typed interface. An agent adding a feature reads the relevant package, follows the types, and writes code that either compiles or doesn't.
+
+mf² ships with `CLAUDE.md` and Cursor rules pre-configured. An agent starting a session already knows the structure before it writes a single line.
+
+This is the stack for teams that treat AI agents as first-class contributors.
