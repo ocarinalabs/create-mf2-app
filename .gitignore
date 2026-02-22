@@ -19,3 +19,4 @@ apps/cli/template/bun.lock
 
 *.tsbuildinfo
 .next/
+.vercel
