@@ -1,0 +1,28 @@
+{
+  "name": "@repo/convex",
+  "version": "0.0.1",
+  "private": true,
+  "exports": {
+    "./provider": "./provider.tsx",
+    "./keys": "./keys.ts"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@repo/backend": "workspace:*",
+    "@t3-oss/env-nextjs": "^0.13.10",
+    "convex": "^1.32.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/react": "^19.2.14",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@clerk/nextjs": "^6.0.0",
+    "react": "^19.0.0"
+  }
+}

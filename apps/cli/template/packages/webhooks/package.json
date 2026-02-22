@@ -1,0 +1,20 @@
+{
+  "name": "@repo/webhooks",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@repo/auth": "*",
+    "@t3-oss/env-nextjs": "^0.13.10",
+    "server-only": "^0.0.1",
+    "svix": "^1.85.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "typescript": "^5.9.3"
+  }
+}

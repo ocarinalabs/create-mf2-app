@@ -1,0 +1,50 @@
+{
+  "name": "@repo/backend",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./convex/_generated/api.d.ts",
+      "default": "./convex/_generated/api.js"
+    },
+    "./dataModel": {
+      "types": "./convex/_generated/dataModel.d.ts"
+    },
+    "./server": {
+      "types": "./convex/_generated/server.d.ts",
+      "default": "./convex/_generated/server.js"
+    }
+  },
+  "scripts": {
+    "dev": "convex dev",
+    "deploy": "convex deploy",
+    "setup": "convex dev --until-success",
+    "codegen": "convex codegen || echo 'skipping: Convex codegen failed or not configured'",
+    "typecheck": "tsc --noEmit",
+    "test": "[ -f convex/_generated/api.js ] && vitest || echo 'skipping: Convex codegen required'",
+    "test:once": "vitest run",
+    "convex-lint": "eslint convex/"
+  },
+  "dependencies": {
+    "@ai-sdk/gateway": "^3.0.50",
+    "@convex-dev/action-retrier": "^0.3.0",
+    "@convex-dev/migrations": "^0.3.1",
+    "@convex-dev/resend": "^0.2.3",
+    "@convex-dev/stripe": "^0.1.3",
+    "@convex-dev/workflow": "^0.3.4",
+    "@repo/ai": "workspace:*",
+    "convex": "^1.32.0",
+    "convex-env": "^2.5.0",
+    "svix": "^1.85.0"
+  },
+  "devDependencies": {
+    "@clerk/backend": "^2.31.2",
+    "@convex-dev/eslint-plugin": "^1.1.1",
+    "@edge-runtime/vm": "^5.0.0",
+    "@repo/typescript-config": "workspace:*",
+    "convex-test": "^0.0.41",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

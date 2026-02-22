@@ -1,0 +1,42 @@
+{
+  "name": "@repo/ai",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./gateway": "./gateway/index.ts",
+    "./gateway/devtools": "./gateway/devtools.ts",
+    "./models": "./models/index.ts",
+    "./agent": "./agent/index.ts",
+    "./prompts": "./prompts/system.ts",
+    "./prompts/title": "./prompts/title.ts",
+    "./prompts/rag": "./prompts/rag.ts",
+    "./utils/cost": "./utils/cost.ts",
+    "./keys": "./keys.ts",
+    "./rag": "./rag/index.ts",
+    "./rag/metrics": "./rag/metrics.ts",
+    "./rag/retrieval/rrf": "./rag/retrieval/rrf.ts",
+    "./rag/retrieval/rerank": "./rag/retrieval/rerank.ts",
+    "./tools/search": "./tools/search.ts"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.45",
+    "@ai-sdk/cohere": "^3.0.21",
+    "@ai-sdk/devtools": "^0.0.14",
+    "@ai-sdk/gateway": "^3.0.50",
+    "@perplexity-ai/ai-sdk": "^0.1.2",
+    "@t3-oss/env-nextjs": "^0.13.10",
+    "ai": "^6.0.91",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "@types/node": "25.3.0",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3"
+  }
+}
