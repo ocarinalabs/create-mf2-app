@@ -1,19 +1,15 @@
 <p align="center">
-  <a href="https://github.com/korrect-ai/create-mf2-app">
-    <h1 align="center">MF2 Stack</h1>
+  <a href="https://github.com/ocarinalabs/create-mf2-app">
+    <h1 align="center">mf²</h1>
   </a>
 </p>
 
-<h3 align="center">
-  Move F*cking Fast
-</h3>
-
 <p align="center">
-  The full-stack web framework for developers who ship
+  Production-ready monorepo for SaaS, AI apps, and marketing sites.
 </p>
 
 <p align="center">
-  Get started by running <code>npx create mf2-app@latest</code>
+  <code>npx create-mf2-app@latest</code>
 </p>
 
 <div align="center">
@@ -25,408 +21,205 @@
 
 </div>
 
-## 📖 Table of Contents
+## Quick Start
 
-- <a href="#quick-start">🚀 Quick Start</a>
-- <a href="#what-is-mf2">🎯 What is MF2 Stack?</a>
-- <a href="#templates">📦 Templates</a>
-- <a href="#features">✨ Features</a>
-- <a href="#cli-usage">🛠️ CLI Usage</a>
-- <a href="#why-mf2">🤔 Why MF2?</a>
-- <a href="#deploy">🚢 Deploy</a>
-- <a href="#community">🤝 Community</a>
-- <a href="#contributors">👥 Contributors</a>
-
-<h2 id="quick-start">🚀 Quick Start</h2>
-
-<div align="center">
-  <pre><code>npm create mf2-app@latest</code></pre>
-</div>
-
-### 📦 Supports All Package Managers
-
-<table>
-<tr>
-<td><b>npm</b></td>
-<td><code>npm create mf2-app@latest</code></td>
-</tr>
-<tr>
-<td><b>yarn</b></td>
-<td><code>yarn create mf2-app</code></td>
-</tr>
-<tr>
-<td><b>pnpm</b></td>
-<td><code>pnpm create mf2-app</code></td>
-</tr>
-<tr>
-<td><b>bun</b></td>
-<td><code>bun create mf2-app</code></td>
-</tr>
-</table>
-
-### 🎬 CLI Flow
-
-```
-◇  What will your project be called?
-│  my-startup
-│
-◇  Which platform are you building for?
-│  Web
-│
-◇  What are you building?
-│  ● Full Stack (database, auth, payments, emails)
-│  ○ Full Stack + AI (agents, RAG, chat interface)
-│  ○ Frontend (landing pages, marketing sites)
-│
-◇  Would you like to include documentation?
-│  ● Yes (powered by Mintlify)
-│  ○ No
-│
-◇  Should we initialize a Git repository?
-│  ● Yes
-│  ○ No
-│
-◇  Should we install dependencies?
-│  ● Yes
-│  ○ No
-│
-◆  Done! Here's how to get started...
-```
-
-<h2 id="what-is-mf2">🎯 What is the MF2 Stack?</h2>
-
-The **MF2 Stack** is an opinionated, full-stack web development framework designed for speed. Created by [Korrect](https://korrect.ai), it's the stack that **AI moves fast with**.
-
-### 🏗️ Core Philosophy
-
-- **🚀 Ship Fast**: Pre-configured with everything you need
-- **🔒 Type Safety**: End-to-end TypeScript for confidence
-- **🤖 AI-Ready**: Built for the AI era with streaming and real-time
-- **📦 Batteries Included**: Auth, payments, emails, analytics - it's all there
-- **❤️ Amazing DX**: Tools that developers and LLMs love
-
-<h2 id="templates">📦 Templates</h2>
-
-<table>
-<thead>
-<tr>
-<th width="33%">Frontend</th>
-<th width="33%">Full Stack</th>
-<th width="33%">Full Stack + AI</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td valign="top">
-<b>Perfect for:</b><br/>
-• Landing pages<br/>
-• Marketing sites<br/>
-• Documentation<br/>
-<br/>
-<b>Includes:</b><br/>
-✅ Next.js 15<br/>
-✅ TypeScript<br/>
-✅ Tailwind CSS v4<br/>
-✅ shadcn/ui<br/>
-✅ Dark mode<br/>
-✅ SEO ready<br/>
-</td>
-<td valign="top">
-<b>Perfect for:</b><br/>
-• SaaS products<br/>
-• Web apps<br/>
-• Startups<br/>
-<br/>
-<b>Everything in Frontend plus:</b><br/>
-✅ Convex (database)<br/>
-✅ Clerk (auth)<br/>
-✅ Polar (payments)<br/>
-✅ Resend (email)<br/>
-✅ PostHog (analytics)<br/>
-✅ Production ready<br/>
-</td>
-<td valign="top">
-<b>Perfect for:</b><br/>
-• AI applications<br/>
-• Chatbots<br/>
-• Smart features<br/>
-<br/>
-<b>Everything in Full Stack plus:</b><br/>
-✅ AI Agents<br/>
-✅ RAG System<br/>
-✅ Chat UI<br/>
-✅ Streaming<br/>
-✅ Usage tracking<br/>
-✅ Rate limiting<br/>
-</td>
-</tr>
-</tbody>
-</table>
-
-<h2 id="features">✨ Features</h2>
-
-### 🎨 Frontend Excellence
-
-<table>
-<tr>
-<td><b>⚡ Next.js 15</b></td>
-<td>Latest React framework with App Router</td>
-</tr>
-<tr>
-<td><b>🔷 TypeScript</b></td>
-<td>Type-safe from database to UI</td>
-</tr>
-<tr>
-<td><b>🎨 Tailwind CSS v4</b></td>
-<td>Modern styling with CSS variables</td>
-</tr>
-<tr>
-<td><b>🧩 shadcn/ui</b></td>
-<td>Beautiful components ready to use</td>
-</tr>
-<tr>
-<td><b>🌙 Dark Mode</b></td>
-<td>Automatic theme switching</td>
-</tr>
-<tr>
-<td><b>📱 Responsive</b></td>
-<td>Mobile-first design</td>
-</tr>
-</table>
-
-### 🔥 Backend Power
-
-<table>
-<tr>
-<td><b>🗄️ Convex</b></td>
-<td>Real-time database with TypeScript</td>
-</tr>
-<tr>
-<td><b>🔐 Clerk</b></td>
-<td>Complete auth with social logins</td>
-</tr>
-<tr>
-<td><b>💳 Polar</b></td>
-<td>Modern payments and subscriptions</td>
-</tr>
-<tr>
-<td><b>📧 Resend</b></td>
-<td>Beautiful transactional emails</td>
-</tr>
-<tr>
-<td><b>📊 PostHog</b></td>
-<td>Analytics and feature flags</td>
-</tr>
-<tr>
-<td><b>🚀 Vercel</b></td>
-<td>One-click deployment</td>
-</tr>
-</table>
-
-### 🤖 AI Features (Full Stack + AI)
-
-<table>
-<tr>
-<td><b>🤖 AI Agents</b></td>
-<td>Pre-built assistant and support agents</td>
-</tr>
-<tr>
-<td><b>📚 RAG System</b></td>
-<td>Knowledge base with vector search</td>
-</tr>
-<tr>
-<td><b>💬 Chat Interface</b></td>
-<td>Beautiful streaming chat UI</td>
-</tr>
-<tr>
-<td><b>📊 Usage Tracking</b></td>
-<td>Monitor tokens and costs</td>
-</tr>
-<tr>
-<td><b>🚦 Rate Limiting</b></td>
-<td>Protect your API and wallet</td>
-</tr>
-<tr>
-<td><b>🎮 Playground</b></td>
-<td>Test and debug AI agents</td>
-</tr>
-</table>
-
-<h2 id="cli-usage">🛠️ CLI Usage</h2>
-
-### Interactive Mode (Recommended)
 ```bash
-npm create mf2-app@latest
+npx create-mf2-app@latest my-app
+cd my-app
+bun run dev
 ```
 
-### With Options
+The CLI scaffolds a Turborepo monorepo with six apps and 20+ shared packages. It prompts for a project name and package manager, copies the template, sets up environment files, installs dependencies, and creates an initial git commit.
+
+Fill in your `.env.local` files with API keys and start building.
+
+## What You Get
+
+The scaffolded project splits into independently deployable apps that share typed packages:
+
+```
+apps/
+  app/            Main application (Next.js 15, App Router)
+  web/            Marketing site
+  api/            Standalone API layer
+  docs/           Documentation (Mintlify)
+  email/          Email templates (React Email)
+  storybook/      Component playground
+
+packages/
+  backend/        Convex database, auth sync, AI agents, workflows
+  design-system/  50+ shadcn/ui components with dark mode
+  auth/           Clerk authentication and route protection
+  payments/       Stripe SDK and @convex-dev/stripe component
+  ai/             AI agents, RAG, streaming, usage tracking
+  analytics/      PostHog event tracking and sessions
+  observability/  Sentry error tracking, BetterStack logging
+  security/       Arcjet bot detection, Nosecone secure headers
+  rate-limit/     Upstash Redis rate limiting
+  storage/        Convex file storage and Vercel Blob
+  email/          Resend transactional email
+  cms/            BaseHub headless CMS
+  seo/            Metadata, JSON-LD, Open Graph images
+  notifications/  Knock in-app notification feeds
+  collaboration/  Liveblocks cursors and presence
+  webhooks/       Svix outbound webhook delivery
+  feature-flags/  Vercel feature flags with overrides
+  internationalization/ next-intl translations
+  convex/         Convex + Clerk React provider
+  next-config/    Shared Next.js configuration
+  typescript-config/ Shared tsconfig
+```
+
+Each app imports only the packages it needs. The main app (`apps/app`) uses auth, payments, backend, and AI. The marketing site (`apps/web`) uses CMS, SEO, and analytics. The API layer (`apps/api`) uses auth, rate-limit, and security. This keeps bundles small and concerns separated.
+
+## Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | [Next.js 15](https://nextjs.org) with App Router |
+| Language | TypeScript (end-to-end, database to UI) |
+| Database | [Convex](https://convex.dev) (real-time, reactive, serverless) |
+| Auth | [Clerk](https://clerk.com) (80+ OAuth providers, webhook sync to Convex) |
+| Payments | [Stripe](https://stripe.com) via [`@convex-dev/stripe`](https://www.convex.dev/components/stripe) |
+| Styling | [Tailwind CSS v4](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com) |
+| AI | Convex AI agents, RAG with vector search, persistent text streaming |
+| Email | [Resend](https://resend.com) + [React Email](https://react.email) |
+| Analytics | [PostHog](https://posthog.com) (events, sessions, feature flags) |
+| Error Tracking | [Sentry](https://sentry.io) + [BetterStack](https://betterstack.com) |
+| Security | [Arcjet](https://arcjet.com) (bot detection, rate limiting, DDoS protection) |
+| Monorepo | [Turborepo](https://turbo.build) + [Bun](https://bun.sh) |
+| Deployment | [Vercel](https://vercel.com) |
+| Code Quality | [Biome](https://biomejs.dev) via [Ultracite](https://docs.ultracite.ai) |
+
+## Convex Components
+
+Five [Convex Components](https://www.convex.dev/components) ship pre-installed. Components are sandboxed TypeScript modules that manage their own tables and functions inside your Convex backend.
+
+| Component | Package | What it does |
+|-----------|---------|-------------|
+| Stripe | `@convex-dev/stripe` | Checkout sessions, subscriptions, customer management, webhook sync |
+| Resend | `@convex-dev/resend` | Transactional email delivery with event tracking |
+| Workflow | `@convex-dev/workflow` | Durable, long-running code flows with retries and delays |
+| Action Retrier | `@convex-dev/action-retrier` | Automatic retry with backoff for unreliable external calls |
+| Migrations | `@convex-dev/migrations` | Schema migrations for live data without downtime |
+
+Install more from the [component directory](https://www.convex.dev/components):
+
 ```bash
-# Create with project name
-npm create mf2-app@latest my-startup
-
-# Skip installation
-npm create mf2-app@latest my-startup --no-install
-
-# Use specific package manager
-npm create mf2-app@latest my-startup --use-pnpm
-
-# Skip git initialization  
-npm create mf2-app@latest my-startup --no-git
+bun add @convex-dev/rate-limiter
 ```
 
-### CLI Options
+Then register in `packages/backend/convex/convex.config.ts`:
 
-| Option | Description |
-|--------|-------------|
-| `--use-npm` | Use npm as package manager |
-| `--use-yarn` | Use Yarn as package manager |
-| `--use-pnpm` | Use pnpm as package manager |
-| `--use-bun` | Use Bun as package manager |
-| `--no-git` | Skip Git repository initialization |
-| `--no-install` | Skip dependency installation |
+```ts
+import rateLimiter from "@convex-dev/rate-limiter/convex.config.js";
+app.use(rateLimiter);
+```
 
-<h2 id="why-mf2">🤔 Why Choose MF2?</h2>
+## Commands
 
-### 🎯 Built Different
+All commands run from the project root.
 
-<table>
-<tr>
-<td width="50%">
+### Development
 
-**🧠 AI-First Architecture**
-- Streaming responses built-in
-- Type-safe AI interactions
-- Real-time data sync
-- Production-ready scaling
+```bash
+bun run dev              # Start all apps in parallel
+turbo dev --filter=app   # Start a single app
+bunx convex dev          # Start Convex backend separately
+```
 
-</td>
-<td width="50%">
+### Code Quality
 
-**⚡ Insane Developer Velocity**
-- Hot reload everything
-- Type safety everywhere
-- Amazing error messages
-- One-command setup
+```bash
+bun run check            # Lint and format check (Biome)
+bun run fix              # Auto-fix linting and formatting
+bun run convex-lint      # Lint Convex functions (ESLint)
+```
 
-</td>
-</tr>
-<tr>
-<td width="50%">
+Biome handles TypeScript, React, and CSS. Convex functions use a separate ESLint plugin (`@convex-dev/eslint-plugin`) for Convex-specific rules (argument validators, explicit table IDs, runtime imports). A Lefthook pre-commit hook runs `ultracite fix` on staged files.
 
-**💰 Save Weeks of Setup**
-- Auth system ready
-- Payments integrated
-- Email templates included
-- Analytics configured
+### Build and Test
 
-</td>
-<td width="50%">
+```bash
+bun run build            # Build all apps
+bun run test             # Run tests
+turbo build --filter=app # Build a single app
+turbo codegen            # Generate TypeScript types from Convex schema
+```
 
-**🛡️ Production Ready**
-- Security best practices
-- Error tracking setup
-- Performance optimized
-- Deployment ready
+### Environment Variables
 
-</td>
-</tr>
-</table>
+```bash
+bun run env:init         # Create .env.local + .env.production from .env.example
+bun run env:check        # Validate all env files have required keys
+bun run env:push         # Sync env vars to Vercel and Convex
+```
 
-### 📊 The Stack Comparison
+`env:push` reads `.env.local` for development/preview and `.env.production` for production. It filters automatically: `NEXT_PUBLIC_*` skips Convex, platform-managed vars (`CONVEX_DEPLOYMENT`, `VERCEL_*`) are ignored, and empty or localhost values are skipped.
 
-| Feature | MF2 Stack | T3 Stack | Next.js Starter |
-|---------|-----------|----------|-----------------|
-| Real-time Database | ✅ Convex | ❌ | ❌ |
-| Authentication | ✅ Clerk | ✅ NextAuth | ❌ |
-| Payments | ✅ Polar | ❌ | ❌ |
-| Email System | ✅ Resend | ❌ | ❌ |
-| AI Ready | ✅ Built-in | ❌ | ❌ |
-| Type Safety | ✅ End-to-end | ✅ | ⚠️ Partial |
-| Setup Time | **< 1 minute** | 5 minutes | 10+ minutes |
+### Upgrading
 
-<h2 id="deploy">🚢 Deploy</h2>
+```bash
+bun run bump-deps        # Update all npm dependencies
+bun run bump-ui          # Update all shadcn/ui components
+bun run clean            # Remove all node_modules directories
+```
 
-Deploy your MF2 app with one click:
+`bump-ui` replaces every component in `packages/design-system` with the latest from shadcn/ui. This overrides customizations — review the diff before committing.
 
-<div align="center">
+## CLI
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fkorrect-ai%2Fcreate-mf2-app)
+The CLI prompts interactively for project name and package manager. Pass flags to skip prompts:
 
-</div>
+```bash
+npx create-mf2-app@latest --name my-app --package-manager bun
+npx create-mf2-app@latest --name my-app --disable-git
+```
 
-<h2 id="community">🤝 Community & Support</h2>
+| Flag | Effect |
+|------|--------|
+| `--name <name>` | Set project name (skips prompt) |
+| `--package-manager <manager>` | Set package manager: bun, npm, yarn, pnpm (skips prompt) |
+| `--disable-git` | Skip git initialization and initial commit |
 
-<div align="center">
+Supported package managers: **bun** (default), npm, yarn, pnpm. When using npm, yarn, or pnpm, the CLI converts `workspace:*` dependencies and adjusts configuration files automatically.
 
-Join our growing community of developers who ship fast:
+## Deploy
 
-[![Discord](https://img.shields.io/discord/YOUR_DISCORD_ID?color=%235865F2&label=Discord&logo=discord&logoColor=white)](https://discord.gg/mf2stack)
-[![Twitter](https://img.shields.io/twitter/follow/korrect?style=social)](https://twitter.com/korrect)
+Each app deploys as a separate Vercel project:
 
-</div>
+1. Import your repo in the [Vercel dashboard](https://vercel.com/new)
+2. Set the root directory (`apps/app`, `apps/web`, or `apps/api`)
+3. Add environment variables from `.env.production`
+4. Push to `main` — Vercel rebuilds only the affected apps
 
-- 💬 [Discord](https://discord.gg/mf2stack) - Get help and share your projects
-- 🐛 [GitHub Issues](https://github.com/korrect-ai/create-mf2-app/issues) - Report bugs
-- 🐦 [Twitter](https://twitter.com/korrect) - Stay updated
-- 📧 [Email](mailto:support@korrect.ai) - Business inquiries
+The [Clerk integration](https://vercel.com/integrations) and [Convex integration](https://vercel.com/integrations) auto-sync their keys to your Vercel projects. Documentation (`apps/docs`) deploys via [Mintlify](https://mintlify.com), not Vercel.
 
-<h2 id="contributors">👥 Contributors</h2>
+## Documentation
 
-We love our contributors! Want to join them?
+Full docs at [docs.mf2.dev](https://docs.mf2.dev) cover setup, architecture, every package, and deployment.
 
-<a href="https://github.com/korrect-ai/create-mf2-app/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=korrect-ai/create-mf2-app" />
-</a>
+## Community
 
-### 🤝 How to Contribute
+- [Discord](https://discord.gg/mf2stack) — Help and project sharing
+- [GitHub Issues](https://github.com/ocarinalabs/create-mf2-app/issues) — Bug reports
+- [Twitter](https://twitter.com/korrect) — Updates
+
+## Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Commit with [conventional commits](https://www.conventionalcommits.org/)
+4. Open a pull request
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+## License
 
-## 🏆 Success Stories
-
-<div align="center">
-<table>
-<tr>
-<td align="center">
-<b>500+ Projects</b><br/>
-Built with MF2
-</td>
-<td align="center">
-<b>48 Hours</b><br/>
-Average time to MVP
-</td>
-<td align="center">
-<b>$2M+ Revenue</b><br/>
-Generated by MF2 apps
-</td>
-</tr>
-</table>
-</div>
-
-## 📄 License
-
-MIT © [Korrect](https://korrect.ai)
-
----
-
-<div align="center">
-  <br/>
-  <h3>🚀 Move F*cking Fast 🚀</h3>
-  <p>Built with ❤️ by <a href="https://korrect.ai">Korrect</a> and our amazing <a href="#contributors">contributors</a></p>
-  <br/>
-  <sub>If you like MF2 Stack, give us a ⭐ on GitHub!</sub>
-</div>
+MIT — [Korrect](https://korrect.ai)
 
 [npm-image]: https://img.shields.io/npm/v/create-mf2-app?color=0b7285&logoColor=0b7285
 [npm-url]: https://www.npmjs.com/package/create-mf2-app
 [downloads-image]: https://img.shields.io/npm/dm/create-mf2-app?color=364fc7&logoColor=364fc7
 [license-image]: https://img.shields.io/npm/l/create-mf2-app
-[license-url]: https://github.com/korrect-ai/create-mf2-app/blob/main/LICENSE
-[stars-image]: https://img.shields.io/github/stars/korrect-ai/create-mf2-app?style=social
-[github-url]: https://github.com/korrect-ai/create-mf2-app
+[license-url]: https://github.com/ocarinalabs/create-mf2-app/blob/main/LICENSE
+[stars-image]: https://img.shields.io/github/stars/ocarinalabs/create-mf2-app?style=social
+[github-url]: https://github.com/ocarinalabs/create-mf2-app
