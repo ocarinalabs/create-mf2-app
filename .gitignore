@@ -1,62 +1,20 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+node_modules/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-package-lock.json
-yarn.lock
+dist/
 
-# testing
-/coverage
-*.lcov
-.nyc_output
+apps/cli/template/node_modules/
+apps/cli/template/apps/*/node_modules/
+apps/cli/template/packages/*/node_modules/
+apps/cli/template/.turbo/
+apps/cli/template/bun.lock
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
-/dist
-/generated
-
-# misc
-.DS_Store
-*.pem
-._*
-Thumbs.db
-.idea
-.cache/
-tmp/
-temp/
 .turbo
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-logs
+.DS_Store
+._*
+
 *.log
 
-# env files (can opt-in for committing if needed)
-.env.local
+.env.*
 
-# vercel
-.vercel
-
-# typescript
 *.tsbuildinfo
-next-env.d.ts
-
-# emacs backup files
-\#*
-.\#*
-
-/ref
