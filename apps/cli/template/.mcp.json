@@ -1,0 +1,39 @@
+{
+  "mcpServers": {
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+      }
+    },
+    "convex": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["convex", "mcp", "start"]
+    },
+    "stripe": {
+      "type": "http",
+      "url": "https://mcp.stripe.com"
+    },
+    "clerk": {
+      "type": "http",
+      "url": "https://mcp.clerk.com/mcp"
+    },
+    "posthog": {
+      "type": "http",
+      "url": "https://mcp.posthog.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${POSTHOG_PERSONAL_API_KEY}"
+      }
+    },
+    "vercel": {
+      "type": "http",
+      "url": "https://mcp.vercel.com"
+    },
+    "ultracite": {
+      "type": "http",
+      "url": "https://www.ultracite.ai/api/mcp/mcp"
+    }
+  }
+}
