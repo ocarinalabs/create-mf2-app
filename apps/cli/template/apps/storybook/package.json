@@ -1,0 +1,48 @@
+{
+  "name": "storybook",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build",
+    "chromatic": "chromatic --exit-zero-on-changes",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@repo/design-system": "*",
+    "@tabler/icons-react": "^3.31.0",
+    "@tanstack/react-table": "^8.21.3",
+    "cmdk": "^1.1.1",
+    "embla-carousel-autoplay": "^8.6.0",
+    "date-fns": "^4.1.0",
+    "input-otp": "^1.4.2",
+    "lucide-react": "^0.575.0",
+    "next": "16.1.6",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-day-picker": "^9.7.0",
+    "react-hook-form": "^7.71.1",
+    "react-textarea-autosize": "^8.5.9",
+    "recharts": "^2.15.4",
+    "sonner": "^2.0.7",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^5.0.1",
+    "@repo/typescript-config": "*",
+    "@storybook/addon-onboarding": "^10.2.10",
+    "@storybook/addon-themes": "^10.2.10",
+    "@storybook/nextjs": "^10.2.10",
+    "@storybook/react": "^10.2.10",
+    "@types/node": "^25",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "chromatic": "^15.1.1",
+    "postcss": "^8",
+    "storybook": "^10.2.10",
+    "tailwindcss": "^4.2.0",
+    "typescript": "^5"
+  }
+}

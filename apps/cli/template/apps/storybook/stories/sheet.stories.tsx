@@ -1,0 +1,139 @@
+import { Button } from "@repo/design-system/components/ui/button";
+import { Input } from "@repo/design-system/components/ui/input";
+import { Label } from "@repo/design-system/components/ui/label";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@repo/design-system/components/ui/sheet";
+import type { Meta, StoryObj } from "@storybook/react";
+
+function SheetDemoComponent() {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Open</Button>
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Edit profile</SheetTitle>
+          <SheetDescription>
+            Make changes to your profile here. Click save when you&apos;re done.
+          </SheetDescription>
+        </SheetHeader>
+        <div className="grid flex-1 auto-rows-min gap-6 px-4">
+          <div className="grid gap-3">
+            <Label htmlFor="sheet-demo-name">Name</Label>
+            <Input defaultValue="Pedro Duarte" id="sheet-demo-name" />
+          </div>
+          <div className="grid gap-3">
+            <Label htmlFor="sheet-demo-username">Username</Label>
+            <Input defaultValue="@peduarte" id="sheet-demo-username" />
+          </div>
+        </div>
+        <SheetFooter>
+          <Button type="submit">Save changes</Button>
+          <SheetClose asChild>
+            <Button variant="outline">Close</Button>
+          </SheetClose>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
+function SheetNoCloseButtonComponent() {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Open Sheet</Button>
+      </SheetTrigger>
+      <SheetContent showCloseButton={false}>
+        <SheetHeader>
+          <SheetTitle>No Close Button</SheetTitle>
+          <SheetDescription>
+            This sheet doesn&apos;t have a close button in the top-right corner.
+            Click outside to close.
+          </SheetDescription>
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
+const SHEET_SIDES = ["top", "right", "bottom", "left"] as const;
+
+function SheetSideComponent() {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {SHEET_SIDES.map((side) => (
+        <Sheet key={side}>
+          <SheetTrigger asChild>
+            <Button className="capitalize" variant="outline">
+              {side}
+            </Button>
+          </SheetTrigger>
+          <SheetContent
+            className="data-[side=bottom]:max-h-[50vh] data-[side=top]:max-h-[50vh]"
+            side={side}
+          >
+            <SheetHeader>
+              <SheetTitle>Edit profile</SheetTitle>
+              <SheetDescription>
+                Make changes to your profile here. Click save when you&apos;re
+                done.
+              </SheetDescription>
+            </SheetHeader>
+            <div className="no-scrollbar overflow-y-auto px-4">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <p className="mb-2 leading-relaxed" key={index}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </p>
+              ))}
+            </div>
+            <SheetFooter>
+              <Button type="submit">Save changes</Button>
+              <SheetClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </SheetClose>
+            </SheetFooter>
+          </SheetContent>
+        </Sheet>
+      ))}
+    </div>
+  );
+}
+
+const meta = {
+  title: "ui/Sheet",
+  component: Sheet,
+  tags: ["autodocs"],
+  parameters: { layout: "centered" },
+} satisfies Meta<typeof Sheet>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Demo: Story = {
+  render: () => <SheetDemoComponent />,
+};
+
+export const NoCloseButton: Story = {
+  render: () => <SheetNoCloseButtonComponent />,
+};
+
+export const Side: Story = {
+  render: () => <SheetSideComponent />,
+};
