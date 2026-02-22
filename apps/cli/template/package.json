@@ -1,0 +1,50 @@
+{
+  "name": "mf2-app",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "check": "ultracite check",
+    "fix": "ultracite fix",
+    "test": "turbo test",
+    "analyze": "turbo analyze",
+    "translate": "turbo translate",
+    "boundaries": "turbo boundaries",
+    "bump-deps": "bun x npm-check-updates --deep -u -x recharts && bun install",
+    "bump-ui": "npx shadcn@latest add --all --overwrite -c packages/design-system",
+    "clean": "git clean -xdf node_modules",
+    "convex-lint": "turbo convex-lint",
+    "env:init": "bun scripts/env.ts init",
+    "env:check": "bun scripts/env.ts check",
+    "env:push": "bun scripts/env.ts push",
+    "prepare": "lefthook install"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.2",
+    "@repo/typescript-config": "*",
+    "@turbo/gen": "^2.8.10",
+    "@types/node": "^25.3.0",
+    "lefthook": "^2.1.1",
+    "lint-staged": "^16.2.7",
+    "turbo": "^2.8.10",
+    "typescript": "^5.9.3",
+    "ultracite": "7.2.3",
+    "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "bun@1.3.9",
+  "overrides": {
+    "parse5": "^7.2.1"
+  },
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,jsonc,css}": "ultracite fix"
+  }
+}

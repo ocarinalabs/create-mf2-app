@@ -1,0 +1,14 @@
+[install]
+linker = "isolated"
+
+[test]
+coverageSkipTestFiles = true
+coverageReporter = ["text", "lcov"]
+coverageDir = "coverage"
+coveragePathIgnorePatterns = [
+  "dist/**",
+  "**/*.d.ts"
+]
+
+[test.reporter]
+junit = "test-results.xml"

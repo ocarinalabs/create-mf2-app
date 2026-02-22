@@ -1,0 +1,60 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/react",
+    "ultracite/biome/next"
+  ],
+  "javascript": {
+    "globals": ["Liveblocks", "Bun"]
+  },
+  "linter": {
+    "rules": {
+      "style": {
+        "useConsistentTypeDefinitions": {
+          "level": "error",
+          "options": { "style": "type" }
+        }
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": [
+        "packages/auth/*.ts",
+        "packages/collaboration/hooks.ts",
+        "packages/storage/*.ts",
+        "packages/cms/components/*.tsx",
+        "packages/analytics/index.ts",
+        "packages/ai/rag/index.ts",
+        "packages/ai/agent/index.ts",
+        "apps/*/postcss.config.mjs",
+        "apps/app/liveblocks.config.ts"
+      ],
+      "linter": {
+        "rules": {
+          "performance": {
+            "noBarrelFile": "off"
+          }
+        }
+      }
+    }
+  ],
+  "files": {
+    "includes": [
+      "**/*",
+      "!packages/design-system/components/ui",
+      "!packages/design-system/lib",
+      "!packages/design-system/hooks",
+      "!packages/collaboration/config.ts",
+      "!apps/storybook",
+      "!docs/components/ui",
+      "!docs/lib",
+      "!docs/hooks",
+      "!apps/docs/**/*.json",
+      "!apps/email/.react-email",
+      "!packages/cms/basehub-types.d.ts",
+      "!**/convex/_generated"
+    ]
+  }
+}
