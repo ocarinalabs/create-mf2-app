@@ -1,5 +1,19 @@
 {
   "name": "@repo/next-config",
   "version": "0.0.0",
-  "private": true
+  "private": true,
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "next": "16.1.6"
+  },
+  "dependencies": {
+    "@next/bundle-analyzer": "16.1.6",
+    "@t3-oss/env-core": "^0.13.10",
+    "@t3-oss/env-nextjs": "^0.13.10",
+    "zod": "^4.3.6"
+  }
 }
