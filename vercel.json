@@ -3,43 +3,43 @@
   "rewrites": [
     {
       "source": "/_mintlify/:path*",
-      "destination": "https://mf2.mintlify.app/_mintlify/:path*"
+      "destination": "https://ocarinalabs.mintlify.app/_mintlify/:path*"
     },
     {
       "source": "/api/request",
-      "destination": "https://mf2.mintlify.app/_mintlify/api/request"
+      "destination": "https://ocarinalabs.mintlify.app/_mintlify/api/request"
     },
     {
       "source": "/docs",
-      "destination": "https://mf2.mintlify.app/docs"
+      "destination": "https://ocarinalabs.mintlify.app/docs"
     },
     {
       "source": "/docs/llms.txt",
-      "destination": "https://mf2.mintlify.app/llms.txt"
+      "destination": "https://ocarinalabs.mintlify.app/llms.txt"
     },
     {
       "source": "/docs/llms-full.txt",
-      "destination": "https://mf2.mintlify.app/llms-full.txt"
+      "destination": "https://ocarinalabs.mintlify.app/llms-full.txt"
     },
     {
       "source": "/docs/sitemap.xml",
-      "destination": "https://mf2.mintlify.app/sitemap.xml"
+      "destination": "https://ocarinalabs.mintlify.app/sitemap.xml"
     },
     {
       "source": "/docs/robots.txt",
-      "destination": "https://mf2.mintlify.app/robots.txt"
+      "destination": "https://ocarinalabs.mintlify.app/robots.txt"
     },
     {
       "source": "/docs/mcp",
-      "destination": "https://mf2.mintlify.app/mcp"
+      "destination": "https://ocarinalabs.mintlify.app/mcp"
     },
     {
       "source": "/docs/:path*",
-      "destination": "https://mf2.mintlify.app/docs/:path*"
+      "destination": "https://ocarinalabs.mintlify.app/docs/:path*"
     },
     {
       "source": "/mintlify-assets/:path+",
-      "destination": "https://mf2.mintlify.app/mintlify-assets/:path+"
+      "destination": "https://ocarinalabs.mintlify.app/mintlify-assets/:path+"
     }
   ]
 }
