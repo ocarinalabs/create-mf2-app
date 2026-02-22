@@ -5,12 +5,22 @@
     "ultracite/biome/react",
     "ultracite/biome/next"
   ],
+  "linter": {
+    "rules": {
+      "style": {
+        "useConsistentTypeDefinitions": {
+          "level": "error",
+          "options": { "style": "type" }
+        }
+      }
+    }
+  },
   "files": {
     "includes": [
-      "apps/**/*.ts",
-      "apps/**/*.tsx",
-      "packages/**/*.ts",
-      "packages/**/*.tsx"
+      "**/*",
+      "!packages/design-system/components/ui",
+      "!packages/design-system/lib",
+      "!packages/design-system/hooks"
     ]
   }
 }
