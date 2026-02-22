@@ -5,11 +5,11 @@
 </p>
 
 <p align="center">
-  Production-ready monorepo for SaaS, AI apps, and marketing sites.
+  The startup-in-a-command monorepo built for the agent era.
 </p>
 
 <p align="center">
-  <code>npx create-mf2-app@latest</code>
+  <code>bunx create-mf2-app</code>
 </p>
 
 <div align="center">
@@ -24,7 +24,7 @@
 ## Quick Start
 
 ```bash
-npx create-mf2-app@latest my-app
+bunx create-mf2-app my-app
 cd my-app
 bun run dev
 ```
@@ -35,23 +35,23 @@ Fill in your `.env.local` files with API keys and start building.
 
 ## What You Get
 
-The scaffolded project splits into independently deployable apps that share typed packages:
+Six independently deployable apps that share typed packages:
 
 ```
 apps/
-  app/            Main application (Next.js 15, App Router)
-  web/            Marketing site
-  api/            Standalone API layer
+  app/            Main SaaS application (Next.js 15, App Router)
+  web/            Marketing website
+  api/            Webhooks, cron jobs, external integrations
   docs/           Documentation (Mintlify)
   email/          Email templates (React Email)
-  storybook/      Component playground
+  storybook/      Component workshop
 
 packages/
   backend/        Convex database, auth sync, AI agents, workflows
   design-system/  50+ shadcn/ui components with dark mode
   auth/           Clerk authentication and route protection
-  payments/       Stripe SDK and @convex-dev/stripe component
-  ai/             AI agents, RAG, streaming, usage tracking
+  payments/       Stripe via @convex-dev/stripe
+  ai/             Vercel AI SDK, multi-model routing, RAG
   analytics/      PostHog event tracking and sessions
   observability/  Sentry error tracking, BetterStack logging
   security/       Arcjet bot detection, Nosecone secure headers
@@ -59,7 +59,7 @@ packages/
   storage/        Convex file storage and Vercel Blob
   email/          Resend transactional email
   cms/            BaseHub headless CMS
-  seo/            Metadata, JSON-LD, Open Graph images
+  seo/            Metadata, JSON-LD, Open Graph
   notifications/  Knock in-app notification feeds
   collaboration/  Liveblocks cursors and presence
   webhooks/       Svix outbound webhook delivery
@@ -70,36 +70,36 @@ packages/
   typescript-config/ Shared tsconfig
 ```
 
-Each app imports only the packages it needs. The main app (`apps/app`) uses auth, payments, backend, and AI. The marketing site (`apps/web`) uses CMS, SEO, and analytics. The API layer (`apps/api`) uses auth, rate-limit, and security. This keeps bundles small and concerns separated.
+Each app imports only the packages it needs. The main app uses auth, payments, backend, and AI. The marketing site uses CMS, SEO, and analytics. The API layer uses auth, rate-limit, and security.
 
 ## Stack
 
 | Layer | Technology |
 |-------|-----------|
 | Framework | [Next.js 15](https://nextjs.org) with App Router |
-| Language | TypeScript (end-to-end, database to UI) |
-| Database | [Convex](https://convex.dev) (real-time, reactive, serverless) |
-| Auth | [Clerk](https://clerk.com) (80+ OAuth providers, webhook sync to Convex) |
+| Language | TypeScript end-to-end |
+| Database | [Convex](https://convex.dev) — real-time, reactive, serverless |
+| Auth | [Clerk](https://clerk.com) — 80+ OAuth providers, webhook sync to Convex |
 | Payments | [Stripe](https://stripe.com) via [`@convex-dev/stripe`](https://www.convex.dev/components/stripe) |
 | Styling | [Tailwind CSS v4](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com) |
-| AI | Convex AI agents, RAG with vector search, persistent text streaming |
+| AI | [Vercel AI SDK](https://sdk.vercel.ai) — multi-model routing, RAG, streaming |
 | Email | [Resend](https://resend.com) + [React Email](https://react.email) |
-| Analytics | [PostHog](https://posthog.com) (events, sessions, feature flags) |
+| Analytics | [PostHog](https://posthog.com) — events, sessions, feature flags |
 | Error Tracking | [Sentry](https://sentry.io) + [BetterStack](https://betterstack.com) |
-| Security | [Arcjet](https://arcjet.com) (bot detection, rate limiting, DDoS protection) |
+| Security | [Arcjet](https://arcjet.com) — bot detection, rate limiting, DDoS protection |
 | Monorepo | [Turborepo](https://turbo.build) + [Bun](https://bun.sh) |
 | Deployment | [Vercel](https://vercel.com) |
 | Code Quality | [Biome](https://biomejs.dev) via [Ultracite](https://docs.ultracite.ai) |
 
 ## Convex Components
 
-Five [Convex Components](https://www.convex.dev/components) ship pre-installed. Components are sandboxed TypeScript modules that manage their own tables and functions inside your Convex backend.
+Five [Convex Components](https://www.convex.dev/components) ship pre-installed — sandboxed TypeScript modules that manage their own tables and functions inside your Convex backend.
 
-| Component | Package | What it does |
-|-----------|---------|-------------|
+| Component | Package | Purpose |
+|-----------|---------|---------|
 | Stripe | `@convex-dev/stripe` | Checkout sessions, subscriptions, customer management, webhook sync |
 | Resend | `@convex-dev/resend` | Transactional email delivery with event tracking |
-| Workflow | `@convex-dev/workflow` | Durable, long-running code flows with retries and delays |
+| Workflow | `@convex-dev/workflow` | Durable, long-running flows with retries and delays |
 | Action Retrier | `@convex-dev/action-retrier` | Automatic retry with backoff for unreliable external calls |
 | Migrations | `@convex-dev/migrations` | Schema migrations for live data without downtime |
 
@@ -123,87 +123,74 @@ All commands run from the project root.
 ### Development
 
 ```bash
-bun run dev              # Start all apps in parallel
+bun run dev              # Start all apps
 turbo dev --filter=app   # Start a single app
-bunx convex dev          # Start Convex backend separately
+bunx convex dev          # Start Convex backend
 ```
 
 ### Code Quality
 
 ```bash
 bun run check            # Lint and format check (Biome)
-bun run fix              # Auto-fix linting and formatting
+bun run fix              # Auto-fix issues
 bun run convex-lint      # Lint Convex functions (ESLint)
 ```
-
-Biome handles TypeScript, React, and CSS. Convex functions use a separate ESLint plugin (`@convex-dev/eslint-plugin`) for Convex-specific rules (argument validators, explicit table IDs, runtime imports). A Lefthook pre-commit hook runs `ultracite fix` on staged files.
 
 ### Build and Test
 
 ```bash
 bun run build            # Build all apps
-bun run test             # Run tests
+bun run test             # Run tests (Vitest)
 turbo build --filter=app # Build a single app
-turbo codegen            # Generate TypeScript types from Convex schema
 ```
 
 ### Environment Variables
 
 ```bash
 bun run env:init         # Create .env.local + .env.production from .env.example
-bun run env:check        # Validate all env files have required keys
+bun run env:check        # Validate all env files
 bun run env:push         # Sync env vars to Vercel and Convex
 ```
-
-`env:push` reads `.env.local` for development/preview and `.env.production` for production. It filters automatically: `NEXT_PUBLIC_*` skips Convex, platform-managed vars (`CONVEX_DEPLOYMENT`, `VERCEL_*`) are ignored, and empty or localhost values are skipped.
 
 ### Upgrading
 
 ```bash
 bun run bump-deps        # Update all npm dependencies
 bun run bump-ui          # Update all shadcn/ui components
-bun run clean            # Remove all node_modules directories
+bun run clean            # Remove all node_modules
 ```
-
-`bump-ui` replaces every component in `packages/design-system` with the latest from shadcn/ui. This overrides customizations — review the diff before committing.
 
 ## CLI
 
-The CLI prompts interactively for project name and package manager. Pass flags to skip prompts:
+Pass flags to skip interactive prompts:
 
 ```bash
-npx create-mf2-app@latest --name my-app --package-manager bun
-npx create-mf2-app@latest --name my-app --disable-git
+bunx create-mf2-app --name my-app --package-manager bun
+bunx create-mf2-app --name my-app --disable-git
 ```
 
 | Flag | Effect |
 |------|--------|
-| `--name <name>` | Set project name (skips prompt) |
-| `--package-manager <manager>` | Set package manager: bun, npm, yarn, pnpm (skips prompt) |
-| `--disable-git` | Skip git initialization and initial commit |
+| `--name <name>` | Set project name |
+| `--package-manager <manager>` | bun (default), npm, yarn, or pnpm |
+| `--disable-git` | Skip git initialization |
 
-Supported package managers: **bun** (default), npm, yarn, pnpm. When using npm, yarn, or pnpm, the CLI converts `workspace:*` dependencies and adjusts configuration files automatically.
+For npm, yarn, or pnpm, the CLI converts `workspace:*` dependencies and adjusts configuration files.
 
 ## Deploy
 
 Each app deploys as a separate Vercel project:
 
-1. Import your repo in the [Vercel dashboard](https://vercel.com/new)
+1. Import your repo at [vercel.com/new](https://vercel.com/new)
 2. Set the root directory (`apps/app`, `apps/web`, or `apps/api`)
 3. Add environment variables from `.env.production`
-4. Push to `main` — Vercel rebuilds only the affected apps
+4. Push to `main` — Vercel rebuilds only affected apps
 
-The [Clerk integration](https://vercel.com/integrations) and [Convex integration](https://vercel.com/integrations) auto-sync their keys to your Vercel projects. Documentation (`apps/docs`) deploys via [Mintlify](https://mintlify.com), not Vercel.
+Documentation (`apps/docs`) deploys via [Mintlify](https://mintlify.com), not Vercel.
 
 ## Documentation
 
-Full docs at [docs.mf2.dev](https://docs.mf2.dev) cover setup, architecture, every package, and deployment.
-
-## Community
-
-- [Discord](https://discord.gg/mf2stack) — Help and project sharing
-- [GitHub Issues](https://github.com/ocarinalabs/create-mf2-app/issues) — Bug reports
-- [Twitter](https://twitter.com/ocarinalabs) — Updates
+Full docs at [mf2.dev/docs](https://mf2.dev/docs).
 
 ## Contributing
 
