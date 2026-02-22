@@ -3,7 +3,7 @@ title: Structure
 description: How the mf² monorepo is organized.
 ---
 
-mf² is a monorepo: multiple packages in a single repository, managed by [Turborepo](https://turborepo.com) and [Bun](https://bun.sh) workspaces.
+mf² is a monorepo: multiple packages in a single repository, managed by [Turborepo](https://turborepo.com) and [Bun](https://bun.sh) workspaces. The structure is predictable by design. Humans and AI agents find what they need in the same places every time.
 
 ## Apps
 
@@ -31,3 +31,9 @@ import { auth } from "@repo/auth";
 import { Button } from "@repo/design-system/components/ui/button";
 import { analytics } from "@repo/analytics";
 ```
+
+## Why this structure matters for agents
+
+An AI agent reads one package, follows the typed exports, and makes a change. The type checker validates the result. To add a feature that touches auth and payments, the agent reads `@repo/auth` and `@repo/payments`: two focused directories, not files scattered across the tree.
+
+The `apps/` and `packages/` split limits blast radius. An agent modifying a package runs `turbo build --filter=<package>...` to verify only the affected code. Fast feedback, fewer mistakes.

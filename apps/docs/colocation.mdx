@@ -3,7 +3,7 @@ title: Colocation
 description: How to structure components and logic within the App Router.
 ---
 
-mf² follows a colocation-first approach: components, logic, and related files live inside the route folders that use them. This matches the [Next.js App Router](https://nextjs.org/docs/app) design and keeps features self-contained.
+mf² follows a colocation-first approach: components, logic, and related files live inside the route folders that use them. This matches the [Next.js App Router](https://nextjs.org/docs/app) design and keeps features self-contained. An agent modifying a feature finds everything in one folder.
 
 ## The Principle
 
@@ -118,3 +118,5 @@ mf² splits shared code into packages. The colocation hierarchy extends across t
 5. **Other `@repo/*` packages**: shared utilities, hooks, configs
 
 This keeps each layer focused. A component in `@repo/design-system` serves every app. A component in `dashboard/_components/` serves one page.
+
+The hierarchy tells an agent where to put new code. Route-specific component: `_components/` in the route folder. Shared across apps: `@repo/design-system`. Convention replaces guesswork.
