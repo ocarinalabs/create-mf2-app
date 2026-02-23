@@ -1,3 +1,11 @@
 @import "@repo/design-system/styles/globals.css";
 
 @source "../**/*.{ts,tsx}";
+
+:root {
+  --dashed-line-color: #cbcbcb;
+}
+
+.dark {
+  --dashed-line-color: #333;
+}
