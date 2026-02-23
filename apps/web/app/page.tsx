@@ -1,8 +1,8 @@
 import { Button } from "@repo/design-system/components/ui/button";
-import { Github } from "lucide-react";
 import Link from "next/link";
 import { CopyCommand } from "@/components/copy-command";
 import { DashedLine } from "@/components/dashed-line";
+import { GitHub } from "@/components/icons/github";
 
 const Home = () => (
   <div className="flex min-h-svh w-full items-center justify-center overflow-hidden">
@@ -42,7 +42,7 @@ const Home = () => (
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <Github className="size-4" />
+                <GitHub className="size-4" />
               </a>
             </Button>
           </div>
