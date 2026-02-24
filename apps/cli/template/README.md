@@ -1,140 +1,276 @@
-# ▲ / next-forge
+# mf²
 
-**Production-grade Turborepo template for Next.js apps.**
+SaaS monorepo built with Next.js 16, Convex, and the Vercel ecosystem. Scaffolded by [mf²](https://mf2.dev).
 
-<div>
-  <img src="https://img.shields.io/npm/dy/next-forge" alt="" />
-  <img src="https://img.shields.io/npm/v/next-forge" alt="" />
-  <img src="https://img.shields.io/github/license/vercel/next-forge" alt="" />
-</div>
+## Philosophy
 
-## Overview
+AI agents write most of the code now. The bottleneck is how well your codebase helps an agent understand what exists, what to change, and whether it broke anything. mf² keeps the source of truth in typed code, not dashboards.
 
-[next-forge](https://github.com/vercel/next-forge) is a production-grade [Turborepo](https://turborepo.com) template for [Next.js](https://nextjs.org/) apps. It's designed to be a comprehensive starting point for building SaaS applications, providing a solid, opinionated foundation with minimal configuration required.
+- **Fast** -- quick to build, run, deploy, and iterate on
+- **Cheap** -- free to start with services that scale with you
+- **Opinionated** -- integrated tooling designed to work together
+- **Modern** -- latest stable features with healthy community support
+- **Safe** -- end-to-end type safety and robust security posture
 
-Built on a decade of experience building web applications, next-forge balances speed and quality to help you ship thoroughly-built products faster.
+Convex collapses your backend into TypeScript files in one `convex/` folder. Any agent reads the schema, writes a query, and gets a type error if it's wrong. Clerk ships pre-configured -- agents never touch auth setup.
 
-### Philosophy
-
-next-forge is built around five core principles:
-
-- **Fast** — Quick to build, run, deploy, and iterate on
-- **Cheap** — Free to start with services that scale with you
-- **Opinionated** — Integrated tooling designed to work together
-- **Modern** — Latest stable features with healthy community support
-- **Safe** — End-to-end type safety and robust security posture
-
-## Demo
-
-Experience next-forge in action:
-
-- [Web](https://demo.next-forge.com) — Marketing website
-- [App](https://app.demo.next-forge.com) — Main application
-- [Storybook](https://storybook.demo.next-forge.com) — Component library
-- [API](https://api.demo.next-forge.com/health) — API health check
-
-## Features
-
-next-forge comes with batteries included:
-
-### Apps
-
-- **Web** — Marketing site built with Tailwind CSS and TWBlocks
-- **App** — Main application with authentication and database integration
-- **API** — RESTful API with health checks and monitoring
-- **Docs** — Documentation site powered by Mintlify
-- **Email** — Email templates with React Email
-- **Storybook** — Component development environment
-
-### Packages
-
-- **Authentication** — Powered by [Clerk](https://clerk.com)
-- **Database** — Type-safe ORM with migrations
-- **Design System** — Comprehensive component library with dark mode
-- **Payments** — Subscription management via [Stripe](https://stripe.com)
-- **Email** — Transactional emails via [Resend](https://resend.com)
-- **Analytics** — Web ([Google Analytics](https://developers.google.com/analytics)) and product ([Posthog](https://posthog.com))
-- **Observability** — Error tracking ([Sentry](https://sentry.io)), logging, and uptime monitoring ([BetterStack](https://betterstack.com))
-- **Security** — Application security ([Arcjet](https://arcjet.com)), rate limiting, and secure headers
-- **CMS** — Type-safe content management for blogs and documentation
-- **SEO** — Metadata management, sitemaps, and JSON-LD
-- **AI** — AI integration utilities
-- **Webhooks** — Inbound and outbound webhook handling
-- **Collaboration** — Real-time features with avatars and live cursors
-- **Feature Flags** — Feature flag management
-- **Cron** — Scheduled job management
-- **Storage** — File upload and management
-- **Internationalization** — Multi-language support
-- **Notifications** — In-app notification system
+Read the full philosophy at [mf2.dev/docs/philosophy](https://mf2.dev/docs/philosophy).
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js 20+
-- [pnpm](https://pnpm.io) (or npm/yarn/bun)
-- [Stripe CLI](https://docs.stripe.com/stripe-cli) for local webhook testing
-
-### Installation
-
-Create a new next-forge project:
-
-```sh
-npx next-forge@latest init
+```bash
+bun install
+bun run env:init        # creates .env.local + .env.production from .env.example
+bun run dev
 ```
 
-### Setup
+Fill in your `.env.local` files before starting. Minimum keys to get running:
 
-1. Configure your environment variables
-2. Set up required service accounts (Clerk, Stripe, Resend, etc.)
-3. Run the development server
+| Service | Variables | Dashboard |
+|---------|-----------|-----------|
+| Clerk | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY` | [dashboard.clerk.com](https://dashboard.clerk.com) |
+| Convex | `NEXT_PUBLIC_CONVEX_URL` (auto-generated by `bunx convex dev`) | [dashboard.convex.dev](https://dashboard.convex.dev) |
+| Stripe | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | [dashboard.stripe.com/apikeys](https://dashboard.stripe.com/apikeys) |
 
-For detailed setup instructions, read the [documentation](https://www.next-forge.com/docs).
+## Dev URLs
 
-## Structure
+| App | URL |
+|-----|-----|
+| App | http://localhost:3000 |
+| Web | http://localhost:3001 |
+| API | http://localhost:3002 |
+| Email | http://localhost:3003 |
+| Docs | http://localhost:3004 |
+| Storybook | http://localhost:6006 |
 
-next-forge uses a monorepo structure managed by Turborepo:
+## Project Structure
 
+### Apps
+
+| App | Path | Description |
+|-----|------|-------------|
+| `app` | `apps/app` | Main SaaS application (authenticated dashboard, core product) |
+| `web` | `apps/web` | Marketing website and landing pages |
+| `api` | `apps/api` | Webhooks, cron jobs, external integrations |
+| `docs` | `apps/docs` | Documentation site (Mintlify) |
+| `email` | `apps/email` | Email templates (React Email) |
+| `storybook` | `apps/storybook` | Component library viewer |
+
+### Packages
+
+| Package | Path | Description |
+|---------|------|-------------|
+| `backend` | `packages/backend` | Convex database, auth sync, AI agents, workflows |
+| `convex` | `packages/convex` | Convex + Clerk React provider |
+| `design-system` | `packages/design-system` | 50+ shadcn/ui components with dark mode |
+| `auth` | `packages/auth` | Clerk authentication and route protection |
+| `payments` | `packages/payments` | Stripe via `@convex-dev/stripe` |
+| `ai` | `packages/ai` | Vercel AI SDK, multi-model routing, RAG |
+| `analytics` | `packages/analytics` | PostHog event tracking and sessions |
+| `observability` | `packages/observability` | Sentry error tracking, BetterStack logging |
+| `security` | `packages/security` | Arcjet bot detection, Nosecone secure headers |
+| `rate-limit` | `packages/rate-limit` | Upstash Redis rate limiting |
+| `storage` | `packages/storage` | Convex file storage and Vercel Blob |
+| `email` | `packages/email` | Resend transactional email |
+| `cms` | `packages/cms` | BaseHub headless CMS |
+| `seo` | `packages/seo` | Metadata, JSON-LD, Open Graph |
+| `notifications` | `packages/notifications` | Knock in-app notification feeds |
+| `collaboration` | `packages/collaboration` | Liveblocks cursors and presence |
+| `webhooks` | `packages/webhooks` | Svix outbound webhook delivery |
+| `feature-flags` | `packages/feature-flags` | Vercel feature flags with overrides |
+| `internationalization` | `packages/internationalization` | next-intl translations |
+| `next-config` | `packages/next-config` | Shared Next.js configuration |
+| `typescript-config` | `packages/typescript-config` | Shared tsconfig |
+
+Route-specific components go in `_components/`. Shared components promote to `src/components/` or `@repo/design-system`.
+
+## Stack
+
+| Layer | Technology |
+|-------|------------|
+| Framework | [Next.js 16](https://nextjs.org) with App Router |
+| Language | TypeScript end-to-end |
+| Database | [Convex](https://convex.dev) -- real-time, reactive, serverless |
+| Auth | [Clerk](https://clerk.com) -- 80+ OAuth providers, webhook sync to Convex |
+| Payments | [Stripe](https://stripe.com) via [`@convex-dev/stripe`](https://www.convex.dev/components/stripe) |
+| Styling | [Tailwind CSS v4](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com) |
+| AI | [Vercel AI SDK](https://sdk.vercel.ai) -- multi-model routing, RAG, streaming |
+| Email | [Resend](https://resend.com) + [React Email](https://react.email) |
+| Analytics | [PostHog](https://posthog.com) -- events, sessions, feature flags |
+| Error Tracking | [Sentry](https://sentry.io) + [BetterStack](https://betterstack.com) |
+| Security | [Arcjet](https://arcjet.com) -- bot detection, rate limiting, DDoS protection |
+| Monorepo | [Turborepo](https://turbo.build) + [Bun](https://bun.sh) |
+| Deployment | [Vercel](https://vercel.com) |
+| Code Quality | [Biome](https://biomejs.dev) via [Ultracite](https://docs.ultracite.ai) |
+
+## Convex Backend
+
+Backend code lives at `packages/backend/convex/`. Schema at `convex/schema.ts`, HTTP endpoints at `convex/http.ts`.
+
+```bash
+bunx convex dev       # isolated dev instance per developer
+bunx convex deploy    # deploy to production
 ```
-next-forge/
-├── apps/           # Deployable applications
-│   ├── web/        # Marketing website (port 3001)
-│   ├── app/        # Main application (port 3000)
-│   ├── api/        # API server
-│   ├── docs/       # Documentation
-│   ├── email/      # Email templates
-│   └── storybook/  # Component library
-└── packages/       # Shared packages
-    ├── design-system/
-    ├── database/
-    ├── auth/
-    └── ...
+
+Five [Convex Components](https://www.convex.dev/components) ship pre-installed:
+
+| Component | Package | Purpose |
+|-----------|---------|---------|
+| Stripe | `@convex-dev/stripe` | Checkout sessions, subscriptions, webhook sync |
+| Resend | `@convex-dev/resend` | Transactional email with event tracking |
+| Workflow | `@convex-dev/workflow` | Durable flows with retries and delays |
+| Action Retrier | `@convex-dev/action-retrier` | Automatic retry with backoff for external calls |
+| Migrations | `@convex-dev/migrations` | Schema migrations for live data without downtime |
+
+All functions require argument and return validators. See `CLAUDE.md` for full conventions.
+
+## Commands
+
+All commands run from the project root.
+
+### Development
+
+| Command | What it does |
+|---------|--------------|
+| `bun run dev` | Start all apps in development mode |
+| `turbo dev --filter=app` | Start a single app |
+| `bunx convex dev` | Start Convex backend separately |
+
+### Code Quality
+
+| Command | What it does |
+|---------|--------------|
+| `bun run check` | Lint and format check (Biome) |
+| `bun run fix` | Auto-fix linting and formatting issues |
+| `bun run convex-lint` | Lint Convex functions (ESLint) |
+
+### Build and Test
+
+| Command | What it does |
+|---------|--------------|
+| `bun run build` | Build all apps (runs tests first) |
+| `bun run test` | Run all tests (Vitest) |
+| `bun run analyze` | Bundle analysis (`ANALYZE=true`) |
+| `turbo build --filter=app` | Build a single app |
+
+### Environment
+
+| Command | What it does |
+|---------|--------------|
+| `bun run env:init` | Create `.env.local` + `.env.production` from `.env.example` |
+| `bun run env:check` | Validate all env files have required keys |
+| `bun run env:push` | Sync env vars to Vercel and Convex |
+
+### Upgrading
+
+| Command | What it does |
+|---------|--------------|
+| `bun run bump-deps` | Update all npm dependencies to latest |
+| `bun run bump-ui` | Update all shadcn/ui components |
+| `bun run clean` | Remove all `node_modules` directories |
+
+### Turbo Filtering
+
+```bash
+turbo dev --filter=app           # only the main app
+turbo build --filter=web         # only the marketing site
+turbo test --filter=backend      # only backend tests
+turbo build --filter=app...      # app and all its dependencies
 ```
 
-Each app is self-contained and independently deployable. Packages are shared across apps for consistency and maintainability.
+## Environment Variables
 
-## Documentation
+Validated at build time via `@t3-oss/env-nextjs`. Import from `@/env`, not `process.env`.
 
-Full documentation is available at [next-forge.com/docs](https://www.next-forge.com/docs), including:
+### Required
 
-- Detailed setup guides
-- Package documentation
-- Migration guides for swapping providers
-- Deployment instructions
-- Examples and recipes
+| Variable | Service | Dashboard |
+|----------|---------|-----------|
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk | [dashboard.clerk.com](https://dashboard.clerk.com) |
+| `CLERK_SECRET_KEY` | Clerk | [dashboard.clerk.com](https://dashboard.clerk.com) |
+| `NEXT_PUBLIC_CONVEX_URL` | Convex | [dashboard.convex.dev](https://dashboard.convex.dev) |
+| `STRIPE_SECRET_KEY` | Stripe | [dashboard.stripe.com/apikeys](https://dashboard.stripe.com/apikeys) |
+| `STRIPE_WEBHOOK_SECRET` | Stripe | [dashboard.stripe.com/webhooks](https://dashboard.stripe.com/webhooks) |
 
-## Contributing
+### Optional
 
-We welcome contributions! See the [contributing guide](https://github.com/vercel/next-forge/blob/main/.github/CONTRIBUTING.md) for details.
+| Variable | Service | Dashboard |
+|----------|---------|-----------|
+| `RESEND_TOKEN` | Resend | [resend.com/api-keys](https://resend.com/api-keys) |
+| `RESEND_FROM` | Resend | -- |
+| `NEXT_PUBLIC_POSTHOG_KEY` | PostHog | [app.posthog.com/project/settings](https://app.posthog.com/project/settings) |
+| `NEXT_PUBLIC_POSTHOG_HOST` | PostHog | -- |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics | [analytics.google.com](https://analytics.google.com) |
+| `SENTRY_DSN` | Sentry | [sentry.io](https://sentry.io) |
+| `SENTRY_ORG` | Sentry | -- |
+| `SENTRY_PROJECT` | Sentry | -- |
+| `BETTERSTACK_API_KEY` | BetterStack | [betterstack.com/logs](https://betterstack.com/logs) |
+| `BETTERSTACK_URL` | BetterStack | -- |
+| `ARCJET_KEY` | Arcjet | [app.arcjet.com](https://app.arcjet.com) |
+| `SVIX_TOKEN` | Svix | [dashboard.svix.com](https://dashboard.svix.com) |
+| `KNOCK_API_KEY` | Knock | [dashboard.knock.app](https://dashboard.knock.app) |
+| `KNOCK_SECRET_API_KEY` | Knock | -- |
+| `KNOCK_FEED_CHANNEL_ID` | Knock | -- |
+| `NEXT_PUBLIC_KNOCK_API_KEY` | Knock | -- |
+| `NEXT_PUBLIC_KNOCK_FEED_CHANNEL_ID` | Knock | -- |
+| `LIVEBLOCKS_SECRET` | Liveblocks | [liveblocks.io/dashboard](https://liveblocks.io/dashboard) |
+| `BASEHUB_TOKEN` | BaseHub | [basehub.com](https://basehub.com) |
+| `AI_GATEWAY_API_KEY` | Vercel AI Gateway | -- |
+| `AI_GATEWAY_URL` | Vercel AI Gateway | -- |
+| `CLERK_WEBHOOK_SECRET` | Clerk | [dashboard.clerk.com](https://dashboard.clerk.com) |
+| `FLAGS_SECRET` | Feature Flags | -- |
 
-## Contributors
+Full reference at [mf2.dev/docs/setup/env](https://mf2.dev/docs/setup/env).
 
-<a href="https://github.com/vercel/next-forge/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=vercel/next-forge" />
-</a>
+## Deploy
 
-Made with [contrib.rocks](https://contrib.rocks).
+Each app deploys as a separate Vercel project:
 
-## License
+1. Import your repo at [vercel.com/new](https://vercel.com/new)
+2. Set the root directory (`apps/app`, `apps/web`, or `apps/api`)
+3. Add environment variables from `.env.production`
+4. Push to `main` -- Vercel rebuilds only affected apps
 
-MIT
+Documentation (`apps/docs`) deploys via [Mintlify](https://mintlify.com).
+
+Backend: `bunx convex deploy`.
+
+## Code Conventions
+
+Ultracite (Biome) handles formatting and linting. A Lefthook pre-commit hook runs `ultracite fix` on staged files.
+
+```bash
+bun run fix             # auto-fix before committing
+bun run check           # verify everything passes
+```
+
+Key conventions:
+- Use `bun` for all package management
+- Use `type` keyword, not `interface`
+- All Convex functions require argument and return validators
+- `const` by default, `let` only when reassignment is needed
+
+`CLAUDE.md` and `.claude/CLAUDE.md` are the authoritative sources for all conventions.
+
+## AI Agent Setup
+
+| File | Purpose |
+|------|---------|
+| `CLAUDE.md` | Project structure, commands, Convex conventions |
+| `.claude/CLAUDE.md` | Ultracite standards, Bun APIs, Convex patterns |
+| `.claude/skills/` | Pre-built skills for Clerk, Turborepo, PostHog, Vercel patterns |
+| `.mcp.json` | MCP servers: Convex, Stripe, Clerk, PostHog, Vercel, Context7, Ultracite |
+
+Agents get typed schema in `packages/backend/convex/`, type-safe env via `@/env`, and colocated components in `_components/` folders.
+
+## Links
+
+| Resource | URL |
+|----------|-----|
+| Documentation | [mf2.dev/docs](https://mf2.dev/docs) |
+| Convex Dashboard | [dashboard.convex.dev](https://dashboard.convex.dev) |
+| Clerk Dashboard | [dashboard.clerk.com](https://dashboard.clerk.com) |
+| Stripe Dashboard | [dashboard.stripe.com](https://dashboard.stripe.com) |
+| Vercel Dashboard | [vercel.com/dashboard](https://vercel.com/dashboard) |
+| PostHog | [app.posthog.com](https://app.posthog.com) |
+| GitHub | [github.com/ocarinalabs/create-mf2-app](https://github.com/ocarinalabs/create-mf2-app) |
