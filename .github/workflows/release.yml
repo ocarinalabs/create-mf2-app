@@ -43,10 +43,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Remove Bun node_modules before Auto
+      - name: Prepare CLI for npm publish
         run: |
           rm -rf node_modules
           rm -rf apps/cli/node_modules
+          cd apps/cli && bun install --ignore-scripts
 
       - name: Create Release
         env:
