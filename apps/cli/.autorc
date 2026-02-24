@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    [
+      "npm",
+      {
+        "setRcToken": false
+      }
+    ]
+  ]
+}
