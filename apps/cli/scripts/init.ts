@@ -16,9 +16,8 @@ import {
   copyDirectory,
   devOnlyFiles,
   envFiles,
-  exec,
-  execSyncOpts,
   getTemplatePath,
+  run,
   supportedPackageManagers,
   updatePackageJson,
   updatePackageManager,
@@ -81,8 +80,8 @@ const stripDevOnlyFiles = async (projectDir: string): Promise<void> => {
 };
 
 const installDependencies = async (packageManager: string): Promise<void> => {
-  const suffix = packageManager === "npm" ? "--force" : "";
-  await exec(`${packageManager} install ${suffix}`, execSyncOpts);
+  const args = packageManager === "npm" ? " install --force" : " install";
+  await run(`${packageManager}${args}`, { stdio: "inherit" });
 };
 
 const setupConvex = async (packageManager: string): Promise<void> => {
@@ -96,22 +95,19 @@ const setupConvex = async (packageManager: string): Promise<void> => {
       "@repo/backend",
     ].join(" ");
 
-    await exec(command, execSyncOpts);
+    await run(command);
   } catch {
     // Convex codegen may fail if not configured yet, that's OK
   }
 };
 
 const initGitRepo = async (): Promise<void> => {
-  await exec("git init", execSyncOpts);
+  await run("git init");
 };
 
 const commitGitRepo = async (): Promise<void> => {
-  await exec("git add .", execSyncOpts);
-  await exec(
-    'git commit -m "feat(init): initial commit from create-mf2-app"',
-    execSyncOpts
-  );
+  await run("git add .");
+  await run('git commit -m "feat(create-mf2-app): init"');
 };
 
 export const initialize = async (options: {
@@ -175,10 +171,11 @@ export const initialize = async (options: {
     s.message("Initializing Git repository...");
     await initGitRepo();
 
-    s.message("Installing dependencies...");
+    s.stop("Configuration complete!");
+    log.step("Installing dependencies...");
     await installDependencies(packageManager);
 
-    s.message("Setting up Convex...");
+    s.start("Setting up Convex...");
     await setupConvex(packageManager);
 
     if (options.disableGit) {

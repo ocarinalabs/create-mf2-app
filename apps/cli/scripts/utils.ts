@@ -1,12 +1,25 @@
-import { type ExecSyncOptions, exec as execRaw } from "node:child_process";
+import { type SpawnOptions, spawn } from "node:child_process";
 import { cp, readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { promisify } from "node:util";
 
-export const exec = promisify(execRaw);
-
-export const execSyncOpts: ExecSyncOptions = { stdio: "ignore" };
+export const run = (command: string, options?: SpawnOptions): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, {
+      stdio: "ignore",
+      shell: true,
+      ...options,
+    });
+    child.on("close", (code) => {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject(new Error(`Command failed with exit code ${code}: ${command}`));
+      }
+    });
+    child.on("error", reject);
+  });
+};
 
 export const supportedPackageManagers = ["bun", "npm", "yarn", "pnpm"];
 
