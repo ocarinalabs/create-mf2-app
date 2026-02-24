@@ -1,4 +1,4 @@
-# next-forge
+# mf²
 
 Production-ready SaaS monorepo built with Next.js, Convex, and the Vercel ecosystem.
 
