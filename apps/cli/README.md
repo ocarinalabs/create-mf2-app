@@ -1,25 +1,15 @@
-<p align="center">
-  <a href="https://github.com/ocarinalabs/create-mf2-app">
-    <h1 align="center">mf²</h1>
-  </a>
-</p>
+# mf²
 
-<p align="center">
-  The startup-in-a-command monorepo built for the agent era.
-</p>
+The startup-in-a-command monorepo built for the agent era.
 
-<p align="center">
-  <code>bunx create-mf2-app</code>
-</p>
-
-<div align="center">
+```
+bunx create-mf2-app
+```
 
 [![npm version][npm-image]][npm-url]
 [![Downloads][downloads-image]][npm-url]
 [![License][license-image]][license-url]
 [![GitHub Stars][stars-image]][github-url]
-
-</div>
 
 ## Quick Start
 
