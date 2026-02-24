@@ -32,6 +32,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Remove Bun node_modules before Auto
+        run: |
+          rm -rf node_modules
+          rm -rf apps/cli/node_modules
+
       - name: Create Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
