@@ -13,11 +13,12 @@
     "check": "biome check apps/cli/scripts/ packages/",
     "fix": "biome check --write apps/cli/scripts/ packages/",
     "clean": "git clean -xdf node_modules",
-    "ci:version": "bunx @changesets/cli version && bun update",
-    "ci:publish": "cd apps/cli && bun publish && bunx @changesets/cli tag"
+    "ci:version": "changeset version && bun update",
+    "ci:publish": "(cd apps/cli && bun publish || true) && changeset tag"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.2",
+    "@changesets/cli": "^2.29.8",
     "turbo": "^2.8.10",
     "typescript": "^5.9.3",
     "ultracite": "7.2.3"

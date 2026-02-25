@@ -4,11 +4,6 @@ on:
   push:
     branches: [main]
 
-permissions:
-  contents: write
-  pull-requests: write
-  id-token: write
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -31,7 +26,7 @@ jobs:
       - name: Build CLI
         run: bun run build
 
-      - name: Create Release PR or Publish
+      - name: Create and publish versions
         uses: changesets/action@v1
         with:
           version: bun run ci:version
