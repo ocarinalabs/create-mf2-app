@@ -2,6 +2,7 @@ import { DesignSystemProvider } from "@repo/design-system";
 import { fonts } from "@repo/design-system/lib/fonts";
 import { cn } from "@repo/design-system/lib/utils";
 import { createMetadata } from "@repo/seo/metadata";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./styles.css";
@@ -26,6 +27,7 @@ const RootLayout = ({ children }: RootLayoutProps) => (
       <DesignSystemProvider defaultTheme="light">
         {children}
       </DesignSystemProvider>
+      <Analytics />
     </body>
   </html>
 );
