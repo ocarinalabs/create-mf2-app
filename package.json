@@ -12,7 +12,9 @@
     "dev": "turbo dev",
     "check": "biome check apps/cli/scripts/ packages/",
     "fix": "biome check --write apps/cli/scripts/ packages/",
-    "clean": "git clean -xdf node_modules"
+    "clean": "git clean -xdf node_modules",
+    "ci:version": "bunx @changesets/cli version && bun update",
+    "ci:publish": "cd apps/cli && bun publish && bunx @changesets/cli tag"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.2",
