@@ -22,7 +22,9 @@ jobs:
         uses: oven-sh/setup-bun@v2
 
       - name: Setup npmrc
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+          cp .npmrc apps/cli/.npmrc
 
       - name: Install dependencies
         run: bun install
@@ -39,3 +41,4 @@ jobs:
           title: "chore(release): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
