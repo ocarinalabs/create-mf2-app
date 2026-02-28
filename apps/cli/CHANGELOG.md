@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.1.0
+
+### Minor Changes
+
+- 71689b9: Update CLI branding and fix initial commit hanging due to lefthook pre-commit hook
+
 #### ⚠️ Pushed to `main`
 
 - fix(ci): remove node_modules without reinstall before auto ([@faw01](https://github.com/faw01))
