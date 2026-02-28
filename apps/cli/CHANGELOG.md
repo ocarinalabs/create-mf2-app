@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.1.3
+
+### Patch Changes
+
+- 054833b: Prevent initial commit from hanging and add docs link to CLI output
+
 ## 2.1.2
 
 ### Patch Changes
