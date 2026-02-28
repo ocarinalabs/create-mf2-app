@@ -1,4 +1,4 @@
-import { copyFile, mkdir, rm } from "node:fs/promises";
+import { copyFile, mkdir, rename, rm } from "node:fs/promises";
 import { join } from "node:path";
 import {
   cancel,
@@ -105,13 +105,6 @@ const initGitRepo = async (): Promise<void> => {
   await run("git init");
 };
 
-const commitGitRepo = async (): Promise<void> => {
-  await run("git add .");
-  await run(
-    'git -c user.name="create-mf2-app" -c user.email="noreply@mf2.dev" commit --no-verify -m "feat(create-mf2-app): init"'
-  );
-};
-
 export const initialize = async (options: {
   name?: string;
   packageManager?: string;
@@ -138,6 +131,8 @@ export const initialize = async (options: {
     s.start("Copying template...");
     await mkdir(projectDir, { recursive: true });
     await copyDirectory(templatePath, projectDir);
+
+    await rename(join(projectDir, "gitignore"), join(projectDir, ".gitignore"));
 
     s.message("Configuring project...");
     await updatePackageJson(projectDir, name);
@@ -184,8 +179,12 @@ export const initialize = async (options: {
       // Remove git repo if user doesn't want it
       await rm(join(projectDir, ".git"), { recursive: true, force: true });
     } else {
+      s.message("Staging files...");
+      await run("git add .");
       s.message("Creating initial commit...");
-      await commitGitRepo();
+      await run(
+        'git -c user.name="create-mf2-app" -c user.email="noreply@mf2.dev" commit --no-verify -m "feat(create-mf2-app): init"'
+      );
     }
 
     s.stop("Project created successfully!");
