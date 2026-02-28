@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.1.4
+
+### Patch Changes
+
+- e2416fd: Fix missing .gitignore in scaffolded projects and show progress during git commit
+
 ## 2.1.3
 
 ### Patch Changes
