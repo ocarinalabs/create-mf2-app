@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.1.5
+
+### Patch Changes
+
+- b7f675d: Fix missing .env.example and .env.local files in scaffolded projects
+
 ## 2.1.4
 
 ### Patch Changes
