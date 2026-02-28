@@ -14,17 +14,15 @@
     },
     "apps/cli": {
       "name": "create-mf2-app",
-      "version": "2.1.0",
+      "version": "2.1.1",
       "bin": {
         "create-mf2-app": "dist/index.js",
       },
-      "dependencies": {
-        "@clack/prompts": "^1.0.1",
-        "commander": "^14.0.3",
-      },
       "devDependencies": {
+        "@clack/prompts": "^1.0.1",
         "@repo/typescript-config": "*",
         "@types/node": "^25.3.2",
+        "commander": "^14.0.3",
         "tsup": "^8.5.1",
         "typescript": "^5.9.3",
       },
