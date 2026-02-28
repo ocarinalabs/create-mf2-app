@@ -107,7 +107,9 @@ const initGitRepo = async (): Promise<void> => {
 
 const commitGitRepo = async (): Promise<void> => {
   await run("git add .");
-  await run('LEFTHOOK=0 git commit -m "feat(create-mf2-app): init"');
+  await run(
+    'git -c user.name="create-mf2-app" -c user.email="noreply@mf2.dev" commit --no-verify -m "feat(create-mf2-app): init"'
+  );
 };
 
 export const initialize = async (options: {
@@ -196,7 +198,9 @@ export const initialize = async (options: {
 
 When ready to deploy:
   Fill in .env.production files with production keys
-  ${pm} run env:push`);
+  ${pm} run env:push
+
+Docs: https://mf2.dev/docs`);
 
     outro("Go forth and conquer");
   } catch (error) {
