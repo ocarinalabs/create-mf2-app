@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.1.1
+
+### Patch Changes
+
+- 55dad3c: Bundle all dependencies to fix sisteransi resolution error when running via bunx
+
 ## 2.1.0
 
 ### Minor Changes
