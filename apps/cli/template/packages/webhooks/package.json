@@ -10,7 +10,7 @@
     "@repo/auth": "*",
     "@t3-oss/env-nextjs": "^0.13.10",
     "server-only": "^0.0.1",
-    "svix": "^1.85.0",
+    "svix": "^1.86.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

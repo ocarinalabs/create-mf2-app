@@ -27,7 +27,7 @@
     "convex-lint": "eslint convex/"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.50",
+    "@ai-sdk/gateway": "^3.0.59",
     "@convex-dev/action-retrier": "^0.3.0",
     "@convex-dev/migrations": "^0.3.1",
     "@convex-dev/resend": "^0.2.3",
@@ -36,10 +36,10 @@
     "@repo/ai": "workspace:*",
     "convex": "^1.32.0",
     "convex-env": "^2.5.0",
-    "svix": "^1.85.0"
+    "svix": "^1.86.0"
   },
   "devDependencies": {
-    "@clerk/backend": "^2.31.2",
+    "@clerk/backend": "^2.33.0",
     "@convex-dev/eslint-plugin": "^1.1.1",
     "@edge-runtime/vm": "^5.0.0",
     "@repo/typescript-config": "workspace:*",
