@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.1.6
+
+### Patch Changes
+
+- 7206808: Update docs from mintlify to mint CLI and add as devDependency
+
 ## 2.1.5
 
 ### Patch Changes
