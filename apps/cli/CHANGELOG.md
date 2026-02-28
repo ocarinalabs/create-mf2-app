@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.1.7
+
+### Patch Changes
+
+- fd7049c: Relax next peer dependency in feature-flags and skip CMS dev when BASEHUB_TOKEN is not set
+
 ## 2.1.6
 
 ### Patch Changes
