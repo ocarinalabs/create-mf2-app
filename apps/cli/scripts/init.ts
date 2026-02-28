@@ -69,7 +69,7 @@ const setupEnvironmentVariables = async (projectDir: string): Promise<void> => {
     try {
       await copyFile(examplePath, targetPath);
     } catch {
-      // .env.example doesn't exist for this path, skip
+      // noop
     }
   }
 };
@@ -98,7 +98,7 @@ const setupConvex = async (packageManager: string): Promise<void> => {
 
     await run(command);
   } catch {
-    // Convex codegen may fail if not configured yet, that's OK
+    // noop
   }
 };
 
@@ -153,11 +153,9 @@ export const initialize = async (options: {
         await addWorkspacesField(projectDir);
       }
 
-      // Remove bun-specific files
       await rm(join(projectDir, "bunfig.toml"), { force: true });
     }
 
-    // Remove pnpm files if not using pnpm
     if (packageManager !== "pnpm") {
       await rm(join(projectDir, "pnpm-lock.yaml"), { force: true });
       await rm(join(projectDir, "pnpm-workspace.yaml"), { force: true });
@@ -169,7 +167,6 @@ export const initialize = async (options: {
     s.message("Removing dev-only files...");
     await stripDevOnlyFiles(projectDir);
 
-    // Git init before install so lefthook's prepare script works
     s.message("Initializing Git repository...");
     await initGitRepo();
 
@@ -181,7 +178,6 @@ export const initialize = async (options: {
     await setupConvex(packageManager);
 
     if (options.disableGit) {
-      // Remove git repo if user doesn't want it
       await rm(join(projectDir, ".git"), { recursive: true, force: true });
     } else {
       s.message("Staging files...");

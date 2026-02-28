@@ -177,11 +177,11 @@ export const convertAllWorkspaceDeps = async (
           await stat(pkgJsonPath);
           await convertWorkspaceDeps(pkgJsonPath);
         } catch {
-          // package.json doesn't exist, skip
+          // noop
         }
       }
     } catch {
-      // directory doesn't exist, skip
+      // noop
     }
   }
 };

@@ -27,10 +27,6 @@ afterEach(async () => {
   await rm(tmpDir, { recursive: true, force: true });
 });
 
-// ---------------------------------------------------------------------------
-// Template integrity — files that must exist in the template for scaffolding
-// ---------------------------------------------------------------------------
-
 describe("template integrity", () => {
   test("template directory exists", () => {
     expect(existsSync(templatePath)).toBe(true);
@@ -106,10 +102,6 @@ describe("template integrity", () => {
   });
 });
 
-// ---------------------------------------------------------------------------
-// copyDirectory
-// ---------------------------------------------------------------------------
-
 describe("copyDirectory", () => {
   test("copies template to destination", async () => {
     const dest = join(tmpDir, "copy-test");
@@ -152,10 +144,6 @@ describe("copyDirectory", () => {
     }
   });
 });
-
-// ---------------------------------------------------------------------------
-// dotfileRenames — covers the .gitignore + .env.* rename flow
-// ---------------------------------------------------------------------------
 
 describe("dotfileRenames", () => {
   test("every env.example has a matching env.local entry", () => {
@@ -205,10 +193,6 @@ describe("dotfileRenames", () => {
   });
 });
 
-// ---------------------------------------------------------------------------
-// envFiles — environment variable setup config
-// ---------------------------------------------------------------------------
-
 describe("envFiles", () => {
   test("every source with .env.local also has .env.production", () => {
     const locals = envFiles.filter((e) => e.target === ".env.local");
@@ -229,10 +213,6 @@ describe("envFiles", () => {
     }
   });
 });
-
-// ---------------------------------------------------------------------------
-// updatePackageJson
-// ---------------------------------------------------------------------------
 
 describe("updatePackageJson", () => {
   test("sets project name in package.json", async () => {
@@ -263,10 +243,6 @@ describe("updatePackageJson", () => {
     expect(content.devDependencies).toBeDefined();
   });
 });
-
-// ---------------------------------------------------------------------------
-// updatePackageManager
-// ---------------------------------------------------------------------------
 
 describe("updatePackageManager", () => {
   test("sets correct packageManager for npm", async () => {
@@ -309,10 +285,6 @@ describe("updatePackageManager", () => {
   });
 });
 
-// ---------------------------------------------------------------------------
-// convertWorkspaceDeps
-// ---------------------------------------------------------------------------
-
 describe("convertWorkspaceDeps", () => {
   test("converts workspace:* to *", async () => {
     const dest = join(tmpDir, "ws-deps-test");
@@ -336,10 +308,6 @@ describe("convertWorkspaceDeps", () => {
   });
 });
 
-// ---------------------------------------------------------------------------
-// addWorkspacesField
-// ---------------------------------------------------------------------------
-
 describe("addWorkspacesField", () => {
   test("adds workspaces array to package.json", async () => {
     const dest = join(tmpDir, "ws-field-test");
@@ -355,10 +323,6 @@ describe("addWorkspacesField", () => {
   });
 });
 
-// ---------------------------------------------------------------------------
-// supportedPackageManagers
-// ---------------------------------------------------------------------------
-
 describe("supportedPackageManagers", () => {
   test("includes bun, npm, yarn, pnpm", () => {
     expect(supportedPackageManagers).toContain("bun");
@@ -373,21 +337,15 @@ describe("supportedPackageManagers", () => {
   });
 });
 
-// ---------------------------------------------------------------------------
-// Full scaffolding simulation (without install/git — just file operations)
-// ---------------------------------------------------------------------------
-
 describe("scaffolding simulation", () => {
   const scaffold = async (name: string) => {
     const projectDir = join(tmpDir, name);
     await mkdir(projectDir, { recursive: true });
     await copyDirectory(templatePath, projectDir);
 
-    // Rename gitignore
     const { rename } = await import("node:fs/promises");
     await rename(join(projectDir, "gitignore"), join(projectDir, ".gitignore"));
 
-    // Rename dotfiles
     for (const { dir, from, to } of dotfileRenames) {
       await rename(join(projectDir, dir, from), join(projectDir, dir, to));
     }
@@ -456,7 +414,6 @@ describe("scaffolding simulation", () => {
   test("env setup copies .env.example to .env.production", async () => {
     const projectDir = await scaffold("env-setup-test");
 
-    // Run the same logic as setupEnvironmentVariables
     const { copyFile } = await import("node:fs/promises");
     for (const { source, target } of envFiles) {
       const examplePath = join(projectDir, source, ".env.example");
@@ -464,11 +421,10 @@ describe("scaffolding simulation", () => {
       try {
         await copyFile(examplePath, targetPath);
       } catch {
-        // skip if doesn't exist
+        // noop
       }
     }
 
-    // .env.production should exist for all dirs that have .env.example
     const envExampleDirs = dotfileRenames
       .filter((r) => r.to === ".env.example")
       .map((r) => r.dir);
@@ -485,7 +441,6 @@ describe("scaffolding simulation", () => {
       expect(existsSync(join(projectDir, file))).toBe(true);
     }
 
-    // Strip them
     for (const file of devOnlyFiles) {
       await rm(join(projectDir, file), { recursive: true, force: true });
     }
@@ -512,7 +467,6 @@ describe("scaffolding simulation", () => {
 
     expect(existsSync(join(projectDir, "node_modules"))).toBe(false);
 
-    // Also check nested
     const apps = readdirSync(join(projectDir, "apps"));
     for (const app of apps) {
       const appPath = join(projectDir, "apps", app);
@@ -546,7 +500,6 @@ describe("scaffolding simulation", () => {
   test("pnpm files removable for non-pnpm managers", async () => {
     const projectDir = await scaffold("pnpm-cleanup-test");
 
-    // These may or may not exist (lockfiles excluded during copy), but removal should not throw
     await rm(join(projectDir, "pnpm-lock.yaml"), { force: true });
     await rm(join(projectDir, "pnpm-workspace.yaml"), { force: true });
 
@@ -554,10 +507,6 @@ describe("scaffolding simulation", () => {
     expect(existsSync(join(projectDir, "pnpm-workspace.yaml"))).toBe(false);
   });
 });
-
-// ---------------------------------------------------------------------------
-// Edge cases
-// ---------------------------------------------------------------------------
 
 describe("edge cases", () => {
   test("env.example and env.local both exist and have content for each dir", () => {
