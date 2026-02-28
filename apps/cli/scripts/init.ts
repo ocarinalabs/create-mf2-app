@@ -15,6 +15,7 @@ import {
   convertAllWorkspaceDeps,
   copyDirectory,
   devOnlyFiles,
+  dotfileRenames,
   envFiles,
   getTemplatePath,
   run,
@@ -133,6 +134,10 @@ export const initialize = async (options: {
     await copyDirectory(templatePath, projectDir);
 
     await rename(join(projectDir, "gitignore"), join(projectDir, ".gitignore"));
+
+    for (const { dir, from, to } of dotfileRenames) {
+      await rename(join(projectDir, dir, from), join(projectDir, dir, to));
+    }
 
     s.message("Configuring project...");
     await updatePackageJson(projectDir, name);
