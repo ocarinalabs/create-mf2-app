@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.1.8
+
+### Patch Changes
+
+- 65576c2: Treat empty environment variable strings as undefined to allow dev server to start without configuration
+
 ## 2.1.7
 
 ### Patch Changes
