@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.1.2
+
+### Patch Changes
+
+- 952ffa7: Fix dynamic require error by keeping commander as external dependency
+
 ## 2.1.1
 
 ### Patch Changes
