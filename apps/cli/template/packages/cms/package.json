@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "basehub dev",
+    "dev": "[ -z \"$BASEHUB_TOKEN\" ] && echo 'Skipping CMS: set BASEHUB_TOKEN to enable' || basehub dev",
     "build": "basehub build",
     "analyze": "basehub",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
