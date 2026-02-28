@@ -8,5 +8,5 @@ export default defineConfig({
   dts: false,
   format: ["esm"],
   banner: { js: "#!/usr/bin/env node" },
-  noExternal: [/.*/],
+  noExternal: ["@clack/prompts", "@clack/core", "sisteransi", "picocolors"],
 });
