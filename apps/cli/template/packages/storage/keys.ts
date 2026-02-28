@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const keys = () =>
   createEnv({
+    emptyStringAsUndefined: true,
     server: {
       BLOB_READ_WRITE_TOKEN: z.string().optional(),
     },

@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const keys = () =>
   createEnv({
+    emptyStringAsUndefined: true,
     server: {
       FLAGS_SECRET: z.string().optional(),
     },

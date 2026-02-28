@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const keys = () =>
   createEnv({
+    emptyStringAsUndefined: true,
     server: {
       BASEHUB_TOKEN: z.string().startsWith("bshb_pk_"),
     },

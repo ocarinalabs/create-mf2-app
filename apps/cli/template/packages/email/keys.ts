@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const keys = () =>
   createEnv({
+    emptyStringAsUndefined: true,
     server: {
       RESEND_FROM: z.string().email(),
       RESEND_TOKEN: z.string().startsWith("re_"),

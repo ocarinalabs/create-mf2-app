@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const keys = () =>
   createEnv({
+    emptyStringAsUndefined: true,
     server: {
       UPSTASH_REDIS_REST_URL: z.url().optional(),
       UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
