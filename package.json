@@ -14,7 +14,7 @@
     "fix": "biome check --write apps/cli/scripts/ packages/",
     "clean": "git clean -xdf node_modules",
     "ci:version": "changeset version && bun update",
-    "ci:publish": "(cd apps/cli && bun publish || true) && changeset tag"
+    "ci:publish": "cd apps/cli && bun publish"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.4",
