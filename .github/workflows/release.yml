@@ -40,7 +40,7 @@ jobs:
         with:
           version: bun run ci:version
           publish: bun run ci:publish
-          commit: "chore(release): version packages [skip ci]"
+          commit: "chore(release): version packages"
           title: "chore(release): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
