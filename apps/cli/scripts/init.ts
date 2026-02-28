@@ -107,7 +107,7 @@ const initGitRepo = async (): Promise<void> => {
 
 const commitGitRepo = async (): Promise<void> => {
   await run("git add .");
-  await run('git commit -m "feat(create-mf2-app): init"');
+  await run('LEFTHOOK=0 git commit -m "feat(create-mf2-app): init"');
 };
 
 export const initialize = async (options: {
@@ -116,7 +116,7 @@ export const initialize = async (options: {
   disableGit?: boolean;
 }): Promise<void> => {
   try {
-    intro("Let's create your MF2 app!");
+    intro("Let's move fawking fast");
 
     const cwd = process.cwd();
     const name = options.name ?? (await getName());
@@ -198,7 +198,7 @@ When ready to deploy:
   Fill in .env.production files with production keys
   ${pm} run env:push`);
 
-    outro("Happy building!");
+    outro("Go forth and conquer");
   } catch (error) {
     const message =
       error instanceof Error

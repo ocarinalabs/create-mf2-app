@@ -10,7 +10,7 @@ program
 
 program
   .command("init", { isDefault: true })
-  .description("Initialize a new MF2 project")
+  .description("Initialize a new mf² project")
   .option("--name <name>", "Name of the project")
   .option(
     "--package-manager <manager>",

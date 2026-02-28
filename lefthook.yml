@@ -1,6 +1,6 @@
 pre-commit:
   jobs:
-    - run: bun x ultracite fix
+    - run: bun run fix
       glob:
         - "**/*.js"
         - "**/*.jsx"
@@ -9,4 +9,6 @@ pre-commit:
         - "**/*.json"
         - "**/*.jsonc"
         - "**/*.css"
+      exclude:
+        - "apps/cli/template/**"
       stage_fixed: true
