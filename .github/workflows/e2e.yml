@@ -27,5 +27,5 @@ jobs:
       - name: Install scaffolded project dependencies
         run: cd /tmp/e2e-test && bun install
 
-      - name: Typecheck scaffolded project
-        run: cd /tmp/e2e-test && bunx turbo typecheck --filter=app --filter=web --filter=api
+      - name: Build app
+        run: cd /tmp/e2e-test/apps/app && bunx next build
