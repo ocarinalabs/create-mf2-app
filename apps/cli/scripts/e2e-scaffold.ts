@@ -1,3 +1,4 @@
+import { execSync } from "node:child_process";
 import { copyFile, mkdir, rename, rm } from "node:fs/promises";
 import { join } from "node:path";
 import {
@@ -41,5 +42,7 @@ for (const { source, target } of envFiles) {
 for (const file of devOnlyFiles) {
   await rm(join(projectDir, file), { recursive: true, force: true });
 }
+
+execSync("git init", { cwd: projectDir, stdio: "ignore" });
 
 console.log("Scaffolded successfully.");
