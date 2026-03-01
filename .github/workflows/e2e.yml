@@ -28,4 +28,4 @@ jobs:
         run: cd /tmp/e2e-test && bun install
 
       - name: Build scaffolded project
-        run: cd /tmp/e2e-test && bun run build
+        run: cd /tmp/e2e-test && bunx turbo build --filter=app --filter=web --filter=api
