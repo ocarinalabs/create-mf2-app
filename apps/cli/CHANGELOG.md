@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.1.10
+
+### Patch Changes
+
+- bfd290e: Switch docs theme to mint and add .mintignore to exclude AGENTS.md from parser
+
 ## 2.1.9
 
 ### Patch Changes
