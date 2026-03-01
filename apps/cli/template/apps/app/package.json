@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.107",
+    "@clerk/nextjs": "^6.39.0",
     "@repo/ai": "workspace:*",
     "@repo/analytics": "*",
     "@repo/auth": "*",

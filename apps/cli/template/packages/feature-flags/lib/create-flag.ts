@@ -13,7 +13,7 @@ export const createFlag = (key: string) =>
         return this.defaultValue as boolean;
       }
 
-      const isEnabled = await analytics.isFeatureEnabled(key, userId);
+      const isEnabled = await analytics?.isFeatureEnabled(key, userId);
 
       return isEnabled ?? (this.defaultValue as boolean);
     },
