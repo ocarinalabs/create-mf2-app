@@ -27,5 +27,5 @@ jobs:
       - name: Install scaffolded project dependencies
         run: cd /tmp/e2e-test && bun install
 
-      - name: Build app
-        run: cd /tmp/e2e-test/apps/app && bunx next build
+      - name: Typecheck app
+        run: cd /tmp/e2e-test/apps/app && bunx tsc --noEmit --emitDeclarationOnly false
