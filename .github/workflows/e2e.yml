@@ -1,0 +1,31 @@
+name: E2E
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  scaffold:
+    name: Scaffold & Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install monorepo dependencies
+        run: bun install
+
+      - name: Build CLI
+        run: bun run build --filter=create-mf2-app
+
+      - name: Scaffold project
+        run: bun run apps/cli/scripts/e2e-scaffold.ts
+        env:
+          E2E_OUTPUT_DIR: /tmp/e2e-test
+
+      - name: Install scaffolded project dependencies
+        run: cd /tmp/e2e-test && bun install
+
+      - name: Build scaffolded project
+        run: cd /tmp/e2e-test && bun run build
