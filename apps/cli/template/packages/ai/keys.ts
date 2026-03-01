@@ -5,7 +5,7 @@ export const keys = () =>
   createEnv({
     emptyStringAsUndefined: true,
     server: {
-      AI_GATEWAY_API_KEY: z.string().min(1),
+      AI_GATEWAY_API_KEY: z.string().min(1).optional(),
       AI_GATEWAY_URL: z.url().default("https://ai-gateway.vercel.sh/v3"),
       COHERE_API_KEY: z.string().min(1).optional(),
       PERPLEXITY_API_KEY: z.string().min(1).optional(),

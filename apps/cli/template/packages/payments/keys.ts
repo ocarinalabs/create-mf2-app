@@ -5,7 +5,7 @@ export const keys = () =>
   createEnv({
     emptyStringAsUndefined: true,
     server: {
-      STRIPE_SECRET_KEY: z.string().startsWith("sk_"),
+      STRIPE_SECRET_KEY: z.string().startsWith("sk_").optional(),
       STRIPE_WEBHOOK_SECRET: z.string().startsWith("whsec_").optional(),
     },
     runtimeEnv: {
