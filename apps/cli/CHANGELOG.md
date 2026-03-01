@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.1.9
+
+### Patch Changes
+
+- 2a6659d: Make all third-party services optional for zero-config dev: analytics, CMS, Convex, AI, email, and payments gracefully skip when env vars are missing
+
 ## 2.1.8
 
 ### Patch Changes
