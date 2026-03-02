@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.1.11
+
+### Patch Changes
+
+- 9de5946: Add `@tailwindcss/postcss` as a devDependency to `apps/app` and `apps/web` in the template. With Bun's isolated linker, Next.js Turbopack could not resolve the PostCSS plugin from the design-system package scope, causing build failures on scaffolded projects.
+
 ## 2.1.10
 
 ### Patch Changes
