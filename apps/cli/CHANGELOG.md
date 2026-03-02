@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.1.12
+
+### Patch Changes
+
+- 4a4823f: Sync template root dependency versions for `@types/node`, `lefthook`, and `lint-staged`.
+
 ## 2.1.11
 
 ### Patch Changes
