@@ -1,0 +1,63 @@
+name: Sync Template Repo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/cli/template/**'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare transformed template
+        run: |
+          mkdir -p /tmp/template-output
+
+          # Copy template, excluding build artifacts
+          rsync -a \
+            --exclude='node_modules' \
+            --exclude='.DS_Store' \
+            --exclude='.turbo' \
+            --exclude='.expo' \
+            --exclude='ios' \
+            --exclude='android' \
+            --exclude='bun.lock' \
+            --exclude='pnpm-lock.yaml' \
+            --exclude='yarn.lock' \
+            --exclude='package-lock.json' \
+            --exclude='.git' \
+            apps/cli/template/ /tmp/template-output/
+
+          cd /tmp/template-output
+
+          # Rename gitignore → .gitignore
+          mv gitignore .gitignore
+
+          # Rename env dotfiles (mirrors utils.ts dotfileRenames)
+          for dir in apps/api apps/app apps/web apps/mobile packages/cms packages/internationalization; do
+            if [ -f "$dir/env.example" ]; then
+              mv "$dir/env.example" "$dir/.env.example"
+            fi
+            if [ -f "$dir/env.local" ]; then
+              mv "$dir/env.local" "$dir/.env.local"
+            fi
+          done
+
+          # Remove dev-only files (mirrors utils.ts devOnlyFiles)
+          rm -rf CLAUDE.md .mcp.json .claude/
+
+      - name: Push to template repo
+        run: |
+          cd /tmp/template-output
+          git init
+          git checkout -b main
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: sync template from startdown monorepo"
+          git remote add origin https://x-access-token:${{ secrets.TEMPLATE_SYNC_TOKEN }}@github.com/ocarinalabs/mf2.git
+          git push --force origin main
