@@ -15,12 +15,16 @@
       }
     }
   },
+  "javascript": {
+    "globals": ["Bun"]
+  },
   "files": {
     "includes": [
       "**/*",
       "!packages/design-system/components/ui",
       "!packages/design-system/lib",
-      "!packages/design-system/hooks"
+      "!packages/design-system/hooks",
+      "!apps/cli/template"
     ]
   }
 }

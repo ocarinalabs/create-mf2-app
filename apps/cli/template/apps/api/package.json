@@ -19,7 +19,7 @@
     "@repo/next-config": "*",
     "@repo/observability": "*",
     "@repo/payments": "*",
-    "@sentry/nextjs": "^10.40.0",
+    "@sentry/nextjs": "^10.41.0",
     "@t3-oss/env-nextjs": "^0.13.10",
     "import-in-the-middle": "^3.0.0",
     "next": "16.1.6",
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "*",
-    "@types/node": "25.3.2",
+    "@types/node": "25.3.3",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "^5.1.4",
