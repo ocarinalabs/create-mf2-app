@@ -1,0 +1,9 @@
+{
+  "extends": ["expo/tsconfig.base", "@repo/typescript-config/expo"],
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
+}

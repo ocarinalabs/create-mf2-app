@@ -278,3 +278,12 @@ $RECYCLE.BIN/
 
 # AI devtools
 .devtools/
+
+# Expo / React Native
+apps/mobile/.expo/
+apps/mobile/ios/
+apps/mobile/android/
+*.jks
+*.keystore
+google-services.json
+GoogleService-Info.plist

@@ -4,7 +4,9 @@
   "private": true,
   "exports": {
     "./provider": "./provider.tsx",
-    "./keys": "./keys.ts"
+    "./provider.native": "./provider.native.tsx",
+    "./keys": "./keys.ts",
+    "./keys.native": "./keys.native.ts"
   },
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
@@ -22,6 +24,7 @@
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
+    "@clerk/clerk-expo": "^2.0.0",
     "@clerk/nextjs": "^6.0.0",
     "react": "^19.0.0"
   }

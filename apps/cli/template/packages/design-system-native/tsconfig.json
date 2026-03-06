@@ -1,0 +1,8 @@
+{
+  "extends": "@repo/typescript-config/expo",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist"]
+}

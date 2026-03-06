@@ -27,8 +27,9 @@
     "convex-lint": "eslint convex/"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.59",
+    "@ai-sdk/gateway": "^3.0.60",
     "@convex-dev/action-retrier": "^0.3.0",
+    "@convex-dev/expo-push-notifications": "0.3.1",
     "@convex-dev/migrations": "^0.3.1",
     "@convex-dev/resend": "^0.2.3",
     "@convex-dev/stripe": "^0.1.3",

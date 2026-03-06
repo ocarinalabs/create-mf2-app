@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": false
+  },
   "extends": [
     "ultracite/biome/core",
     "ultracite/biome/react",
@@ -29,7 +32,10 @@
         "packages/ai/rag/index.ts",
         "packages/ai/agent/index.ts",
         "apps/*/postcss.config.mjs",
-        "apps/app/liveblocks.config.ts"
+        "apps/app/liveblocks.config.ts",
+        "packages/auth/client.native.ts",
+        "packages/analytics/native.ts",
+        "packages/design-system-native/lib/icons.ts"
       ],
       "linter": {
         "rules": {
@@ -54,7 +60,11 @@
       "!apps/docs/**/*.json",
       "!apps/email/.react-email",
       "!packages/cms/basehub-types.d.ts",
-      "!**/convex/_generated"
+      "!**/convex/_generated",
+      "!apps/mobile/ios",
+      "!apps/mobile/android",
+      "!apps/mobile/.expo",
+      "!packages/design-system-native/components/ui"
     ]
   }
 }

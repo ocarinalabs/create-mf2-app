@@ -11,12 +11,23 @@
     "@knocklabs/react": "^0.11.5",
     "@t3-oss/env-nextjs": "^0.13.10",
     "react": "19.2.4",
-    "zod": "^4.3.6"
+    "zod": "^4.3.6",
+    "expo-notifications": "55.0.10",
+    "expo-device": "55.0.9",
+    "expo-constants": "55.0.7"
+  },
+  "peerDependencies": {
+    "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "react-native": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@repo/typescript-config": "*",
     "typescript": "^5.9.3",
-    "@types/node": "25.3.2",
+    "@types/node": "25.3.3",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3"
   }

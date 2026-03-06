@@ -29,6 +29,9 @@ export const copyExclusions = new Set([
   "node_modules",
   ".DS_Store",
   ".turbo",
+  ".expo",
+  "ios",
+  "android",
   "bun.lock",
   "pnpm-lock.yaml",
   "yarn.lock",
@@ -55,6 +58,8 @@ export const dotfileRenames = [
     from: "env.local",
     to: ".env.local",
   },
+  { dir: join("apps", "mobile"), from: "env.example", to: ".env.example" },
+  { dir: join("apps", "mobile"), from: "env.local", to: ".env.local" },
 ];
 
 export const envFiles = [
@@ -71,6 +76,8 @@ export const envFiles = [
     source: join("packages", "internationalization"),
     target: ".env.production",
   },
+  { source: join("apps", "mobile"), target: ".env.local" },
+  { source: join("apps", "mobile"), target: ".env.production" },
 ];
 
 export const getTemplatePath = (): string => {

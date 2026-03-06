@@ -136,7 +136,11 @@ export const initialize = async (options: {
     await rename(join(projectDir, "gitignore"), join(projectDir, ".gitignore"));
 
     for (const { dir, from, to } of dotfileRenames) {
-      await rename(join(projectDir, dir, from), join(projectDir, dir, to));
+      try {
+        await rename(join(projectDir, dir, from), join(projectDir, dir, to));
+      } catch {
+        // noop
+      }
     }
 
     s.message("Configuring project...");

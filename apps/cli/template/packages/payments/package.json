@@ -9,6 +9,8 @@
   "dependencies": {
     "@stripe/agent-toolkit": "^0.9.0",
     "@t3-oss/env-nextjs": "^0.13.10",
+    "react-native-purchases": "^9.10.5",
+    "react-native-purchases-ui": "^9.10.5",
     "server-only": "^0.0.1",
     "stripe": "^20.4.0",
     "zod": "^4.3.6"
