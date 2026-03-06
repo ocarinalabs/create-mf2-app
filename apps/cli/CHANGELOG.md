@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.2.0
+
+### Minor Changes
+
+- 3684e29: Add React Native + Expo mobile app support with shared package native entrypoints
+
 ## 2.1.12
 
 ### Patch Changes
