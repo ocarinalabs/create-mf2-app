@@ -1,12 +1,12 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": [
-    "ultracite/biome/core",
-    "ultracite/biome/react",
-    "ultracite/biome/next"
-  ],
+  "extends": ["ultracite/core", "ultracite/react", "ultracite/next"],
   "linter": {
     "rules": {
+      "correctness": {
+        "useImportExtensions": "off",
+        "noUnresolvedImports": "off"
+      },
       "style": {
         "useConsistentTypeDefinitions": {
           "level": "error",
@@ -24,7 +24,10 @@
       "!packages/design-system/components/ui",
       "!packages/design-system/lib",
       "!packages/design-system/hooks",
-      "!apps/cli/template"
+      "!apps/cli/template",
+      "!.claude",
+      "!.agents",
+      "!new-next-forge-6"
     ]
   }
 }

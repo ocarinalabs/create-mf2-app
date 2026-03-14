@@ -3,11 +3,7 @@
   "vcs": {
     "enabled": false
   },
-  "extends": [
-    "ultracite/biome/core",
-    "ultracite/biome/react",
-    "ultracite/biome/next"
-  ],
+  "extends": ["ultracite/core", "ultracite/react", "ultracite/next"],
   "javascript": {
     "globals": ["Liveblocks", "Bun"]
   },
@@ -18,34 +14,15 @@
           "level": "error",
           "options": { "style": "type" }
         }
+      },
+      "correctness": {
+        "useImportExtensions": "off"
+      },
+      "performance": {
+        "noBarrelFile": "off"
       }
     }
   },
-  "overrides": [
-    {
-      "includes": [
-        "packages/auth/*.ts",
-        "packages/collaboration/hooks.ts",
-        "packages/storage/*.ts",
-        "packages/cms/components/*.tsx",
-        "packages/analytics/index.ts",
-        "packages/ai/rag/index.ts",
-        "packages/ai/agent/index.ts",
-        "apps/*/postcss.config.mjs",
-        "apps/app/liveblocks.config.ts",
-        "packages/auth/client.native.ts",
-        "packages/analytics/native.ts",
-        "packages/design-system-native/lib/icons.ts"
-      ],
-      "linter": {
-        "rules": {
-          "performance": {
-            "noBarrelFile": "off"
-          }
-        }
-      }
-    }
-  ],
   "files": {
     "includes": [
       "**/*",
@@ -64,7 +41,8 @@
       "!apps/mobile/ios",
       "!apps/mobile/android",
       "!apps/mobile/.expo",
-      "!packages/design-system-native/components/ui"
+      "!packages/design-system-native/components/ui",
+      "!.turbo"
     ]
   }
 }
