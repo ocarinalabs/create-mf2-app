@@ -27,25 +27,25 @@
     "convex-lint": "eslint convex/"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.60",
+    "@ai-sdk/gateway": "^3.0.66",
     "@convex-dev/action-retrier": "^0.3.0",
     "@convex-dev/expo-push-notifications": "0.3.1",
     "@convex-dev/migrations": "^0.3.1",
     "@convex-dev/resend": "^0.2.3",
-    "@convex-dev/stripe": "^0.1.3",
-    "@convex-dev/workflow": "^0.3.4",
+    "@convex-dev/stripe": "^0.1.4",
+    "@convex-dev/workflow": "^0.3.6",
     "@repo/ai": "workspace:*",
-    "convex": "^1.32.0",
+    "convex": "^1.33.1",
     "convex-env": "^2.5.0",
-    "svix": "^1.86.0"
+    "svix": "^1.88.0"
   },
   "devDependencies": {
-    "@clerk/backend": "^2.33.0",
-    "@convex-dev/eslint-plugin": "^1.1.1",
+    "@clerk/backend": "^3.2.0",
+    "@convex-dev/eslint-plugin": "^1.2.0",
     "@edge-runtime/vm": "^5.0.0",
     "@repo/typescript-config": "workspace:*",
     "convex-test": "^0.0.41",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.0"
   }
 }

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "[ -z \"$BASEHUB_TOKEN\" ] && echo 'Skipping CMS: set BASEHUB_TOKEN to enable' || basehub dev",
-    "build": "basehub build",
+    "build": "[ -z \"$BASEHUB_TOKEN\" ] && echo 'Skipping CMS build: set BASEHUB_TOKEN to enable' || basehub build",
     "analyze": "basehub",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
@@ -16,8 +16,8 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@repo/typescript-config": "*",
-    "@types/node": "25.3.3",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "25.5.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "next": "16.1.6"

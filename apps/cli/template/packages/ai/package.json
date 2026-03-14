@@ -24,18 +24,18 @@
     "test": "bun test || true"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^3.0.51",
-    "@ai-sdk/cohere": "^3.0.22",
+    "@ai-sdk/anthropic": "^3.0.58",
+    "@ai-sdk/cohere": "^3.0.25",
     "@ai-sdk/devtools": "^0.0.15",
-    "@ai-sdk/gateway": "^3.0.60",
+    "@ai-sdk/gateway": "^3.0.66",
     "@perplexity-ai/ai-sdk": "^0.1.2",
     "@t3-oss/env-nextjs": "^0.13.10",
-    "ai": "^6.0.106",
+    "ai": "^6.0.116",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@repo/typescript-config": "*",
-    "@types/node": "25.3.3",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "25.5.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3"
   }

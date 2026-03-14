@@ -11,7 +11,7 @@
     "analyze": "turbo analyze",
     "translate": "turbo translate",
     "boundaries": "turbo boundaries",
-    "bump-deps": "bun x npm-check-updates --deep -u -x recharts && bun install",
+    "bump-deps": "bun x npm-check-updates --deep -u && bun install",
     "bump-ui": "npx shadcn@latest add --all --overwrite -c packages/design-system",
     "clean": "git clean -xdf node_modules",
     "convex-lint": "turbo convex-lint",
@@ -21,16 +21,16 @@
     "prepare": "lefthook install"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.5",
-    "@repo/typescript-config": "*",
-    "@turbo/gen": "^2.8.12",
-    "@types/node": "^25.3.3",
-    "lefthook": "^2.1.2",
-    "lint-staged": "^16.3.1",
-    "turbo": "^2.8.12",
+    "@biomejs/biome": "2.4.7",
+    "@repo/typescript-config": "workspace:*",
+    "@turbo/gen": "^2.8.17",
+    "@types/node": "^25.5.0",
+    "lefthook": "^2.1.4",
+    "lint-staged": "^16.4.0",
+    "turbo": "^2.8.17",
     "typescript": "^5.9.3",
-    "ultracite": "7.2.4",
-    "vitest": "^4.0.18"
+    "ultracite": "7.3.0",
+    "vitest": "^4.1.0"
   },
   "engines": {
     "node": ">=18"

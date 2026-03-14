@@ -12,9 +12,9 @@
     "schema-dts": "^1.1.5"
   },
   "devDependencies": {
-    "@repo/typescript-config": "*",
+    "@repo/typescript-config": "workspace:*",
     "@types/lodash.merge": "^4.6.9",
-    "@types/node": "25.3.3",
+    "@types/node": "25.5.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "next": "16.1.6"
