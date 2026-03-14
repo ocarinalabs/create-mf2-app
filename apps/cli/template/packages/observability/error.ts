@@ -1,4 +1,5 @@
-import { captureException } from "@sentry/nextjs";
+// biome-ignore lint/performance/noNamespaceImport: Sentry SDK convention
+import * as Sentry from "@sentry/nextjs";
 import { log } from "./log";
 
 export const parseError = (error: unknown): string => {
@@ -13,7 +14,7 @@ export const parseError = (error: unknown): string => {
   }
 
   try {
-    captureException(error);
+    Sentry.captureException(error);
     log.error(`Parsing error: ${message}`);
   } catch (newError) {
     console.error("Error parsing error:", newError);

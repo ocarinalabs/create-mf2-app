@@ -4,11 +4,12 @@
  * https://docs.sentry.io/platforms/javascript/guides/nextjs/
  */
 
-import { consoleLoggingIntegration, init } from "@sentry/nextjs";
+// biome-ignore lint/performance/noNamespaceImport: Sentry SDK convention
+import * as Sentry from "@sentry/nextjs";
 import { keys } from "./keys";
 
-export const initializeSentry = (): ReturnType<typeof init> =>
-  init({
+export const initializeSentry = (): ReturnType<typeof Sentry.init> =>
+  Sentry.init({
     dsn: keys().NEXT_PUBLIC_SENTRY_DSN,
 
     // Enable logging
@@ -23,6 +24,6 @@ export const initializeSentry = (): ReturnType<typeof init> =>
     // Integrations for console logging
     integrations: [
       // Send console.log, console.error, and console.warn calls as logs to Sentry
-      consoleLoggingIntegration({ levels: ["log", "error", "warn"] }),
+      Sentry.consoleLoggingIntegration({ levels: ["log", "error", "warn"] }),
     ],
   });

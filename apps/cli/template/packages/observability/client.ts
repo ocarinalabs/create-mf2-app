@@ -4,15 +4,12 @@
  * https://docs.sentry.io/platforms/javascript/guides/nextjs/
  */
 
-import {
-  consoleLoggingIntegration,
-  init,
-  replayIntegration,
-} from "@sentry/nextjs";
+// biome-ignore lint/performance/noNamespaceImport: Sentry SDK convention
+import * as Sentry from "@sentry/nextjs";
 import { keys } from "./keys";
 
-export const initializeSentry = (): ReturnType<typeof init> =>
-  init({
+export const initializeSentry = (): ReturnType<typeof Sentry.init> =>
+  Sentry.init({
     dsn: keys().NEXT_PUBLIC_SENTRY_DSN,
 
     // Enable logging
@@ -34,12 +31,14 @@ export const initializeSentry = (): ReturnType<typeof init> =>
 
     // You can remove this option if you're not planning to use the Sentry Session Replay feature:
     integrations: [
-      replayIntegration({
+      Sentry.replayIntegration({
         // Additional Replay configuration goes in here, for example:
         maskAllText: true,
         blockAllMedia: true,
       }),
       // Send console.log, console.error, and console.warn calls as logs to Sentry
-      consoleLoggingIntegration({ levels: ["log", "error", "warn"] }),
+      Sentry.consoleLoggingIntegration({ levels: ["log", "error", "warn"] }),
     ],
   });
+
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

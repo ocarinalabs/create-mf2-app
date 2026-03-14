@@ -1,3 +1,6 @@
+// biome-ignore lint/performance/noNamespaceImport: Sentry SDK convention
+import * as Sentry from "@sentry/nextjs";
+
 export const initializeSentry = async () => {
   if (process.env.NEXT_RUNTIME === "nodejs") {
     const { initializeSentry: initServer } = await import("./server");
@@ -9,3 +12,5 @@ export const initializeSentry = async () => {
     initEdge();
   }
 };
+
+export const onRequestError = Sentry.captureRequestError;
