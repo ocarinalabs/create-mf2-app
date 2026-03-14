@@ -3,7 +3,6 @@ import { z } from "zod";
 
 export const keys = () =>
   createEnv({
-    emptyStringAsUndefined: true,
     server: {
       SVIX_TOKEN: z
         .union([z.string().startsWith("sk_"), z.string().startsWith("testsk_")])

@@ -3,7 +3,6 @@ import { z } from "zod";
 
 export const keys = () =>
   createEnv({
-    emptyStringAsUndefined: true,
     server: {
       ARCJET_KEY: z.string().startsWith("ajkey_").optional(),
     },

@@ -3,7 +3,6 @@ import { z } from "zod";
 
 export const keys = () =>
   createEnv({
-    emptyStringAsUndefined: true,
     client: {
       NEXT_PUBLIC_CONVEX_URL: z.string().url().optional(),
     },

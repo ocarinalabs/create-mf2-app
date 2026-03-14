@@ -3,7 +3,6 @@ import { z } from "zod";
 
 export const keys = () =>
   createEnv({
-    emptyStringAsUndefined: true,
     server: {
       LIVEBLOCKS_SECRET: z.string().startsWith("sk_").optional(),
     },

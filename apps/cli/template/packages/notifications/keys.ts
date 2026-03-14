@@ -3,7 +3,6 @@ import { z } from "zod";
 
 export const keys = () =>
   createEnv({
-    emptyStringAsUndefined: true,
     server: {
       KNOCK_SECRET_API_KEY: z.string().optional(),
     },

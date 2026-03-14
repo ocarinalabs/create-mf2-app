@@ -3,7 +3,6 @@ import { z } from "zod";
 
 export const keys = () =>
   createEnv({
-    emptyStringAsUndefined: true,
     server: {
       BETTERSTACK_API_KEY: z.string().optional(),
       BETTERSTACK_URL: z.url().optional(),
