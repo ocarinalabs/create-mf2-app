@@ -1,8 +1,7 @@
 import { type ApiData, verifyAccess } from "flags";
 import { type NextRequest, NextResponse } from "next/server";
-import { showBetaFeature } from "./index";
-
-const allFlags = [showBetaFeature];
+// biome-ignore lint/performance/noNamespaceImport: flags SDK convention
+import * as flags from "./index";
 
 export const getFlags = async (request: NextRequest) => {
   const access = await verifyAccess(request.headers.get("Authorization"));
@@ -12,7 +11,7 @@ export const getFlags = async (request: NextRequest) => {
   }
 
   const definitions = Object.fromEntries(
-    allFlags.map((flag) => [
+    Object.values(flags).map((flag) => [
       flag.key,
       {
         origin: flag.origin,
