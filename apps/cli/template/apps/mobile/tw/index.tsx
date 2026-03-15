@@ -27,9 +27,9 @@ Link.MenuAction = RouterLink.MenuAction;
 Link.Preview = RouterLink.Preview;
 
 export const useCSSVariable =
-  process.env.EXPO_OS !== "web"
-    ? useFunctionalVariable
-    : (variable: string) => `var(${variable})`;
+  process.env.EXPO_OS === "web"
+    ? (variable: string) => `var(${variable})`
+    : useFunctionalVariable;
 
 export type ViewProps = React.ComponentProps<typeof RNView> & {
   className?: string;

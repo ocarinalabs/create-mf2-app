@@ -3,13 +3,13 @@ import { rerank } from "ai";
 import { COHERE_RERANK } from "../../models";
 
 export type RerankableItem = {
-  id: string;
   content: string;
+  id: string;
   score?: number;
 };
 export type RerankOptions = {
-  topK?: number;
   model?: string;
+  topK?: number;
 };
 
 export async function rerankItems<T extends RerankableItem>(

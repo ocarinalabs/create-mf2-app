@@ -11,7 +11,9 @@
  * 4. Access state via experimental_context if needed
  */
 
-type BaseState = { step?: number };
+type BaseState = {
+  step?: number;
+};
 
 import { tool } from "ai";
 import { z } from "zod";

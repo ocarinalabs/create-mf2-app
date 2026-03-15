@@ -8,13 +8,13 @@ export type RankedItem = {
 };
 
 export type FusionWeights = {
-  semantic: number;
   keyword: number;
+  semantic: number;
 };
 
 export type FusionOptions = {
-  weights?: FusionWeights;
   k?: number;
+  weights?: FusionWeights;
 };
 
 export type FusionSource = "semantic" | "keyword";

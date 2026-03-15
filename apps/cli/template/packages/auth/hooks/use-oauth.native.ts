@@ -11,8 +11,8 @@ type OAuthStrategy =
   | "oauth_github";
 
 type UseOAuthFlowOptions = {
-  strategy: OAuthStrategy;
   redirectPath?: string;
+  strategy: OAuthStrategy;
 };
 
 export const useOAuthFlow = ({

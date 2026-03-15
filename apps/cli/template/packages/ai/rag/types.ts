@@ -1,45 +1,45 @@
 import type { FusionSource } from "./retrieval/rrf";
 
 export type PipelineChunk = {
-  id: string;
   content: string;
+  id: string;
+  metadata?: Record<string, unknown>;
   score: number;
   sources?: FusionSource[];
-  metadata?: Record<string, unknown>;
 };
 
 export type PipelineContext = {
+  chunks: PipelineChunk[];
   originalQuery: string;
   query: string;
-  subQueries?: string[];
   stepBackQuery?: string;
-  chunks: PipelineChunk[];
+  subQueries?: string[];
   timing: Map<string, number>;
 };
 
 export type StageResult = {
   context: PipelineContext;
-  skipped: boolean;
   durationMs: number;
+  skipped: boolean;
 };
 
 export type PipelineStage<TConfig = unknown> = {
-  id: string;
-  name: string;
   category: "preprocess" | "retrieval" | "postprocess";
   execute: (context: PipelineContext, config: TConfig) => Promise<StageResult>;
+  id: string;
+  name: string;
 };
 
 export type Retriever = {
-  semanticSearch: (query: string, limit: number) => Promise<PipelineChunk[]>;
   keywordSearch: (query: string, limit: number) => Promise<PipelineChunk[]>;
+  semanticSearch: (query: string, limit: number) => Promise<PipelineChunk[]>;
 };
 
 export type PipelineResult = {
   chunks: PipelineChunk[];
   originalQuery: string;
   queriesUsed: string[];
-  totalDurationMs: number;
-  stageTiming: Record<string, number>;
   stageStatus: Record<string, "executed" | "skipped" | "disabled">;
+  stageTiming: Record<string, number>;
+  totalDurationMs: number;
 };

@@ -3,22 +3,22 @@ import { AI_GATEWAY_URL } from "../gateway";
 const BACKOFF_MULTIPLIER = 1.5;
 
 type GenerationData = {
-  id: string;
-  total_cost: number;
-  usage: number;
   created_at: string;
-  model: string;
+  generation_time: number;
+  id: string;
   is_byok: boolean;
+  latency: number;
+  model: string;
+  native_tokens_cached: number;
+  native_tokens_completion: number;
+  native_tokens_prompt: number;
+  native_tokens_reasoning: number;
   provider_name: string;
   streamed: boolean;
-  latency: number;
-  generation_time: number;
-  tokens_prompt: number;
   tokens_completion: number;
-  native_tokens_prompt: number;
-  native_tokens_completion: number;
-  native_tokens_reasoning: number;
-  native_tokens_cached: number;
+  tokens_prompt: number;
+  total_cost: number;
+  usage: number;
 };
 
 type CreditsData = {
@@ -27,9 +27,9 @@ type CreditsData = {
 };
 
 type BatchCostResult = {
-  totalCost: number;
-  generations: GenerationData[];
   failed: string[];
+  generations: GenerationData[];
+  totalCost: number;
 };
 
 const fetchGenerationCost = async (
@@ -153,10 +153,10 @@ const createUsageTracker = () => {
   return { onStepFinish, getGenerationIds, clear };
 };
 
+export type { BatchCostResult, CreditsData, GenerationData };
 export {
-  fetchGenerationCost,
+  createUsageTracker,
   fetchAllGenerationCosts,
   fetchCredits,
-  createUsageTracker,
+  fetchGenerationCost,
 };
-export type { GenerationData, CreditsData, BatchCostResult };
