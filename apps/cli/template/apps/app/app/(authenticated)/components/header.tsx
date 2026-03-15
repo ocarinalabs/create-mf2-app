@@ -11,9 +11,9 @@ import { SidebarTrigger } from "@repo/design-system/components/ui/sidebar";
 import { Fragment, type ReactNode } from "react";
 
 type HeaderProps = {
-  pages: string[];
-  page: string;
   children?: ReactNode;
+  page: string;
+  pages: string[];
 };
 
 export const Header = ({ pages, page, children }: HeaderProps) => (

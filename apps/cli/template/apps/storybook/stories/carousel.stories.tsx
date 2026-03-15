@@ -34,6 +34,7 @@ function CarouselApiComponent() {
       <Carousel className="w-full max-w-xs" setApi={setApi}>
         <CarouselContent>
           {Array.from({ length: 5 }).map((_, index) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: static list
             <CarouselItem key={index}>
               <Card className="m-px">
                 <CardContent className="flex aspect-square items-center justify-center p-6">
@@ -58,6 +59,7 @@ function CarouselDemoComponent() {
     <Carousel className="w-full max-w-[12rem] sm:max-w-xs">
       <CarouselContent>
         {Array.from({ length: 5 }).map((_, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: static list
           <CarouselItem key={index}>
             <div className="p-1">
               <Card>
@@ -85,6 +87,7 @@ function CarouselMultipleComponent() {
     >
       <CarouselContent>
         {Array.from({ length: 5 }).map((_, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: static list
           <CarouselItem className="sm:basis-1/2 lg:basis-1/3" key={index}>
             <div className="p-1">
               <Card>
@@ -113,6 +116,7 @@ function CarouselOrientationComponent() {
     >
       <CarouselContent className="-mt-1 h-[270px]">
         {Array.from({ length: 5 }).map((_, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: static list
           <CarouselItem className="basis-1/2 pt-1" key={index}>
             <div className="p-1">
               <Card>
@@ -142,6 +146,7 @@ function CarouselPluginComponent() {
     >
       <CarouselContent>
         {Array.from({ length: 5 }).map((_, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: static list
           <CarouselItem key={index}>
             <div className="p-1">
               <Card>
@@ -169,6 +174,7 @@ function CarouselSizeComponent() {
     >
       <CarouselContent>
         {Array.from({ length: 5 }).map((_, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: static list
           <CarouselItem className="basis-1/2 lg:basis-1/3" key={index}>
             <div className="p-1">
               <Card>
@@ -191,6 +197,7 @@ function CarouselSpacingComponent() {
     <Carousel className="w-full max-w-[12rem] sm:max-w-xs md:max-w-sm">
       <CarouselContent className="-ml-1">
         {Array.from({ length: 5 }).map((_, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: static list
           <CarouselItem className="basis-1/2 pl-1 lg:basis-1/3" key={index}>
             <div className="p-1">
               <Card>

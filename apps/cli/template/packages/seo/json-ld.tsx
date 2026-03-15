@@ -14,7 +14,7 @@ const escapeJsonForHtml = (json: string): string =>
 
 export const JsonLd = ({ code }: JsonLdProps) => (
   <script
-    // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD requires innerHTML
+    // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD script with escaped content
     dangerouslySetInnerHTML={{
       __html: escapeJsonForHtml(JSON.stringify(code)),
     }}
@@ -22,4 +22,4 @@ export const JsonLd = ({ code }: JsonLdProps) => (
   />
 );
 
-export type { Blog, WithContext } from "schema-dts";
+export * from "schema-dts";
