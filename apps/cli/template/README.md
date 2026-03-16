@@ -55,6 +55,7 @@ Fill in your `.env.local` files before starting. Minimum keys to get running:
 | `docs` | `apps/docs` | Documentation site (Mintlify) |
 | `email` | `apps/email` | Email templates (React Email) |
 | `storybook` | `apps/storybook` | Component library viewer |
+| `mobile` | `apps/mobile` | React Native + Expo mobile app |
 
 ### Packages
 
@@ -63,6 +64,7 @@ Fill in your `.env.local` files before starting. Minimum keys to get running:
 | `backend` | `packages/backend` | Convex database, auth sync, AI agents, workflows |
 | `convex` | `packages/convex` | Convex + Clerk React provider |
 | `design-system` | `packages/design-system` | 50+ shadcn/ui components with dark mode |
+| `design-system-native` | `packages/design-system-native` | React Native UI components (NativeWind) |
 | `auth` | `packages/auth` | Clerk authentication and route protection |
 | `payments` | `packages/payments` | Stripe via `@convex-dev/stripe` |
 | `ai` | `packages/ai` | Vercel AI SDK, multi-model routing, RAG |
