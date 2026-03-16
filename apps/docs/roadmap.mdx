@@ -11,11 +11,13 @@ Most startups need more than a web app. They need a mobile app, a desktop client
 
 mf² puts everything in one monorepo with shared packages. An agent that understands `@repo/auth` in the web app understands it in the mobile app, the desktop client, and the extension. Same types, same patterns, one context.
 
-## Coming soon
+## Available now
 
 ### Mobile: React Native + Expo
 
-An `apps/mobile` workspace using [Expo](https://expo.dev) and React Native. It consumes the same `@repo/auth`, `@repo/analytics`, `@repo/design-system` (via [NativeWind](https://www.nativewind.dev/)), and `@repo/backend` packages. One Convex backend serves both web and mobile. An agent writes a feature once; it runs on both platforms.
+The `apps/mobile` workspace uses [Expo](https://expo.dev) and React Native. It consumes the same `@repo/auth`, `@repo/analytics`, `@repo/design-system-native` (via [NativeWind](https://www.nativewind.dev/)), and `@repo/backend` packages. One Convex backend serves both web and mobile. An agent writes a feature once; it runs on both platforms. See the [mobile app docs](/apps/mobile) for setup and usage.
+
+## Coming soon
 
 ### Desktop: Electron
 
