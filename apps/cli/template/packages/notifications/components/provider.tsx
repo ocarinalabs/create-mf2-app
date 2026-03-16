@@ -13,8 +13,8 @@ const knockFeedChannelId = keys().NEXT_PUBLIC_KNOCK_FEED_CHANNEL_ID;
 
 type NotificationsProviderProps = {
   children: ReactNode;
-  userId: string;
   theme: ColorMode;
+  userId: string;
 };
 
 export const NotificationsProvider = ({
