@@ -19,6 +19,7 @@ Add your deployment URLs to your [environment variables](/setup/env) under `NEXT
 | [email](/apps/email) | 3003 | — | Email templates |
 | [docs](/apps/docs) | 3004 | `docs.{yourdomain}.com` | Documentation site |
 | [storybook](/apps/storybook) | 6006 | — | Component workshop |
+| [mobile](/apps/mobile) | — | — | React Native + Expo mobile app |
 
 ## Packages
 
@@ -30,6 +31,9 @@ Packages export everything the apps need: middleware, hooks, components, and [en
 import { auth } from "@repo/auth";
 import { Button } from "@repo/design-system/components/ui/button";
 import { analytics } from "@repo/analytics";
+
+// Mobile equivalents
+import { Button } from "@repo/design-system-native/components/ui/button";
 ```
 
 ## Why this structure matters for agents

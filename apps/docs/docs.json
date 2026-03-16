@@ -38,6 +38,7 @@
           "apps/docs",
           "apps/email",
           "apps/storybook",
+          "apps/mobile",
           "apps/web"
         ]
       },
