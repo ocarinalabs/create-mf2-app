@@ -9,7 +9,6 @@ import {
   copyExclusions,
   devOnlyFiles,
   dotfileRenames,
-  envFiles,
   getTemplatePath,
   supportedPackageManagers,
   updatePackageJson,
@@ -146,14 +145,12 @@ describe("copyDirectory", () => {
 });
 
 describe("dotfileRenames", () => {
-  test("every env.example has a matching env.local entry", () => {
+  test("only env.example entries exist (no env.local)", () => {
     const examples = dotfileRenames.filter((r) => r.from === "env.example");
     const locals = dotfileRenames.filter((r) => r.from === "env.local");
 
-    for (const ex of examples) {
-      const match = locals.find((l) => l.dir === ex.dir);
-      expect(match).toBeDefined();
-    }
+    expect(examples.length).toBeGreaterThan(0);
+    expect(locals.length).toBe(0);
   });
 
   test("all directories in dotfileRenames exist in the template", () => {
@@ -189,27 +186,6 @@ describe("dotfileRenames", () => {
 
     for (const dir of dirsWithEnvExample) {
       expect(renameDirs.has(dir)).toBe(true);
-    }
-  });
-});
-
-describe("envFiles", () => {
-  test("every source with .env.local also has .env.production", () => {
-    const locals = envFiles.filter((e) => e.target === ".env.local");
-    const prods = envFiles.filter((e) => e.target === ".env.production");
-
-    for (const local of locals) {
-      const match = prods.find((p) => p.source === local.source);
-      expect(match).toBeDefined();
-    }
-  });
-
-  test("every envFile source has a corresponding dotfileRename entry", () => {
-    const renameDirs = new Set(dotfileRenames.map((r) => r.dir));
-    const envSources = new Set(envFiles.map((e) => e.source));
-
-    for (const source of envSources) {
-      expect(renameDirs.has(source)).toBe(true);
     }
   });
 });
@@ -379,12 +355,14 @@ describe("scaffolding simulation", () => {
     }
   });
 
-  test("all .env.local files exist after rename", async () => {
+  test("no .env.local files exist after scaffold", async () => {
     const projectDir = await scaffold("env-local-test");
 
-    const envLocalDirs = dotfileRenames.filter((r) => r.to === ".env.local");
-    for (const { dir } of envLocalDirs) {
-      expect(existsSync(join(projectDir, dir, ".env.local"))).toBe(true);
+    const envExampleDirs = dotfileRenames.filter(
+      (r) => r.to === ".env.example"
+    );
+    for (const { dir } of envExampleDirs) {
+      expect(existsSync(join(projectDir, dir, ".env.local"))).toBe(false);
     }
   });
 
@@ -411,26 +389,15 @@ describe("scaffolding simulation", () => {
     }
   });
 
-  test("env setup copies .env.example to .env.production", async () => {
+  test("no .env.production files created (envFiles is empty)", async () => {
     const projectDir = await scaffold("env-setup-test");
-
-    const { copyFile } = await import("node:fs/promises");
-    for (const { source, target } of envFiles) {
-      const examplePath = join(projectDir, source, ".env.example");
-      const targetPath = join(projectDir, source, target);
-      try {
-        await copyFile(examplePath, targetPath);
-      } catch {
-        // noop
-      }
-    }
 
     const envExampleDirs = dotfileRenames
       .filter((r) => r.to === ".env.example")
       .map((r) => r.dir);
 
     for (const dir of envExampleDirs) {
-      expect(existsSync(join(projectDir, dir, ".env.production"))).toBe(true);
+      expect(existsSync(join(projectDir, dir, ".env.production"))).toBe(false);
     }
   });
 
@@ -509,7 +476,7 @@ describe("scaffolding simulation", () => {
 });
 
 describe("edge cases", () => {
-  test("env.example and env.local both exist and have content for each dir", () => {
+  test("env.example exists and has content for each dir (no env.local)", () => {
     const dirs = dotfileRenames
       .filter((r) => r.from === "env.example")
       .map((r) => r.dir);
@@ -519,20 +486,14 @@ describe("edge cases", () => {
         join(templatePath, dir, "env.example"),
         "utf8"
       );
-      const localContent = readFileSync(
-        join(templatePath, dir, "env.local"),
-        "utf8"
-      );
       expect(exampleContent.length).toBeGreaterThan(0);
-      expect(localContent.length).toBeGreaterThan(0);
+      expect(existsSync(join(templatePath, dir, "env.local"))).toBe(false);
     }
   });
 
   test("copyExclusions does not block dotenv files", () => {
     expect(copyExclusions.has(".env.example")).toBe(false);
-    expect(copyExclusions.has(".env.local")).toBe(false);
     expect(copyExclusions.has("env.example")).toBe(false);
-    expect(copyExclusions.has("env.local")).toBe(false);
   });
 
   test("devOnlyFiles does not include env files", () => {
