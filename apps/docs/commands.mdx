@@ -58,7 +58,7 @@ Updates every dependency across all `package.json` files and installs the new ve
 
 ### bump-ui
 
-Runs `npx shadcn@latest add --all --overwrite` against `packages/design-system`, replacing every component with the latest version from shadcn/ui.
+Runs `bunx shadcn@latest add --all --overwrite` against `packages/design-system`, replacing every component with the latest version from shadcn/ui.
 
 <Warning>
   This overrides all customizations you've made to shadcn/ui components. If you've modified components in `packages/design-system/components/ui/`, this command overwrites them. To protect customizations, create wrapper components in a separate folder (e.g., `packages/design-system/components/custom/`) instead of editing the originals.
