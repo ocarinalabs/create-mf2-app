@@ -41,43 +41,15 @@ export const copyExclusions = new Set([
 
 export const dotfileRenames = [
   { dir: join("apps", "api"), from: "env.example", to: ".env.example" },
-  { dir: join("apps", "api"), from: "env.local", to: ".env.local" },
   { dir: join("apps", "app"), from: "env.example", to: ".env.example" },
-  { dir: join("apps", "app"), from: "env.local", to: ".env.local" },
   { dir: join("apps", "web"), from: "env.example", to: ".env.example" },
-  { dir: join("apps", "web"), from: "env.local", to: ".env.local" },
   { dir: join("packages", "cms"), from: "env.example", to: ".env.example" },
-  { dir: join("packages", "cms"), from: "env.local", to: ".env.local" },
   {
     dir: join("packages", "internationalization"),
     from: "env.example",
     to: ".env.example",
   },
-  {
-    dir: join("packages", "internationalization"),
-    from: "env.local",
-    to: ".env.local",
-  },
   { dir: join("apps", "mobile"), from: "env.example", to: ".env.example" },
-  { dir: join("apps", "mobile"), from: "env.local", to: ".env.local" },
-];
-
-export const envFiles = [
-  { source: join("apps", "api"), target: ".env.local" },
-  { source: join("apps", "api"), target: ".env.production" },
-  { source: join("apps", "app"), target: ".env.local" },
-  { source: join("apps", "app"), target: ".env.production" },
-  { source: join("apps", "web"), target: ".env.local" },
-  { source: join("apps", "web"), target: ".env.production" },
-  { source: join("packages", "cms"), target: ".env.local" },
-  { source: join("packages", "cms"), target: ".env.production" },
-  { source: join("packages", "internationalization"), target: ".env.local" },
-  {
-    source: join("packages", "internationalization"),
-    target: ".env.production",
-  },
-  { source: join("apps", "mobile"), target: ".env.local" },
-  { source: join("apps", "mobile"), target: ".env.production" },
 ];
 
 export const getTemplatePath = (): string => {
