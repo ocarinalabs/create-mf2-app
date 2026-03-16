@@ -1,4 +1,4 @@
-import { copyFile, mkdir, rename, rm } from "node:fs/promises";
+import { mkdir, rename, rm } from "node:fs/promises";
 import { join } from "node:path";
 import {
   cancel,
@@ -16,7 +16,6 @@ import {
   copyDirectory,
   devOnlyFiles,
   dotfileRenames,
-  envFiles,
   getTemplatePath,
   run,
   supportedPackageManagers,
@@ -59,19 +58,6 @@ const getPackageManager = async (): Promise<string> => {
   }
 
   return value.toString();
-};
-
-const setupEnvironmentVariables = async (projectDir: string): Promise<void> => {
-  for (const { source, target } of envFiles) {
-    const examplePath = join(projectDir, source, ".env.example");
-    const targetPath = join(projectDir, source, target);
-
-    try {
-      await copyFile(examplePath, targetPath);
-    } catch {
-      // noop
-    }
-  }
 };
 
 const stripDevOnlyFiles = async (projectDir: string): Promise<void> => {
@@ -164,9 +150,6 @@ export const initialize = async (options: {
       await rm(join(projectDir, "pnpm-lock.yaml"), { force: true });
       await rm(join(projectDir, "pnpm-workspace.yaml"), { force: true });
     }
-
-    s.message("Setting up environment variables...");
-    await setupEnvironmentVariables(projectDir);
 
     s.message("Removing dev-only files...");
     await stripDevOnlyFiles(projectDir);
