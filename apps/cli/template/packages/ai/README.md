@@ -1,6 +1,16 @@
 # @repo/ai
 
-Multi-model AI package using the Vercel AI Gateway.
+Multi-model AI gateway, agents, and RAG pipelines with the Vercel AI SDK.
+
+## Usage
+
+```ts
+import { gateway } from "@repo/ai/gateway";
+import { CLAUDE_SONNET, DEFAULT_CHAT_MODEL } from "@repo/ai/models";
+import { createChatAgent } from "@repo/ai/agent";
+import { SYSTEM_PROMPT } from "@repo/ai/prompts";
+import { createPipeline } from "@repo/ai/rag";
+```
 
 ## Architecture
 
@@ -16,29 +26,11 @@ packages/ai/
   keys.ts          # T3 env validation for AI keys
 ```
 
-## Exports
-
-Import via subpath exports:
-
-```typescript
-import { gateway } from "@repo/ai/gateway";
-import { CLAUDE_SONNET, DEFAULT_CHAT_MODEL } from "@repo/ai/models";
-import { createChatAgent } from "@repo/ai/agent";
-import { SYSTEM_PROMPT } from "@repo/ai/prompts";
-import { createPipeline } from "@repo/ai/rag";
-```
-
-## Adding a New Model
-
-1. Add the model constant in `models/index.ts`
-2. Add an entry to the `CHAT_MODELS` array with its gateway preset
-3. The gateway handles routing to the correct provider
-
 ## RAG Pipeline
 
 The RAG pipeline is provider-agnostic. Implement the `Retriever` interface:
 
-```typescript
+```ts
 import { createPipeline, type Retriever } from "@repo/ai/rag";
 
 const retriever: Retriever = {
@@ -52,7 +44,13 @@ const results = await pipeline.execute("search query");
 
 ## Environment Variables
 
-- `AI_GATEWAY_API_KEY` (required) - Vercel AI Gateway key
-- `AI_GATEWAY_URL` (optional) - Gateway URL, defaults to https://ai-gateway.vercel.sh/v3
-- `COHERE_API_KEY` (optional) - For reranking
-- `PERPLEXITY_API_KEY` (optional) - For web search tool
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `AI_GATEWAY_API_KEY` | Yes | Vercel AI Gateway key |
+| `AI_GATEWAY_URL` | No | Gateway URL, defaults to https://ai-gateway.vercel.sh/v3 |
+| `COHERE_API_KEY` | No | For reranking |
+| `PERPLEXITY_API_KEY` | No | For web search tool |
+
+## Docs
+
+[mf2.dev/docs/packages/ai](https://mf2.dev/docs/packages/ai)
