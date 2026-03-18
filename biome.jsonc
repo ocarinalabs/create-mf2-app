@@ -26,8 +26,7 @@
       "!packages/design-system/hooks",
       "!apps/cli/template",
       "!.claude",
-      "!.agents",
-      "!new-next-forge-6"
+      "!.agents"
     ]
   }
 }
