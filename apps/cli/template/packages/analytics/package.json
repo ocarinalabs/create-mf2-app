@@ -7,12 +7,12 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@next/third-parties": "16.1.6",
-    "@t3-oss/env-nextjs": "^0.13.10",
+    "@next/third-parties": "16.2.1",
+    "@t3-oss/env-nextjs": "^0.13.11",
     "@vercel/analytics": "^2.0.1",
-    "posthog-js": "^1.360.2",
-    "posthog-react-native": "^4.37.3",
-    "posthog-node": "^5.28.2",
+    "posthog-js": "^1.363.4",
+    "posthog-react-native": "^4.37.6",
+    "posthog-node": "^5.28.5",
     "react": "19.2.4",
     "server-only": "^0.0.1",
     "zod": "^4.3.6"
