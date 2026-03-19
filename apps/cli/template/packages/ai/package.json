@@ -24,13 +24,13 @@
     "test": "bun test || true"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^3.0.58",
-    "@ai-sdk/cohere": "^3.0.25",
+    "@ai-sdk/anthropic": "^3.0.64",
+    "@ai-sdk/cohere": "^3.0.27",
     "@ai-sdk/devtools": "^0.0.15",
-    "@ai-sdk/gateway": "^3.0.66",
+    "@ai-sdk/gateway": "^3.0.79",
     "@perplexity-ai/ai-sdk": "^0.1.2",
-    "@t3-oss/env-nextjs": "^0.13.10",
-    "ai": "^6.0.116",
+    "@t3-oss/env-nextjs": "^0.13.11",
+    "ai": "^6.0.137",
     "zod": "^4.3.6"
   },
   "devDependencies": {
