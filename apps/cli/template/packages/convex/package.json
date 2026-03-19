@@ -14,14 +14,14 @@
   },
   "dependencies": {
     "@repo/backend": "workspace:*",
-    "@t3-oss/env-nextjs": "^0.13.10",
-    "convex": "^1.33.1",
+    "@t3-oss/env-nextjs": "^0.13.11",
+    "convex": "^1.34.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
     "@types/react": "^19.2.14",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   },
   "peerDependencies": {
     "@clerk/clerk-expo": "^2.0.0",
