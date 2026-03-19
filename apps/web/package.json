@@ -17,9 +17,9 @@
     "@repo/next-config": "*",
     "@repo/seo": "*",
     "@vercel/analytics": "^2.0.1",
-    "lucide-react": "^0.577.0",
-    "next": "^16.1.6",
-    "postprocessing": "^6.38.3",
+    "lucide-react": "^1.0.1",
+    "next": "^16.2.1",
+    "postprocessing": "^6.39.0",
     "raw-loader": "^4.0.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -32,9 +32,9 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/three": "^0.183.1",
-    "@tailwindcss/postcss": "^4.2.1",
+    "@tailwindcss/postcss": "^4.2.2",
     "@tailwindcss/typography": "^0.5.19",
-    "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3"
+    "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.2"
   }
 }
