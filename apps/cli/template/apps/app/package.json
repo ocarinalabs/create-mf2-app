@@ -11,8 +11,8 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@ai-sdk/react": "^3.0.118",
-    "@clerk/nextjs": "^7.0.4",
+    "@ai-sdk/react": "^3.0.139",
+    "@clerk/nextjs": "^7.0.6",
     "@repo/ai": "workspace:*",
     "@repo/analytics": "workspace:*",
     "@repo/auth": "workspace:*",
@@ -26,12 +26,12 @@
     "@repo/security": "workspace:*",
     "@repo/seo": "workspace:*",
     "@repo/webhooks": "workspace:*",
-    "@sentry/nextjs": "^10.43.0",
-    "@t3-oss/env-nextjs": "^0.13.10",
+    "@sentry/nextjs": "^10.45.0",
+    "@t3-oss/env-nextjs": "^0.13.11",
     "fuse.js": "^7.1.0",
     "import-in-the-middle": "^3.0.0",
-    "lucide-react": "^0.577.0",
-    "next": "16.1.6",
+    "lucide-react": "^1.0.1",
+    "next": "16.2.1",
     "next-themes": "^0.4.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -46,10 +46,10 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
-    "jsdom": "^28.1.0",
-    "@tailwindcss/postcss": "^4.2.1",
-    "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.1.0"
+    "jsdom": "^29.0.1",
+    "@tailwindcss/postcss": "^4.2.2",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.1"
   }
 }
