@@ -1,5 +1,15 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.4.0
+
+### Minor Changes
+
+- 2202e2d: Update all dependencies including Next.js 16.2.1 (security patches), TypeScript 6.0, Convex 1.34, Storybook 10.3, and remove deprecated baseUrl from all tsconfig files
+
+### Patch Changes
+
+- 9fd3195: Remove next-forge remnants: Prisma extension recommendation, dead biome exclusion, and rebrand all user-facing references from next-forge to mf²
+
 ## 2.3.0
 
 ### Minor Changes
