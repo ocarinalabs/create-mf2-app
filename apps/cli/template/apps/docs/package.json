@@ -6,7 +6,7 @@
     "lint": "mint broken-links"
   },
   "devDependencies": {
-    "mint": "^4.2.434",
-    "typescript": "^5.9.3"
+    "mint": "^4.2.447",
+    "typescript": "^6.0.2"
   }
 }
