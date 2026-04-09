@@ -5,7 +5,7 @@
   "scripts": {
     "translate": "npx -y languine@latest translate",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+    "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.8.2",
@@ -16,9 +16,9 @@
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
     "@types/negotiator": "^0.6.4",
-    "@types/node": "25.5.0",
+    "@types/node": "25.6.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "next": "16.2.1"
+    "next": "16.2.3"
   }
 }

@@ -21,31 +21,31 @@
     "deploy": "convex deploy",
     "setup": "convex dev --until-success",
     "codegen": "convex codegen || echo 'skipping: Convex codegen failed or not configured'",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsgo --noEmit",
     "test": "[ -f convex/_generated/api.js ] && vitest || echo 'skipping: Convex codegen required'",
     "test:once": "vitest run",
     "convex-lint": "eslint convex/"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.79",
+    "@ai-sdk/gateway": "^3.0.95",
     "@convex-dev/action-retrier": "^0.3.0",
     "@convex-dev/expo-push-notifications": "0.3.1",
-    "@convex-dev/migrations": "^0.3.2",
+    "@convex-dev/migrations": "^0.3.3",
     "@convex-dev/resend": "^0.2.3",
     "@convex-dev/stripe": "^0.1.4",
-    "@convex-dev/workflow": "^0.3.7",
+    "@convex-dev/workflow": "^0.3.9",
     "@repo/ai": "workspace:*",
-    "convex": "^1.34.0",
+    "convex": "^1.35.1",
     "convex-env": "^2.5.0",
-    "svix": "^1.89.0"
+    "svix": "^1.90.0"
   },
   "devDependencies": {
-    "@clerk/backend": "^3.2.2",
-    "@convex-dev/eslint-plugin": "^1.2.1",
+    "@clerk/backend": "^3.2.8",
+    "@convex-dev/eslint-plugin": "^2.0.0",
     "@edge-runtime/vm": "^5.0.0",
     "@repo/typescript-config": "workspace:*",
-    "convex-test": "^0.0.44",
+    "convex-test": "^0.0.47",
     "typescript": "^6.0.2",
-    "vitest": "^4.1.1"
+    "vitest": "^4.1.4"
   }
 }

@@ -4,17 +4,17 @@
   "private": true,
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+    "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
     "@knocklabs/node": "^1.29.1",
-    "@knocklabs/react": "^0.11.10",
+    "@knocklabs/react": "^0.11.15",
     "@t3-oss/env-nextjs": "^0.13.11",
-    "react": "19.2.4",
+    "react": "19.2.5",
     "zod": "^4.3.6",
-    "expo-notifications": "55.0.13",
-    "expo-device": "55.0.10",
-    "expo-constants": "55.0.9"
+    "expo-notifications": "55.0.18",
+    "expo-device": "55.0.14",
+    "expo-constants": "55.0.13"
   },
   "peerDependencies": {
     "react-native": "*"
@@ -27,7 +27,7 @@
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
     "typescript": "^6.0.2",
-    "@types/node": "25.5.0",
+    "@types/node": "25.6.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3"
   }

@@ -4,19 +4,19 @@
   "private": true,
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+    "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
     "lodash.merge": "^4.6.2",
-    "react": "19.2.4",
+    "react": "19.2.5",
     "schema-dts": "^2.0.0"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
     "@types/lodash.merge": "^4.6.9",
-    "@types/node": "25.5.0",
+    "@types/node": "25.6.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "next": "16.2.1"
+    "next": "16.2.3"
   }
 }
