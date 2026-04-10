@@ -42,7 +42,8 @@
       "!apps/mobile/android",
       "!apps/mobile/.expo",
       "!packages/design-system-native/components/ui",
-      "!.turbo"
+      "!.turbo",
+      "!apps/desktop/out"
     ]
   }
 }
