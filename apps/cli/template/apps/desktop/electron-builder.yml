@@ -1,0 +1,56 @@
+appId: com.mf2.desktop
+productName: mf2
+directories:
+  buildResources: build
+files:
+  - "!**/.vscode/*"
+  - "!src/*"
+  - "!electron.vite.config.{js,ts,mjs,cjs}"
+  - "!{.eslintcache,.prettierignore,.prettierrc.yaml,CHANGELOG.md,README.md}"
+  - "!{.env,.env.*,.npmrc,pnpm-lock.yaml}"
+  - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
+asarUnpack:
+  - resources/**
+mac:
+  category: public.app-category.productivity
+  entitlementsInherit: build/entitlements.mac.plist
+  target:
+    - target: dmg
+      arch:
+        - universal
+  notarize: false
+win:
+  executableName: mf2
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - arm64
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  differentialPackage: true
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+        - arm64
+    - target: deb
+      arch:
+        - x64
+        - arm64
+  maintainer: ocarinalabs
+  category: Office
+dmg:
+  artifactName: ${name}-${version}.${ext}
+appImage:
+  artifactName: ${name}-${version}.${ext}
+npmRebuild: false
+publish:
+  provider: github
+  owner: ocarinalabs
+  repo: mf2-desktop
