@@ -38,6 +38,14 @@ The [Clerk integration](https://vercel.com/integrations) and [Convex integration
 
 The `apps/docs/` site deploys via [Mintlify](https://mintlify.com), not Vercel. Configure your docs domain in the Mintlify dashboard.
 
+## Mobile
+
+The `apps/mobile` app deploys via [EAS Build](https://docs.expo.dev/build/introduction/) and [EAS Submit](https://docs.expo.dev/submit/introduction/) for the App Store and Play Store. See the [mobile app docs](/apps/mobile) for setup.
+
+## Desktop
+
+The `apps/desktop` app packages with [electron-builder](https://www.electron.build/) and publishes to GitHub Releases. It does not deploy to Vercel. See the [desktop app docs](/apps/desktop) for packaging commands.
+
 ## Monorepo Behavior
 
 Vercel detects Turborepo and scopes builds to the affected app. Only changed apps rebuild. Each Vercel project keeps its own environment variables; they are not shared across projects.
