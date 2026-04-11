@@ -5,13 +5,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ocarinalabs/create-mf2-app",
+    "url": "https://github.com/faw01/create-mf2-app",
     "directory": "apps/cli"
   },
   "bugs": {
-    "url": "https://github.com/ocarinalabs/create-mf2-app/issues"
+    "url": "https://github.com/faw01/create-mf2-app/issues"
   },
-  "homepage": "https://github.com/ocarinalabs/create-mf2-app/tree/main/apps/cli",
+  "homepage": "https://github.com/faw01/create-mf2-app/tree/main/apps/cli",
   "bin": {
     "create-mf2-app": "dist/index.js"
   },

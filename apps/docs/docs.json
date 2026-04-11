@@ -89,7 +89,7 @@
       "anchors": [
         {
           "anchor": "GitHub",
-          "href": "https://github.com/ocarinalabs/create-mf2-app",
+          "href": "https://github.com/faw01/create-mf2-app",
           "icon": "github"
         }
       ]
@@ -122,7 +122,7 @@
   },
   "footer": {
     "socials": {
-      "github": "https://github.com/ocarinalabs/create-mf2-app"
+      "github": "https://github.com/faw01/create-mf2-app"
     }
   }
 }

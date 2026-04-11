@@ -277,4 +277,4 @@ Agents get typed schema in `packages/backend/convex/`, type-safe env via `@/env`
 | Stripe Dashboard | [dashboard.stripe.com](https://dashboard.stripe.com) |
 | Vercel Dashboard | [vercel.com/dashboard](https://vercel.com/dashboard) |
 | PostHog | [app.posthog.com](https://app.posthog.com) |
-| GitHub | [github.com/ocarinalabs/create-mf2-app](https://github.com/ocarinalabs/create-mf2-app) |
+| GitHub | [github.com/faw01/create-mf2-app](https://github.com/faw01/create-mf2-app) |

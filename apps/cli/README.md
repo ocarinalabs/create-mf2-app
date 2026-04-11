@@ -204,6 +204,6 @@ MIT — [Ocarina Labs](https://ocarinalabs.ai)
 [npm-url]: https://www.npmjs.com/package/create-mf2-app
 [downloads-image]: https://img.shields.io/npm/dm/create-mf2-app?color=364fc7&logoColor=364fc7
 [license-image]: https://img.shields.io/npm/l/create-mf2-app
-[license-url]: https://github.com/ocarinalabs/create-mf2-app/blob/main/LICENSE
-[stars-image]: https://img.shields.io/github/stars/ocarinalabs/create-mf2-app?style=social
-[github-url]: https://github.com/ocarinalabs/create-mf2-app
+[license-url]: https://github.com/faw01/create-mf2-app/blob/main/LICENSE
+[stars-image]: https://img.shields.io/github/stars/faw01/create-mf2-app?style=social
+[github-url]: https://github.com/faw01/create-mf2-app

@@ -38,7 +38,7 @@ const Home = () => (
             </Button>
             <Button asChild className="font-mono" size="icon" variant="ghost">
               <a
-                href="https://github.com/ocarinalabs/create-mf2-app"
+                href="https://github.com/faw01/create-mf2-app"
                 rel="noopener noreferrer"
                 target="_blank"
               >
