@@ -35,6 +35,7 @@
         "pages": [
           "apps/api",
           "apps/app",
+          "apps/desktop",
           "apps/docs",
           "apps/email",
           "apps/storybook",
