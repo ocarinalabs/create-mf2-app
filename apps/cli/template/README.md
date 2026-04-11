@@ -52,10 +52,11 @@ Fill in your `.env.local` files before starting. Minimum keys to get running:
 | `app` | `apps/app` | Main SaaS application (authenticated dashboard, core product) |
 | `web` | `apps/web` | Marketing website and landing pages |
 | `api` | `apps/api` | Webhooks, cron jobs, external integrations |
+| `desktop` | `apps/desktop` | Electron desktop app (macOS, Windows, Linux) |
 | `docs` | `apps/docs` | Documentation site (Mintlify) |
 | `email` | `apps/email` | Email templates (React Email) |
-| `storybook` | `apps/storybook` | Component library viewer |
 | `mobile` | `apps/mobile` | React Native + Expo mobile app |
+| `storybook` | `apps/storybook` | Component library viewer |
 
 ### Packages
 
@@ -169,6 +170,7 @@ All commands run from the project root.
 |---------|--------------|
 | `bun run bump-deps` | Update all npm dependencies to latest |
 | `bun run bump-ui` | Update all shadcn/ui components |
+| `bun run bump-ui-native` | Update all React Native Reusables components |
 | `bun run clean` | Remove all `node_modules` directories |
 
 ### Turbo Filtering

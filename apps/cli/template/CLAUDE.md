@@ -13,8 +13,10 @@ This is a Turborepo monorepo managed with **bun** as the package manager.
 | `app` | `apps/app` | Main SaaS application (authenticated dashboard, core product) |
 | `web` | `apps/web` | Marketing website and landing pages |
 | `api` | `apps/api` | Public API layer |
+| `desktop` | `apps/desktop` | Electron desktop app (macOS, Windows, Linux) |
 | `docs` | `apps/docs` | Documentation site |
 | `email` | `apps/email` | Email templates (react.email) |
+| `mobile` | `apps/mobile` | React Native + Expo mobile app |
 | `storybook` | `apps/storybook` | Component library viewer |
 
 ### Packages
