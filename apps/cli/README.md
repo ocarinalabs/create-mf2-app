@@ -68,7 +68,7 @@ Each app imports only the packages it needs. The main app uses auth, payments, b
 
 | Layer | Technology |
 |-------|-----------|
-| Framework | [Next.js 15](https://nextjs.org) with App Router |
+| Framework | [Next.js 16](https://nextjs.org) with App Router |
 | Language | TypeScript end-to-end |
 | Database | [Convex](https://convex.dev) — real-time, reactive, serverless |
 | Auth | [Clerk](https://clerk.com) — 80+ OAuth providers, webhook sync to Convex |
@@ -76,6 +76,8 @@ Each app imports only the packages it needs. The main app uses auth, payments, b
 | Styling | [Tailwind CSS v4](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com) |
 | AI | [Vercel AI SDK](https://sdk.vercel.ai) — multi-model routing, RAG, streaming |
 | Email | [Resend](https://resend.com) + [React Email](https://react.email) |
+| Mobile | [Expo](https://expo.dev) + [React Native](https://reactnative.dev) + [NativeWind](https://www.nativewind.dev/) |
+| Desktop | [Electron](https://www.electronjs.org/) + [electron-vite](https://electron-vite.org/) + [electron-builder](https://www.electron.build/) |
 | Analytics | [PostHog](https://posthog.com) — events, sessions, feature flags |
 | Error Tracking | [Sentry](https://sentry.io) + [BetterStack](https://betterstack.com) |
 | Security | [Arcjet](https://arcjet.com) — bot detection, rate limiting, DDoS protection |
