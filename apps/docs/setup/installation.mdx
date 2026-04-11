@@ -42,7 +42,9 @@ All apps start in parallel:
 | App | http://localhost:3000 |
 | Web | http://localhost:3001 |
 | API | http://localhost:3002 |
+| Email | http://localhost:3003 |
 | Docs | http://localhost:3004 |
+| Storybook | http://localhost:6006 |
 
 To run a single app:
 
@@ -51,4 +53,16 @@ bun run dev --filter=app
 ```
 
 Replace `app` with `web`, `api`, `docs`, `email`, or `storybook`.
+
+### Mobile
+
+```bash
+cd apps/mobile && bunx expo start
+```
+
+### Desktop
+
+```bash
+cd apps/desktop && bun run dev
+```
 

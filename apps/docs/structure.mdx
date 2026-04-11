@@ -20,6 +20,7 @@ Add your deployment URLs to your [environment variables](/setup/env) under `NEXT
 | [docs](/apps/docs) | 3004 | `docs.{yourdomain}.com` | Documentation site |
 | [storybook](/apps/storybook) | 6006 | — | Component workshop |
 | [mobile](/apps/mobile) | — | — | React Native + Expo mobile app |
+| [desktop](/apps/desktop) | — | — | Electron desktop app |
 
 ## Packages
 
@@ -34,6 +35,9 @@ import { analytics } from "@repo/analytics";
 
 // Mobile equivalents
 import { Button } from "@repo/design-system-native/components/ui/button";
+
+// Desktop uses the same web design system
+import { Button } from "@repo/design-system/components/ui/button";
 ```
 
 ## Why this structure matters for agents

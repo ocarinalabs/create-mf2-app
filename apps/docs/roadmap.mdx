@@ -3,7 +3,7 @@ title: What's Next
 description: Where mf² is headed.
 ---
 
-mf² ships a complete web stack today. The goal is a startup-in-a-command: every platform a product needs, in one monorepo, with AI agents building across all of them.
+mf² ships web, mobile, and desktop today. The goal is a startup-in-a-command: every platform a product needs, in one monorepo, with AI agents building across all of them.
 
 ## The vision
 
@@ -17,11 +17,11 @@ mf² puts everything in one monorepo with shared packages. An agent that underst
 
 The `apps/mobile` workspace uses [Expo](https://expo.dev) and React Native. It consumes the same `@repo/auth`, `@repo/analytics`, `@repo/design-system-native` (via [NativeWind](https://www.nativewind.dev/)), and `@repo/backend` packages. One Convex backend serves both web and mobile. An agent writes a feature once; it runs on both platforms. See the [mobile app docs](/apps/mobile) for setup and usage.
 
-## Coming soon
-
 ### Desktop: Electron
 
-An `apps/desktop` workspace using [Electron](https://www.electronjs.org/). The desktop app runs the same React frontend from the monorepo in a native window. It imports from `@repo/auth`, `@repo/design-system`, and `@repo/backend` directly. No separate codebase, no second set of conventions for the agent to learn.
+The `apps/desktop` workspace uses [Electron](https://www.electronjs.org/) with [electron-vite](https://electron-vite.org/) and [electron-builder](https://www.electron.build/). The desktop app runs the same React frontend and `@repo/design-system` components in a native window. It packages for macOS (DMG), Windows (NSIS), and Linux (AppImage, deb) with auto-updates via GitHub Releases. See the [desktop app docs](/apps/desktop) for setup and usage.
+
+## Coming soon
 
 ### Browser extension: Plasmo
 
