@@ -3,7 +3,7 @@ title: Agent Skills
 description: Pre-installed AI agent skills that ship with mf².
 ---
 
-mf² ships with agent skills in `.claude/skills/` that teach AI coding agents (Claude Code, Cursor, Copilot) how to work with the stack. Each skill gives the agent procedural knowledge for specific tools and patterns, so it writes correct code without guessing.
+mf² ships with agent skills in `.agents/skills/` that teach AI coding agents (Claude Code, Cursor, Copilot) how to work with the stack. Each skill gives the agent procedural knowledge for specific tools and patterns, so it writes correct code without guessing.
 
 ## Pre-installed Skills
 
@@ -14,36 +14,33 @@ mf² ships with agent skills in `.claude/skills/` that teach AI coding agents (C
 | **clerk** | Router skill that detects your task and routes to the right sub-skill |
 | **clerk-setup** | Framework detection and quickstart guides. Covers 12+ frameworks and migration from NextAuth, Supabase, Firebase, Auth0 |
 | **clerk-nextjs-patterns** | Advanced Next.js patterns: `await auth()` vs `useAuth()`, middleware strategies, Server Actions, caching |
-| **clerk-custom-ui** | Theme customization, layout, colors, fonts, and CSS overrides for Clerk components |
+| **clerk-custom-ui** | Custom authentication flows and component appearance styling |
 | **clerk-orgs** | Multi-tenant B2B: org switching, role-based access, verified domains, enterprise SSO |
 | **clerk-webhooks** | Webhook event handling for user sync with Convex. Covers event types, signature verification, local testing |
 | **clerk-testing** | E2E testing with Playwright or Cypress. Auth state persistence and test setup |
+| **clerk-backend-api** | Clerk Backend REST API explorer and executor |
 
-### Analytics
-
-| Skill | Description |
-|-------|-------------|
-| **posthog-instrumentation** | Event tracking, feature flags, and user identification. Covers React hooks, server-side tracking, and naming conventions |
-
-### Build System
+### Expo and React Native
 
 | Skill | Description |
 |-------|-------------|
-| **turborepo** | Task pipelines, caching, environment variables, CI/CD, and filtering. 45+ reference docs covering configuration, anti-patterns, and Vercel integration |
-
-### React and Performance
-
-| Skill | Description |
-|-------|-------------|
-| **vercel-react-best-practices** | 57 rules across 8 categories: eliminating waterfalls, bundle size, server-side performance, re-render optimization, rendering, JS performance |
-| **vercel-composition-patterns** | Component architecture without boolean prop sprawl. Compound components, context interfaces, React 19 patterns |
+| **building-native-ui** | Complete guide for building apps with Expo Router, styling, navigation, animations |
+| **expo-api-routes** | Creating API routes in Expo Router with EAS Hosting |
+| **expo-deployment** | Deploying Expo apps to iOS App Store, Android Play Store, and web |
+| **expo-dev-client** | Build and distribute Expo development clients locally or via TestFlight |
+| **expo-module** | Writing Expo native modules and views using the Expo Modules API (Swift, Kotlin) |
+| **expo-ui-swiftui** | `@expo/ui/swift-ui` package for iOS SwiftUI views and modifiers |
+| **expo-ui-jetpack-compose** | `@expo/ui/jetpack-compose` package for Android Jetpack Compose views |
+| **native-data-fetching** | Network requests, API calls, data fetching patterns for React Native |
+| **use-dom** | Expo DOM components for running web code in webview on native |
+| **vercel-react-native-skills** | React Native best practices for performance, animations, list performance |
 
 ### UI and Design
 
 | Skill | Description |
 |-------|-------------|
-| **web-design-guidelines** | Reviews UI code against Vercel's Web Interface Guidelines |
-| **web-interface-guidelines** | Full guideline reference: accessibility, focus states, forms, animation, typography, dark mode, hydration safety, anti-patterns |
+| **shadcn** | Manages shadcn components and projects. Adding, searching, fixing, styling, composing UI |
+| **web-design-guidelines** | Reviews UI code against Web Interface Guidelines |
 
 ### Discovery
 
@@ -74,7 +71,7 @@ Skills that pair well with the mf² stack but are not included by default:
 
 ## How Skills Work
 
-Each skill is a folder in `.claude/skills/` containing a `SKILL.md` file. The markdown defines when the skill activates, what it knows, and how it behaves. Some skills include `references/` or `rules/` subdirectories with deeper guidance.
+Each skill is a folder in `.agents/skills/` containing a `SKILL.md` file. The markdown defines when the skill activates, what it knows, and how it behaves. Some skills include `references/` or `rules/` subdirectories with deeper guidance.
 
 Agents read these files when they match a task. For example, when you ask an agent to "add Clerk auth to a page," the `clerk-nextjs-patterns` skill provides the correct server vs client patterns without the agent needing to search documentation.
 
