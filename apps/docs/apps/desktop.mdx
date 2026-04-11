@@ -1,0 +1,65 @@
+---
+title: Desktop
+description: Electron desktop app with shared packages and cross-platform packaging.
+---
+
+The `apps/desktop` directory contains a desktop application built with [Electron](https://www.electronjs.org/) and [electron-vite](https://electron-vite.org/). It shares packages with the web and mobile apps so an agent writes a feature once and it runs across all platforms.
+
+## Overview
+
+A cross-platform desktop app that consumes the same design system, auth, analytics, and observability packages as the web apps. The renderer is a React app bundled by Vite. The main process handles window management, IPC, and auto-updates.
+
+```bash
+cd apps/desktop && bun run dev
+```
+
+## Features
+
+- **[Design System](/packages/design-system)**: shadcn/ui components and Tailwind CSS via `@repo/design-system`.
+- **[Authentication](/packages/auth)**: Clerk auth via `@repo/auth`.
+- **[Backend](/packages/convex)**: Real-time data from Convex via `@repo/convex`.
+- **[Analytics](/packages/analytics)**: PostHog event tracking via `@repo/analytics`.
+- **[Observability](/packages/observability)**: Sentry error tracking via `@repo/observability`.
+- **Auto-updates**: `electron-updater` checks for updates on launch.
+- **Cross-platform packaging**: DMG for macOS, NSIS for Windows, AppImage and deb for Linux.
+
+## Architecture
+
+Electron splits into three processes, each with its own build:
+
+| Process | Entry | Bundler | Purpose |
+|---------|-------|---------|---------|
+| Main | `src/main/index.ts` | electron-vite | Window management, IPC, auto-updater |
+| Preload | `src/preload/index.ts` | electron-vite | Context bridge between main and renderer |
+| Renderer | `src/renderer/src/main.tsx` | Vite + React | UI, same components as web |
+
+The renderer imports from `@repo/design-system` directly. Same Button, Card, and Dialog components that run in the web app.
+
+## Packaging
+
+Build installers with [electron-builder](https://www.electron.build/):
+
+```bash
+bun run build:mac     # DMG (universal)
+bun run build:win     # NSIS (x64, arm64)
+bun run build:linux   # AppImage + deb (x64, arm64)
+```
+
+Configuration lives in `electron-builder.yml`. Auto-updates publish to GitHub Releases by default.
+
+## TypeScript
+
+The desktop app uses two shared TypeScript configs from `@repo/typescript-config`:
+
+| Config | Used by |
+|--------|---------|
+| `electron.json` | Main process and preload scripts |
+| `electron-renderer.json` | Renderer (Vite + React) |
+
+## Environment variables
+
+Set in `apps/desktop/.env`:
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `VITE_CONVEX_URL` | Yes | Convex deployment URL |
