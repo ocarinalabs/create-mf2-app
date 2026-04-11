@@ -19,21 +19,23 @@ cd my-app
 bun run dev
 ```
 
-The CLI scaffolds a Turborepo monorepo with six apps and 20+ shared packages. It prompts for a project name and package manager, copies the template, sets up environment files, installs dependencies, and creates an initial git commit.
+The CLI scaffolds a Turborepo monorepo with eight apps across web, mobile, and desktop, plus 20+ shared packages. It prompts for a project name and package manager, copies the template, sets up environment files, installs dependencies, and creates an initial git commit.
 
 Fill in your `.env.local` files with API keys and start building.
 
 ## What You Get
 
-Six independently deployable apps that share typed packages:
+Eight apps across web, mobile, and desktop that share typed packages:
 
 ```
 apps/
-  app/            Main SaaS application (Next.js 15, App Router)
+  app/            Main SaaS application (Next.js, App Router)
   web/            Marketing website
   api/            Webhooks, cron jobs, external integrations
+  desktop/        Electron desktop app (macOS, Windows, Linux)
   docs/           Documentation (Mintlify)
   email/          Email templates (React Email)
+  mobile/         React Native + Expo mobile app
   storybook/      Component workshop
 
 packages/
@@ -147,6 +149,7 @@ bun run env:push         # Sync env vars to Vercel and Convex
 ```bash
 bun run bump-deps        # Update all npm dependencies
 bun run bump-ui          # Update all shadcn/ui components
+bun run bump-ui-native   # Update all React Native Reusables components
 bun run clean            # Remove all node_modules
 ```
 
