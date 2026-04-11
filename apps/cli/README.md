@@ -19,6 +19,8 @@ cd my-app
 bun run dev
 ```
 
+Or use the [template repository](https://github.com/faw01/mf2) directly on GitHub — click **Use this template** to create a new repo from it.
+
 The CLI scaffolds a Turborepo monorepo with eight apps across web, mobile, and desktop, plus 20+ shared packages. It prompts for a project name and package manager, copies the template, sets up environment files, installs dependencies, and creates an initial git commit.
 
 Fill in your `.env.local` files with API keys and start building.
