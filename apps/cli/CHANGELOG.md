@@ -1,5 +1,11 @@
 # v2.0.5 (Tue Feb 24 2026)
 
+## 2.5.0
+
+### Minor Changes
+
+- 0b2c3f8: Add Electron desktop app scaffold with electron-vite, electron-builder, and shared design system. Add electron and electron-renderer TypeScript configs. Add react-native-reusables native UI components. Update agent skills to .agents directory. Update dependencies across all template apps and packages.
+
 ## 2.4.0
 
 ### Minor Changes
