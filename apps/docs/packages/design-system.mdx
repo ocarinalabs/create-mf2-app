@@ -45,16 +45,39 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
+## Desktop
+
+The desktop app (`apps/desktop`) imports from `@repo/design-system` directly. The same components that render in Next.js render in Electron's Vite-bundled renderer. No separate component library needed.
+
+## Native (Mobile)
+
+`@repo/design-system-native` provides React Native equivalents of the web components, built on [React Native Reusables](https://rnr-docs.vercel.app/) and [NativeWind](https://www.nativewind.dev/). They use the same design tokens (colors, radii, spacing) through CSS variables.
+
+```tsx title="apps/mobile/app/index.tsx"
+import { Button } from "@repo/design-system-native/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@repo/design-system-native/components/ui/card";
+import { Text } from "@repo/design-system-native/components/ui/text";
+```
+
 ## Adding Components
 
-Add new shadcn/ui components to the shared package (not to individual apps):
+Add new web components to the shared package (not to individual apps):
 
 ```bash
+bun run bump-ui                # Update all web components
 bunx shadcn@latest add calendar -c packages/design-system
+```
+
+Add new native components:
+
+```bash
+bun run bump-ui-native         # Update all native components
+bunx --bun @react-native-reusables/cli@latest add button -c apps/mobile
 ```
 
 ## Learn More
 
 - [shadcn/ui documentation](https://ui.shadcn.com)
 - [Radix UI primitives](https://www.radix-ui.com/primitives)
+- [React Native Reusables](https://rnr-docs.vercel.app/)
 - [Tailwind CSS documentation](https://tailwindcss.com/docs)
