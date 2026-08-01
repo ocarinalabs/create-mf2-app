@@ -26,6 +26,6 @@
     "react-doctor": "^0.7.1",
     "turbo": "^2.10.4",
     "typescript": "^6.0.3",
-    "ultracite": "7.9.2"
+    "ultracite": "7.9.4"
   }
 }
