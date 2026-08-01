@@ -64,7 +64,7 @@
   "devDependencies": {
     "@clack/prompts": "^1.6.0",
     "@repo/typescript-config": "*",
-    "@types/node": "^25.7.0",
+    "@types/node": "^26.1.2",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3"
   }
