@@ -1,1 +1,3 @@
-apps/cli/README.md
+
+
+Requires Node.js >= 22.12.0.
